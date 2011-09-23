@@ -11,8 +11,6 @@ from qa.models import Tag, Question, Answer
 
 @csrf_protect
 def join(request):
-    print request.POST
-    
     user = User.objects.create_user(request.POST['email'], #email is username
                                     request.POST['email'], #email
                                     request.POST['password'])
@@ -31,8 +29,20 @@ def authenticate(request, email, password):
     else:
         return HttpResponseRedirect('/error')
     
-def qa_login(request):
-    pass
+@csrf_protect
+def login(request):
+    return authenticate(request, request.POST['email'], request.POST['password'])
+    
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
+    
+def error(request):
+    return render_to_response(
+        "error.html",
+        {},
+        context_instance = RequestContext(request)
+    )
 
 def index(request):
     if not request.user.is_authenticated():
@@ -42,9 +52,12 @@ def index(request):
             context_instance = RequestContext(request)
         )
     else:
+        
         return render_to_response(
             "index.html",
-            {},
+            {
+                'user': request.user
+            },
             context_instance = RequestContext(request)
         )
         

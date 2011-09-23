@@ -8,8 +8,10 @@ urlpatterns = patterns('',
 
     (r'^$', 'qa.views.index'),
     
-    (r'^login$', 'qa.views.qa_login'),
+    (r'^login$', 'qa.views.login'),
     (r'^join$', 'qa.views.join'),
+    (r'^logout$', 'qa.views.logout'),
+    (r'^error$', 'qa.views.error'),
     
     (r'^ask/?$', 'qa.views.ask'),
     (r'^question/(?P<id>\d+)/?$', 'qa.views.question'),
