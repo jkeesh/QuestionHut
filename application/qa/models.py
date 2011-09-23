@@ -33,3 +33,15 @@ class Answer(models.Model):
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.content[:15], self.votes)
     
+    
+class UserMethods:
+    """
+    This class adds some additional convenience methods onto the User
+    class.
+    """
+    def name(self):
+        """
+        Get the users full name
+        """
+        return self.first_name + " " + self.last_name
+User.__bases__ += (UserMethods,)
