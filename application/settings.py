@@ -115,5 +115,5 @@ INSTALLED_APPS = (
     'django_extensions', # shell_plus
     'qa',   # the main question-answer app
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
 )
