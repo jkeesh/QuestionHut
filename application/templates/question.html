@@ -8,9 +8,9 @@
 
 <div id="question_content">
 	<div id="question_votes">
-		<a class='vote-arrow vote-up-off' href="#">up vote</a>
-		<span class='vote-count'>{{ question.votes }}</span>
-		<a class='vote-arrow vote-down-off' href='#'>down vote</a>
+		{% with obj=question type='question' %}
+		{% include "votecell.html" %}
+		{% endwith %}
 	</div>
 	<div class="text">
 		{{ question.content }}
@@ -29,9 +29,9 @@
 
 <div class="answer">
 	<div id="votes">
-		<a class='vote-arrow vote-up-off' href="#">up vote</a>
-		<span class='vote-count'>{{ question.votes }}</span>
-		<a class='vote-arrow vote-down-off' href='#'>down vote</a>
+		{% with obj=answer  type='answer' %}
+		{% include "votecell.html" %}
+		{% endwith %}
 	</div>
 	
 	<div class="text">

@@ -11,9 +11,27 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer
 
+from django.utils import simplejson
+def json_response(obj):
+    """
+    Helper method to turn a python object into json format and return an HttpResponse object.
+    """
+    return HttpResponse(simplejson.dumps(obj), mimetype="application/x-javascript")
+
+
+models = {
+    'answer': Answer,
+    'question': Question
+}
+
 @csrf_protect
 def vote(request):
-    pass
+    Model = models[request.POST['type']]
+    votes = Model.vote(request)
+    return json_response({
+        "status": "ok",
+        "votes": votes
+    })
 
 
 @csrf_protect
