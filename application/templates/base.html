@@ -22,10 +22,19 @@
 	
 	<body>
 		<div id="header">
-			<a href="/">discussT</a>
-			<a href="/ask">ask a question</a>
-			<a href="/">questions</a>
-			
+			<div id="logo">
+				<a href="/">discussT</a>
+			</div>
+			<div id="menu">
+				<ul>
+					<li>
+						<a href="/ask">Ask a Question</a>
+					</li>
+					<li>
+						<a href="/">Questions</a>
+					</li>
+				</ul>
+			</div>
 			<span>
 				Hello, {{ user.first_name }} {{ user.last_name }}
 			</span>

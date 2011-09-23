@@ -74,6 +74,42 @@ a{
     margin: auto;
 }
 
+#header{
+    width: 900px;
+    margin: auto;
+}
+
+#menu{
+/*    width: 705px;*/
+    float: left;
+    padding: 34px 0px 20px 5px;
+    margin-top: 10px;
+}
+
+#logo{
+    float: left;
+    width: 250px;
+    height: 61px;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+/* Menu */
+#menu li{
+    background: #777;
+    display: block;
+    float: left;
+    margin-right: 7px;
+}
+
+#menu a{
+    padding: 6px 12px 6px 12px;
+    color: white;
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 /* Index List */
 
 .question-item{

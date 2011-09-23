@@ -76,7 +76,7 @@ def index(request):
             context_instance = RequestContext(request)
         )
     else:
-        questions = Question.objects.all().order_by('-created_at')[:10]
+        questions = Question.objects.all().order_by('-created_at')[:30]
         
         
         return render_to_response(
