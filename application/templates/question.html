@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="question_title">
+	{{ question.title }}
+</div>
+
+<div id="question_content">
+	<div id="question_votes">
+		{{ question.votes }}
+	</div>
+	<div class="text">
+		{{ question.content }}
+	</div>
+</div>
+
+<div id="answer_count">
+	{{ answers|length }} Answers
+</div>
+
+{% for answer in answers %}
+
+<div class="answer">
+	<div class="votes">
+		{{ answer.votes }}
+	</div>
+	
+	<div class="text">
+		{{ answer.content }}
+	</div>
+</div>	
+
+{% endfor %}
+
+
+{% endblock %}
