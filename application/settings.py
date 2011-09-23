@@ -1,6 +1,15 @@
 # Django settings for application project.
+import socket, secrets
 
-DEBUG = True
+if socket.gethostname() == 'madness':
+    PRODUCTION = True
+    DEBUG = False
+    LOCAL = False
+else:
+    PRODUCTION = False
+    DEBUG = True
+    LOCAL = True
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -9,17 +18,29 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'discusst',                      # Or path to database file if using sqlite3.
-        'USER': 'discusst_user',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+if LOCAL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'discusst',                      # Or path to database file if using sqlite3.
+            'USER': secrets.LOCAL['db_user'],                         # Not used with sqlite3.
+            'PASSWORD': secrets.LOCAL['db_passwd'],                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'discusst',                      # Or path to database file if using sqlite3.
+            'USER': secrets.PROD['db_user'],            # Not used with sqlite3.
+            'PASSWORD': secrets.PROD['db_passwd'],  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
+    
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -27,7 +48,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
