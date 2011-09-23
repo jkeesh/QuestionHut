@@ -71,6 +71,8 @@ def question_view(request, id=None):
     if not id: 
         return redirect('/error')
     question = get_object_or_404(Question, pk=id)
+    question.views += 1
+    question.save()
     return render_to_response(
         "question.html",
         {
