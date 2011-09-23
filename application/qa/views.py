@@ -107,6 +107,7 @@ def question_view(request, id=None):
     
 
 def answer_question(request):
+    print request.user
     if not request.user.is_authenticated():
         return redirect('/')
     else:

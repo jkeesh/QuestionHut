@@ -25,6 +25,12 @@
 			<a href="/">discussT</a>
 			<a href="/ask">ask a question</a>
 			<a href="/">questions</a>
+			
+			<span>
+				Hello, {{ user.first_name }} {{ user.last_name }}
+			</span>
+
+			<a href="/logout">Logout</a>
 		</div>
 		
 		{% block content %}
