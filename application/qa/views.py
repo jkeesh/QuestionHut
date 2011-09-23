@@ -1,5 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect
@@ -25,9 +26,9 @@ def authenticate(request, email, password):
     if user is not None:
         auth.login(request, user)
         print "authenticated"
-        return HttpResponseRedirect('/')
+        return redirect('/')
     else:
-        return HttpResponseRedirect('/error')
+        return redirect('/error')
     
 @csrf_protect
 def login(request):
@@ -35,7 +36,7 @@ def login(request):
     
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect('/')
+    return redirect('/')
     
 def error(request):
     return render_to_response(
@@ -65,9 +66,16 @@ def index(request):
 def question(request, id=None):
     pass
     
+def ask_question(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
+    else:
+        print request.POST
+        return redirect('/')
+    
 def ask(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        return redirect('/')
     else:
         return render_to_response(
             "ask.html",
