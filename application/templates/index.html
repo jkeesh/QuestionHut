@@ -43,18 +43,19 @@
 			
 			<span class="tags">
 				{% for tag in question.tags.all %}
-					<a href="#">{{ tag.title }}</a>
+					<a href="#" class="tag">{{ tag.title }}</a>
 				{% endfor %}
 			</span>
 			
-			<span class="question-time">
-				{{ question.created_at|timesince }} ago
-			</span>
+			<div class="started">
+				<span class="question-time">
+					{{ question.created_at|timesince }} ago
+				</span>
 			
-			<span class="question-author">
-				{{ question.author }}
-			</span>
-				
+				<span class="question-author">
+					{{ question.author }}
+				</span>
+			</div>
 		</div>
 		
 	</div>
