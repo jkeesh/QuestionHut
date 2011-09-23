@@ -17,5 +17,7 @@ urlpatterns = patterns('',
     (r'^ask_question$', 'qa.views.ask_question'),
     
     (r'^question/(?P<id>\d+)/?$', 'qa.views.question_view'),
+    (r'^answer_question$', 'qa.views.answer_question'),
+    
     (r'^admin/', include(admin.site.urls)),
 )

@@ -42,6 +42,7 @@
 <form action="/answer_question" method="post">
 	{% csrf_token %}
 	<textarea name="answer"></textarea>
+	<input type="hidden" name="question" value="{{question.id}}" />
 	<input type="submit" value="Submit Answer" />
 </form>
 

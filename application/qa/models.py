@@ -20,7 +20,7 @@ class Question(models.Model):
 class Answer(models.Model):
     author      =   models.ForeignKey(User)
     content     =   models.TextField()
-    votes       =   models.IntegerField()
+    votes       =   models.IntegerField(default=0)
     created_at  =   models.DateTimeField(auto_now_add=True)
     question    =   models.ForeignKey(Question, related_name='answers')
     

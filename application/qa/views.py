@@ -81,6 +81,20 @@ def question_view(request, id=None):
         context_instance = RequestContext(request)
     )
     
+
+def answer_question(request):
+    if not request.user.is_authenticated():
+        return redirect('/')
+    else:
+        q_id = request.POST['question']
+        content = request.POST['answer']
+        question = Question.objects.get(pk=q_id)
+        answer = Answer(author=request.user,
+                        question=question,
+                        content=content)
+        answer.save()
+        return redirect('/question/%s' % q_id)
+    
     
 @csrf_protect
 def ask_question(request):
