@@ -8,7 +8,11 @@ from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer
 
 def index(request):
-    pass
+    return render_to_response(
+        "login.html",
+        {},
+        context_instance = RequestContext(request)
+    )
     
 def question(request, id=None):
     pass
