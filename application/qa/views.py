@@ -28,6 +28,7 @@ models = {
 def vote(request):
     Model = models[request.POST['type']]
     votes = Model.vote(request)
+    print votes
     return json_response({
         "status": "ok",
         "votes": votes
