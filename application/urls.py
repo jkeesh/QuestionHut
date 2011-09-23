@@ -7,6 +7,10 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     (r'^$', 'qa.views.index'),
+    
+    (r'^login$', 'qa.views.qa_login'),
+    (r'^join$', 'qa.views.join'),
+    
     (r'^ask/?$', 'qa.views.ask'),
     (r'^question/(?P<id>\d+)/?$', 'qa.views.question'),
     (r'^admin/', include(admin.site.urls)),

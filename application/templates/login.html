@@ -8,6 +8,7 @@
 	<body>
 		<h2>Login</h2>
 		<form action='/login' method='post'>
+			{% csrf_token %}
 			<div>
 				<label for="login_email">Email:</label>
 				<input id="login_email" type="text" name="email"/>
@@ -25,6 +26,8 @@
 		
 		<h2>Or Create Accout</h2>
 		<form action='/join' method='post'>
+			{% csrf_token %}
+
 			<div>
 				<label for="user_first_name">First Name:</label>
 				<input id="user_first_name" type="text" name="first_name"/>
