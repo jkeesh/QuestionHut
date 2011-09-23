@@ -8,10 +8,16 @@
 
 <div id="question_content">
 	<div id="question_votes">
-		{{ question.votes }}
+		<a class='vote-up-off' href="#">up vote</a>
+		<span class='vote-count'>{{ question.votes }}</span>
+		<a class='vote-down-off' href='#'>down vote</a>
 	</div>
 	<div class="text">
 		{{ question.content }}
+		
+		<div class="user">
+			{{ question.author.first_name }} {{ question.author.last_name }}
+		</div>
 	</div>
 </div>
 
@@ -22,12 +28,19 @@
 {% for answer in answers %}
 
 <div class="answer">
-	<div class="votes">
-		{{ answer.votes }}
+	<div id="votes">
+		<a class='vote-up-off' href="#">up vote</a>
+		<span class='vote-count'>{{ question.votes }}</span>
+		<a class='vote-down-off' href='#'>down vote</a>
 	</div>
 	
 	<div class="text">
 		{{ answer.content }}
+		
+		<div class="user">
+			{{ question.author.first_name }} {{ question.author.last_name }}
+		</div>
+		
 	</div>
 </div>	
 
