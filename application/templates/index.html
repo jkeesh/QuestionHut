@@ -40,6 +40,9 @@
 			</div>
 			
 			<span class="tags">
+				{% for tag in question.tags.all %}
+					<a href="#">{{ tag.title }}</a>
+				{% endfor %}
 			</span>
 			
 			<span class="question-time">

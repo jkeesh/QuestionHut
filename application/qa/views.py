@@ -105,8 +105,19 @@ def ask_question(request):
     else:
         title = request.POST['title']
         content = request.POST['content']
+        
         question = Question(title=title, content=content, author=request.user)
         question.save()
+        
+        tags = request.POST['tags'].split(' ')
+        for tag in tags:
+            try:
+                the_tag = Tag.objects.get(title=tag.strip().lower())
+            except Tag.DoesNotExist:
+                the_tag = Tag(title=tag.strip().lower())
+                the_tag.save()
+            question.tags.add(the_tag)
+        
         
         return redirect('/')
     
