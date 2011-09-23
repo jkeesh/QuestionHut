@@ -1,0 +1,131 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	font-family: Arial;
+	font-size: 13px;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Custom Overall Style */
+h3, h3 a{
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+a{
+    color: #07C;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cp{
+    cursor: pointer;
+}
+
+/* Base Overview */
+
+#content{
+    width: 900px;
+    margin: auto;
+}
+
+/* Index List */
+
+.question-item{
+    border-bottom: 1px dotted #999;
+    overflow: hidden;
+    padding: 11px 0px;
+}
+
+.question-item .question-info .counts{
+    font-size: 190%;
+    height: 25px;
+    font-weight: bold;
+}
+
+.question-info .votes{
+    float: left;
+    padding: 5px;
+    color: #555;
+    text-align: center;
+    width: 38px;
+    height: 38px;
+}
+
+.question-info .answers{
+    float: left;
+    padding: 5px;
+    width: 48px;
+    height: 38px;
+    text-align: center;
+}
+
+.answered{
+    background: #75845C;
+    color: white;
+}
+
+.unanswered{
+    color: #9A4444;
+    background: transparent;
+}
+
+.question-info .views{
+    float: left;
+    padding: 5px;
+    width: 40px;
+    height: 38px;
+    color: #999;
+    text-align: center;
+    margin; 0 7px 0 0;
+}
+
+
+.question-summary h3 a{
+    font-weight: bold;
+}

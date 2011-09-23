@@ -4,7 +4,8 @@
 
 {% for question in questions %}
 	<div class="question-item">
-		<div class="question-info">
+		<div class="question-info cp"
+			onclick="window.location.href='/question/{{question.id}}'">
 			<div class="votes">
 				<div class="counts">
 					{{ question.votes }}
@@ -12,7 +13,13 @@
 				<div>votes</div>
 			</div>
 			
-			<div class="answers">
+			
+			<div class="answers
+				{% if question.answers.all|length > 0 %}
+					answered
+				{% else %}
+					unanswered
+				{% endif %}">
 				<div class="counts">
 					{{ question.answers.all|length }}
 				</div>
@@ -30,9 +37,9 @@
 		</div>
 	
 		<div class="question-summary">
-			<div>
+			<h3>
 				<a href="/question/{{question.id}}">{{ question.title }}</a>
-			</div>
+			</h3>
 			
 			<span class="tags">
 				{% for tag in question.tags.all %}
