@@ -8,10 +8,12 @@ if socket.gethostname() == 'madness':
     PRODUCTION = True
     DEBUG = False
     LOCAL = False
+    CONSOLE_DEBUG = False
 else:
     PRODUCTION = False
     DEBUG = True
     LOCAL = True
+    CONSOLE_DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
