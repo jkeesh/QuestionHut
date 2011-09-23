@@ -112,6 +112,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     
     'south', # db migrations
+    'django_extensions', # shell_plus
+    
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
 )
