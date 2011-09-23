@@ -113,7 +113,7 @@ INSTALLED_APPS = (
     
     'south', # db migrations
     'django_extensions', # shell_plus
-    
+    'qa',   # the main question-answer app
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
 )
