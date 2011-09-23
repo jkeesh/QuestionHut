@@ -33,5 +33,17 @@
 
 {% endfor %}
 
+<hr/>
+
+<div id="your_answer">
+	Your Answer
+</div>
+
+<form action="/answer_question" method="post">
+	{% csrf_token %}
+	<textarea name="answer"></textarea>
+	<input type="submit" value="Submit Answer" />
+</form>
+
 
 {% endblock %}
