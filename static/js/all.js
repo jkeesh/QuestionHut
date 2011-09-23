@@ -52,25 +52,38 @@ $(document).ready(function(){
 function Voter(){
     var that = {}
     
+    that.get_vote_count = function(arrow){
+        return $('.vote-count[data-type="'+ arrow.attr('data-type')+'"][data-id="'+ arrow.attr('data-id')+'"]')
+    }
+    
+    
+    
+    that.get_data = function(arrow){
+        var action = arrow.attr('data-action');
+        var type = arrow.attr('data-type');
+        var id = arrow.attr('data-id');
+        return {
+            action: action,
+            type: type,
+            id: id
+        }
+    }
+    
     that.setup = function(){
         $('.vote-arrow').click(function(e){
+            var self = $(this);
             e.preventDefault();
-            var action = $(this).attr('data-action');
-            var type = $(this).attr('data-type');
-            var id = $(this).attr('data-id');
+            var vote_count = that.get_vote_count($(this));
 
             $.ajax({
                 type: 'POST',
                 url: '/ajax/vote',
                 dataType: 'JSON',
-                data: {
-                    action: action,
-                    type: type,
-                    id: id
-                },
+                data: that.get_data(self),
                 success: function(result){
-                    result = $.parseJSON(result);
-                    D.log(result);
+                    if(result.status == 'ok'){
+                        vote_count.html(result.votes);
+                    }
                 }
             });
         });
