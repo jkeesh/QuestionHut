@@ -7,6 +7,9 @@ class UserProfile(models.Model):
 
 class Tag(models.Model):
     title       =   models.CharField(max_length=200)
+    
+    def __unicode__(self):
+        return "%s" % self.title
 
 class Question(models.Model):
     author      =   models.ForeignKey(User)
