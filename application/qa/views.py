@@ -12,6 +12,11 @@ from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer
 
 @csrf_protect
+def vote(request):
+    pass
+
+
+@csrf_protect
 def join(request):
     user = User.objects.create_user(request.POST['email'], #email is username
                                     request.POST['email'], #email

@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
-
+from django.conf import settings
+import os
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -19,5 +20,15 @@ urlpatterns = patterns('',
     (r'^question/(?P<id>\d+)/?$', 'qa.views.question_view'),
     (r'^answer_question$', 'qa.views.answer_question'),
     
+    (r'^ajax/vote$', 'qa.views.vote'),
+    
+    
     (r'^admin/', include(admin.site.urls)),
 )
+
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^(?P<path>.*)$', 'django.views.static.serve',
+         {'document_root': os.path.dirname(settings.PROJECT_ROOT)}),
+    )
