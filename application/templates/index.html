@@ -35,7 +35,21 @@
 		</div>
 	
 		<div class="question-summary">
-			<a href="/question/{{question.id}}">{{ question.title }}</a>
+			<div>
+				<a href="/question/{{question.id}}">{{ question.title }}</a>
+			</div>
+			
+			<span class="tags">
+			</span>
+			
+			<span class="question-time">
+				{{ question.created_at|timesince }} ago
+			</span>
+			
+			<span class="question-author">
+				{{ question.author }}
+			</span>
+				
 		</div>
 		
 	</div>
