@@ -41,6 +41,7 @@
 				<a href="/question/{{question.id}}">{{ question.title }}</a>
 			</h3>
 			
+			{% load all_tags %}
 			<span class="tags">
 				{% for tag in question.tags.all %}
 					<a href="#" class="tag">{{ tag.title }}</a>
@@ -49,7 +50,8 @@
 			
 			<div class="started">
 				<span class="question-time">
-					{{ question.created_at|timesince }} ago
+				
+					{% format_time question.created_at %}
 				</span>
 			
 				<span class="question-author">

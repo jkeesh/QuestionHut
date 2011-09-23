@@ -94,6 +94,12 @@ a{
     border: 1px solid black;
 }
 
+#user{
+    float: right;
+    padding: 5px;
+    font-weight: bold;
+}
+
 /* Menu */
 #menu li{
     background: #777;
