@@ -8,7 +8,7 @@
 
 <div id="question_content">
 	<div id="question_votes">
-		{% with obj=question type='question' %}
+		{% with obj=question type='Q' %}
 		{% include "votecell.html" %}
 		{% endwith %}
 	</div>
@@ -29,7 +29,7 @@
 
 <div class="answer">
 	<div id="votes">
-		{% with obj=answer  type='answer' %}
+		{% with obj=answer  type='A' %}
 		{% include "votecell.html" %}
 		{% endwith %}
 	</div>

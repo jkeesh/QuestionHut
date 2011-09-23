@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 # Models
 from django.contrib.auth.models import User
-from qa.models import Tag, Question, Answer
+from qa.models import Tag, Question, Answer, Vote
 
 from django.utils import simplejson
 def json_response(obj):
@@ -20,15 +20,13 @@ def json_response(obj):
 
 
 models = {
-    'answer': Answer,
-    'question': Question
+    'A': Answer,
+    'Q': Question
 }
 
 @csrf_protect
 def vote(request):
-    Model = models[request.POST['type']]
-    votes = Model.vote(request)
-    print votes
+    votes = Vote.submit_vote(request)
     return json_response({
         "status": "ok",
         "votes": votes
