@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+	ask a question!
+	
+<form action="/ask_question" method='post'>
+	{% csrf_token %}
+	<div>
+		<span>Title</span>
+		<input id="question_title" type="text" name="title"/>
+	</div>
+	<div>
+		<div>What is your question?</div>
+		<textarea id="question_textarea" name="content" ></textarea>
+	</div>
+	
+	<div>
+		<span>Tags</div>
+		<input id="question_tags" type="text" name="tags" />
+	</div>
+	
+	<div>
+		<input id="question_submit" type="submit" value="Submit Question">
+	</div>
+	
+</form>
+{% endblock %}

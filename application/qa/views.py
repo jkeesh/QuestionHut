@@ -66,4 +66,13 @@ def question(request, id=None):
     pass
     
 def ask(request):
-    pass
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        return render_to_response(
+            "ask.html",
+            {
+                'user': request.user
+            },
+            context_instance = RequestContext(request)
+        )
