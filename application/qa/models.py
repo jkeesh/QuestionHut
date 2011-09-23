@@ -21,18 +21,40 @@ class Vote(models.Model):
     score       =   models.IntegerField()
     kind        =   models.CharField(max_length=1, choices=VOTE_TYPES)
     
+    def update_vote_count(self, score_change):
+        if self.kind == 'A':
+            obj = Answer.objects.get(pk=self.obj_id)
+        else:
+            obj = Question.objects.get(pk=self.obj_id)
+                    
+        obj.votes += score_change
+        obj.save()
+        return obj.votes
+        
+    def undo(self):
+        undo_change = self.score * -1 # This undoes the vote
+        self.update_vote_count(undo_change)
+    
     @staticmethod
     def submit_vote(request):
-        print request.POST
+        new_score = int(request.POST['action'])
         
         try:
-            existing = Vote.objects.get(user=request.user, 
-                        kind=request.POST['type'],
-                        obj_id=request.POST['id'])
+            vote = Vote.objects.get(
+                            user=request.user, 
+                            kind=request.POST['type'],
+                            obj_id=request.POST['id']
+                        )
+            vote.undo()
         except Vote.DoesNotExist:
-            pass
-        
-        return 1
+            vote = Vote(
+                            user=request.user,
+                            kind=request.POST['type'],
+                            obj_id=request.POST['id']
+                        )        
+        vote.score = new_score
+        vote.save()
+        return vote.update_vote_count(new_score)
     
     def __unicode__(self):
         return "%s voted on %c %d %d" % (self.user.name(), self.kind, self.id, self.score)
