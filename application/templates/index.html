@@ -7,7 +7,39 @@
 
 <a href="/logout">Logout</a>
 
-
+{% for question in questions %}
+	<div class="question-item">
+		<div class="question-info">
+			<div class="votes">
+				<div class="counts">
+					{{ question.votes }}
+				</div>
+				<div>votes</div>
+			</div>
+			
+			<div class="answers">
+				<div class="counts">
+					{{ question.answers.all|length }}
+				</div>
+				<div>answers</div>
+			</div>
+			
+			<div class="views">
+				<div class="counts">
+					{{ question.views }}
+				</div>
+				<div>views</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="question-summary">
+			<a href="/question/{{question.id}}">{{ question.title }}</a>
+		</div>
+		
+	</div>
+{% endfor %}
 
 
 {% endblock %}

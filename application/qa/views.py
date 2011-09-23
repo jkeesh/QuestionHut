@@ -53,11 +53,14 @@ def index(request):
             context_instance = RequestContext(request)
         )
     else:
+        questions = Question.objects.all()[:10]
+        
         
         return render_to_response(
             "index.html",
             {
-                'user': request.user
+                'user': request.user,
+                'questions': questions
             },
             context_instance = RequestContext(request)
         )
@@ -66,11 +69,16 @@ def index(request):
 def question(request, id=None):
     pass
     
+@csrf_protect
 def ask_question(request):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
-        print request.POST
+        title = request.POST['title']
+        content = request.POST['content']
+        question = Question(title=title, content=content, author=request.user)
+        question.save()
+        
         return redirect('/')
     
 def ask(request):
