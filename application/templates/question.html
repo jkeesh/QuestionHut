@@ -10,7 +10,7 @@
 </div>
 
 <div id="question_content">
-	<div id="question_votes">
+	<div class="votes">
 		{% with obj=question type='Q' %}
 		{% include "votecell.html" %}
 		{% endwith %}
@@ -43,19 +43,25 @@
 {% for answer in answers %}
 
 <div class="answer">
-	<div id="votes">
+	<div class="votes">
 		{% with obj=answer  type='A' %}
 		{% include "votecell.html" %}
 		{% endwith %}
 	</div>
-	
+
 	<div class="text">
-		{{ answer.content }}
-		
-		<div class="user">
-			{{ answer.author.name }}
+		<div class="main">
+			{{ answer.content }}
 		</div>
 		
+		{% load all_tags %}
+		<div class="user">
+			<div class="time-asked">
+				asked {% format_time answer.created_at %}
+			</div>
+			
+			{{ answer.author.name }}
+		</div>
 	</div>
 </div>	
 

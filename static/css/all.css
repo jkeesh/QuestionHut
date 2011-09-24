@@ -224,6 +224,13 @@ a.tag:hover{
 
 
 /* Question Page */
+
+.answer{
+    overflow: hidden;
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+}
+
 #question_title h1{
     font-size: 23px;
     font-weight: bold;
@@ -233,7 +240,7 @@ a.tag:hover{
     padding-bottom: 5px;
 }
 
-#question_votes{
+#question_content .votes, .answer .votes{
     float: left;
     width: 30px;
     text-align: center;
@@ -243,20 +250,23 @@ a.tag:hover{
     overflow: hidden;
 }
 
-#question_content .text{
+#question_content .text,
+.answer .text{
     font-size: 14px;
     line-height: 18px;
     width: 660px;
     float: left;
 }
 
-#question_content .user{
+#question_content .user,
+.answer .user{
     float: right;
     background: #E0EAF1;
     padding: 10px;
 }
 
-#question_content .user .time-asked{
+#question_content .user .time-asked,
+.answer .user .time-asked{
     font-weight: bold;
 }
 
@@ -283,4 +293,8 @@ textarea{
     height: 30px;
     font-size: 14px;
     margin-top: 4px;
+}
+
+#your_answer{
+    margin-top: 15px;
 }
