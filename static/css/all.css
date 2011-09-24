@@ -106,12 +106,13 @@ a{
     margin-top: 10px;
 }
 
-#logo{
+#logo a{
     float: left;
     width: 250px;
-    height: 61px;
-    margin-top: 10px;
-    border: 1px solid black;
+    margin-top: 38px;
+    font-size: 38px;
+    font-weight: bold;
+    display: block;
 }
 
 #user{
