@@ -85,7 +85,8 @@ class Question(models.Model):
         except Tag.DoesNotExist:
             the_tag = Tag(title=tag_title.strip().lower())
             the_tag.save()
-        self.tags.add(the_tag)
+        if the_tag not in self.tags.all():
+            self.tags.add(the_tag)
         
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.title, self.votes)
