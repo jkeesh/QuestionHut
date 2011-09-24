@@ -107,6 +107,20 @@ def index(request):
             context_instance = RequestContext(request)
         )
         
+def tag(request, tag_title):
+    cur_tag = Tag.objects.get(title=tag_title)
+    questions = cur_tag.questions.all()
+    
+    
+    return render_to_response(
+        "index.html",
+        {
+            'user': request.user,
+            'questions': questions
+        },
+        context_instance = RequestContext(request)
+    )
+        
     
 def question_view(request, id=None):
     if not id: 

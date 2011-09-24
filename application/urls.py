@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     (r'^$', 'qa.views.index'),
+    (r'^tag/(?P<tag_title>\w+)/?$', 'qa.views.tag'),
     
     (r'^login$', 'qa.views.login'),
     (r'^join$', 'qa.views.join'),
