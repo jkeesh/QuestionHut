@@ -78,6 +78,15 @@ class Question(models.Model):
     answered    =   models.BooleanField(default=False)
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
         
+        
+    def add_tag(self, tag_title): 
+        try:
+            the_tag = Tag.objects.get(title=tag_title.strip().lower())
+        except Tag.DoesNotExist:
+            the_tag = Tag(title=tag_title.strip().lower())
+            the_tag.save()
+        self.tags.add(the_tag)
+        
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.title, self.votes)
        

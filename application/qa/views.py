@@ -148,18 +148,17 @@ def ask_question(request):
         title = request.POST['title']
         content = request.POST['content']
         
-        question = Question(title=title, content=content, author=request.user)
+        course_id = request.POST['course']
+        course = Course.objects.get(pk=course_id)
+        
+        question = Question(title=title, content=content, author=request.user, course=course)
         question.save()
+
+        question.add_tag(course.title)
         
         tags = request.POST['tags'].split(' ')
         for tag in tags:
-            try:
-                the_tag = Tag.objects.get(title=tag.strip().lower())
-            except Tag.DoesNotExist:
-                the_tag = Tag(title=tag.strip().lower())
-                the_tag.save()
-            question.tags.add(the_tag)
-        
+            question.add_tag(tag)
         
         return redirect('/')
     
@@ -170,7 +169,8 @@ def ask(request):
         return render_to_response(
             "ask.html",
             {
-                'user': request.user
+                'user': request.user,
+                'courses': Course.objects.all()
             },
             context_instance = RequestContext(request)
         )

@@ -21,6 +21,18 @@
 			placeholder="You need at least one tag like 'karel'"/>
 	</div>
 	
+	<div id="question_class_area">
+		<div class="form-label">Class</div>
+		
+		<div class="class-options">
+		<select name="course">
+		{% for course in courses %}
+		  <option value="{{course.id}}">{{course}}</option>
+		{% endfor %}
+		</select>
+		</div>
+	</div>
+	
 	<div class="ask-form-submit">
 		<input id="question_submit" type="submit" value="Submit Question">
 	</div>

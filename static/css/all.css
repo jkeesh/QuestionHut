@@ -349,8 +349,25 @@ textarea{
     margin-right: 14px;
 }
 
-#question_area, #question_tags_area{
+#question_area, #question_tags_area, #question_class_area{
     margin-top: 10px;
+}
+
+#question_class_area{
+    overflow: hidden;
+}
+
+#question_class_area .form-label{ 
+    float: left;
+}
+
+#question_class_area select{
+    margin-bottom: 5px;
+    width: 100px;
+}
+
+.class-options{
+    float: left;
 }
 
 #question_title{
