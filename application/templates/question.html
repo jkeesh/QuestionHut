@@ -16,9 +16,21 @@
 		{% endwith %}
 	</div>
 	<div class="text">
-		{{ question.content }}
+		<div class="main">
+			{{ question.content }}
+		</div>
+		<div class="tags">
+			{% for tag in question.tags.all %}
+				<a href="#" class="tag">{{ tag.title }}</a>
+			{% endfor %}
+		</div>
 		
+		{% load all_tags %}
 		<div class="user">
+			<div class="time-asked">
+				asked {% format_time question.created_at %}
+			</div>
+			
 			{{ question.author.name }}
 		</div>
 	</div>

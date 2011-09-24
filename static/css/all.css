@@ -223,8 +223,27 @@ a.tag:hover{
     text-align: center;
 }
 
+#question_content{
+    overflow: hidden;
+}
+
 #question_content .text{
     font-size: 14px;
     line-height: 18px;
     width: 660px;
+    float: left;
+}
+
+#question_content .user{
+    float: right;
+    background: #E0EAF1;
+    padding: 10px;
+}
+
+#question_content .user .time-asked{
+    font-weight: bold;
+}
+
+#question_content .tags{
+    margin-top: 10px;
 }
