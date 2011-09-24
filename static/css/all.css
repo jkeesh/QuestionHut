@@ -274,3 +274,13 @@ a.tag:hover{
 textarea{
     font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 }
+
+.question-form input{
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    padding: 2px;
+    background-color: #ccc;
+    width: 150px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 4px;
+}

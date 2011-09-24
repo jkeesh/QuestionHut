@@ -65,6 +65,7 @@
 	<h2>Your Answer</h2>
 </div>
 
+<div class="question-form">
 <form action="/answer_question" method="post">
 	{% csrf_token %}
 	<textarea id="answer_area" name="answer"></textarea>
@@ -73,6 +74,6 @@
 		<input type="submit" value="Submit Answer" />
 	</div>
 </form>
-
+</div>
 
 {% endblock %}
