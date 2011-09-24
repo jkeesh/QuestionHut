@@ -25,6 +25,7 @@
 			<div id="logo">
 				<a href="/">QuestionHut</a>
 			</div>
+			{% if user.is_authenticated %}
 			<div id="menu">
 				<ul>
 					<li>
@@ -43,6 +44,7 @@
 
 				<a href="/logout">Logout</a>
 			</div>
+			{% endif %}
 		</div>
 		
 		<div id="content">

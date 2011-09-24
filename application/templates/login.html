@@ -1,56 +1,59 @@
-<html>
-	<head>
-		<title>
-			discussT - question answer for classes
-		</title>
-	</head>
+{% extends "base.html" %}
 
-	<body>
-		<h2>Login</h2>
-		<form action='/login' method='post'>
-			{% csrf_token %}
-			<div>
-				<label for="login_email">Email:</label>
-				<input id="login_email" type="text" name="email"/>
-			</div>
+{% block content %}
 
-			<div>
-				<label for="login_password">Password:</label>
-				<input id="login_password" type="password" name="password"/>
-			</div>
+<div class="main-title">
+	<h2>Login</h2>
+</div>
+<div id="login_form">
+<form action='/login' method='post'>
+	{% csrf_token %}
+	<div>
+		<label for="login_email">Email:</label>
+		<input id="login_email" type="text" name="email"/>
+	</div>
 
-			<div>
-				<input type="submit" value="Login" />
-			</div>
-		</form>
-		
-		<h2>Or Create Account</h2>
-		<form action='/join' method='post'>
-			{% csrf_token %}
+	<div>
+		<label for="login_password">Password:</label>
+		<input id="login_password" type="password" name="password"/>
+	</div>
 
-			<div>
-				<label for="user_first_name">First Name:</label>
-				<input id="user_first_name" type="text" name="first_name"/>
-			</div>
-			<div>
-				<label for="user_last_name">Last Name:</label>
-				<input id="user_last_name" type="text" name="last_name"/>
-			</div>
-			
-			<div>
-				<label for="user_email">Email:</label>
-				<input id="user_email" type="text" name="email"/>
-			</div>
-			
-			<div>
-				<label for="user_password">Password:</label>
-				<input id="user_password" type="password" name="password"/>
-			</div>
-			
-			<div>
-				<input type="submit" value="Create Account" />
-			</div>
-		</form>
+	<div class="login-submit">
+		<input type="submit" value="Login" />
+	</div>
+</form>
+</div>
+
+<div class="main-title">
+	<h2>Or Create Account</h2>
+</div>
+<div id="create_form">
+<form action='/join' method='post'>
+	{% csrf_token %}
+
+	<div>
+		<label for="user_first_name">First Name:</label>
+		<input id="user_first_name" type="text" name="first_name"/>
+	</div>
+	<div>
+		<label for="user_last_name">Last Name:</label>
+		<input id="user_last_name" type="text" name="last_name"/>
+	</div>
 	
-	</body>
-</html>
+	<div>
+		<label for="user_email">Email:</label>
+		<input id="user_email" type="text" name="email"/>
+	</div>
+	
+	<div>
+		<label for="user_password">Password:</label>
+		<input id="user_password" type="password" name="password"/>
+	</div>
+	
+	<div class="create-submit">
+		<input type="submit" value="Create Account" />
+	</div>
+</form>
+</div>
+		
+{% endblock %}

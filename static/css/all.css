@@ -87,6 +87,28 @@ a{
     clear: both;
 }
 
+input[type="text"], input[type="password"]{
+    color: #888;
+    padding: 3px;
+    outline: none;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 14px;
+    width: 200px;
+}
+
+/* Login Page */
+#login_form, #create_form{
+    margin-top: 15px;
+}
+.main-title{
+    margin-top: 10px;
+}
+
+#login_form label, #create_form label{
+    width: 120px;
+    display: inline-block;
+}
+
 /* Base Overview */
 
 #content{
@@ -293,7 +315,8 @@ textarea{
     padding: 4px;    
 }
 
-.question-form input, .ask-form-submit input{
+.question-form input, .ask-form-submit input, 
+.login-submit input[type="submit"], .create-submit input{
     font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
     padding: 2px;
     background-color: #ccc;
