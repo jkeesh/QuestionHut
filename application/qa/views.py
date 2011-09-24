@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 # Models
 from django.contrib.auth.models import User
-from qa.models import Tag, Question, Answer, Vote
+from qa.models import Tag, Question, Answer, Vote, UserProfile, Course
 
 from django.utils import simplejson
 def json_response(obj):
@@ -35,12 +35,29 @@ def vote(request):
 
 @csrf_protect
 def join(request):
+    try:
+        User.objects.get(email=request.POST['email'])
+        return redirect('/error')
+    except User.DoesNotExist:
+        pass
+    
+    print request.POST
     user = User.objects.create_user(request.POST['email'], #email is username
                                     request.POST['email'], #email
                                     request.POST['password'])
     user.first_name = request.POST['first_name']
     user.last_name = request.POST['last_name']
     user.save()
+    
+    userprofile = UserProfile(user=user)
+    userprofile.save()
+    
+    courses = request.POST.getlist('class')
+    for course_id in courses:
+        print course_id
+        course = Course.objects.get(pk=course_id)
+        print course
+        userprofile.courses.add(course)
     
     return authenticate(request, request.POST['email'], request.POST['password'])
     
@@ -72,7 +89,9 @@ def index(request):
     if not request.user.is_authenticated():
         return render_to_response(
             "login.html",
-            {},
+            {
+                'courses': Course.objects.all()
+            },
             context_instance = RequestContext(request)
         )
     else:

@@ -52,15 +52,11 @@
 	
 	<div class="classes-area">
 		<label for"user_classes">Classes:</label>
+		{% for course in courses %}
 		<span class="checkbox-option">
 		<input type="checkbox" 
-			class="user-class" name="class" value="cs106a" />cs106a</span>
-		<span class="checkbox-option">
-		<input type="checkbox" 
-			class="user-class" name="class" value="cs106b" />cs106b</span>
-		<span class="checkbox-option">
-		<input type="checkbox" 
-			class="user-class" name="class" value="cs106x" />cs106x</span>
+			class="user-class" name="class" value="{{course.id}}" />{{course}}</span>
+		{% endfor %}
 	</div>
 	
 	<div class="create-submit">
