@@ -16,7 +16,13 @@
 			
 			<div class="answers
 				{% if question.answers.all|length > 0 %}
+				
+				{% if question.answered %}
+					answered-accepted
+				{% else %}
 					answered
+				{% endif %}
+					
 				{% else %}
 					unanswered
 				{% endif %}">
