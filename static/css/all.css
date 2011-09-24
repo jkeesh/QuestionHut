@@ -67,6 +67,10 @@ a{
     cursor: pointer;
 }
 
+.clear{
+    clear: both;
+}
+
 /* Base Overview */
 
 #content{
@@ -200,4 +204,27 @@ a.tag{
 a.tag:hover{
     background-color:#3E6D8E;
     color:#E0EAF1;
+}
+
+
+/* Question Page */
+#question_title h1{
+    font-size: 23px;
+    font-weight: bold;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    border-bottom: 1px solid #555;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+#question_votes{
+    float: left;
+    width: 30px;
+    text-align: center;
+}
+
+#question_content .text{
+    font-size: 14px;
+    line-height: 18px;
+    width: 660px;
 }
