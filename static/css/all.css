@@ -97,6 +97,7 @@ a{
 #header{
     width: 900px;
     margin: auto;
+    overflow: hidden;
 }
 
 #menu{
@@ -281,17 +282,18 @@ a.tag:hover{
 }
 
 /* Answer textarea */
-#answer_area{
+#answer_area, #question_textarea{
     width: 660px;
     height: 200px;
-    padding: 3px;
 }
 
 textarea{
     font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    font-size: 14px;
+    padding: 4px;    
 }
 
-.question-form input{
+.question-form input, .ask-form-submit input{
     font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
     padding: 2px;
     background-color: #ccc;
@@ -303,4 +305,34 @@ textarea{
 
 #your_answer{
     margin-top: 15px;
+}
+
+
+/* Ask Page */
+.form-label{
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 14px;
+}
+
+#question_area, #question_tags_area{
+    margin-top: 10px;
+}
+
+#question_title{
+    width: 610px;
+    color: #888;
+    padding: 3px;
+    outline: none;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 14px;
+}
+
+#question_tags{
+    width: 660px;
+    color: #888;
+    padding: 3px;
+    outline: none;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 14px;   
 }
