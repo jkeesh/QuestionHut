@@ -11,3 +11,15 @@
 	data-type='{{type}}'
 	data-action='-1'
 	data-id='{{obj.id}}'>down vote</a>
+	
+{% if type == 'A' %}
+
+<a 	class='answer-select' href='#'
+{% if obj.selected %}
+style="display:none"
+{% endif %}
+>
+	accept answer
+</a>
+
+{% endif %}
