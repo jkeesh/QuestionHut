@@ -109,7 +109,7 @@ def index(request):
         
 def tag(request, tag_title):
     cur_tag = Tag.objects.get(title=tag_title)
-    questions = cur_tag.questions.all()
+    questions = cur_tag.questions.all().order_by('-created_at')
     
     
     return render_to_response(
