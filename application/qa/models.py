@@ -68,6 +68,7 @@ class Question(models.Model):
     content     =   models.TextField()
     created_at  =   models.DateTimeField(auto_now_add=True)
     tags        =   models.ManyToManyField(Tag)   
+    answered    =   models.BooleanField(default=False)
         
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.title, self.votes)
@@ -78,6 +79,7 @@ class Answer(models.Model):
     votes       =   models.IntegerField(default=0)
     created_at  =   models.DateTimeField(auto_now_add=True)
     question    =   models.ForeignKey(Question, related_name='answers')
+    selected    =   models.BooleanField(default=False)
     
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.content[:15], self.votes)
