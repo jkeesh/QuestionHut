@@ -57,6 +57,22 @@ h3, h3 a{
     margin-bottom: 5px;
 }
 
+h2{
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px; 
+}
+
+h1{
+    font-size: 23px;
+    font-weight: bold;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    border-bottom: 1px solid #555;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
 a{
     color: #07C;
     text-decoration: none;
@@ -246,4 +262,15 @@ a.tag:hover{
 
 #question_content .tags{
     margin-top: 10px;
+}
+
+/* Answer textarea */
+#answer_area{
+    width: 660px;
+    height: 200px;
+    padding: 3px;
+}
+
+textarea{
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 }

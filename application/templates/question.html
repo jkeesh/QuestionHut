@@ -37,7 +37,7 @@
 </div>
 
 <div id="answer_count">
-	{{ answers|length }} Answers
+	<h1>{{ answers|length }} Answers</h1>
 </div>
 
 {% for answer in answers %}
@@ -61,15 +61,13 @@
 
 {% endfor %}
 
-<hr/>
-
 <div id="your_answer">
-	Your Answer
+	<h2>Your Answer</h2>
 </div>
 
 <form action="/answer_question" method="post">
 	{% csrf_token %}
-	<textarea name="answer"></textarea>
+	<textarea id="answer_area" name="answer"></textarea>
 	<input type="hidden" name="question" value="{{question.id}}" />
 	<div>	
 		<input type="submit" value="Submit Answer" />
