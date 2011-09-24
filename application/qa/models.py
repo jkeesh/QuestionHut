@@ -11,6 +11,12 @@ class Tag(models.Model):
     def __unicode__(self):
         return "%s" % self.title
         
+class Course(models.Model):
+    title       =   models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return "%s" % self.title
+        
 class Vote(models.Model):
     VOTE_TYPES = (
         ('Q', 'Question'),
@@ -69,6 +75,7 @@ class Question(models.Model):
     created_at  =   models.DateTimeField(auto_now_add=True)
     tags        =   models.ManyToManyField(Tag)   
     answered    =   models.BooleanField(default=False)
+    course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
         
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.title, self.votes)

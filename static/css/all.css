@@ -96,6 +96,7 @@ input[type="text"], input[type="password"]{
     width: 200px;
 }
 
+
 /* Login Page */
 #login_form, #create_form{
     margin-top: 15px;
@@ -104,9 +105,19 @@ input[type="text"], input[type="password"]{
     margin-top: 10px;
 }
 
+.checkbox-option{
+    margin-right: 8px;
+}
+
 #login_form label, #create_form label{
     width: 120px;
     display: inline-block;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 13px;
+}
+
+.classes-area{
+    margin-top: 5px;
 }
 
 /* Base Overview */
