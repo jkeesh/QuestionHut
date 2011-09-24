@@ -298,6 +298,10 @@ a.tag:hover{
     float: left;
 }
 
+.text .main{
+    word-wrap: break-word;
+}
+
 #question_content .user,
 .answer .user{
     float: right;
