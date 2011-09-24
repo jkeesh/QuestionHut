@@ -12,7 +12,7 @@
 	data-action='-1'
 	data-id='{{obj.id}}'>down vote</a>
 	
-{% if type == 'A' %}
+{% if type == 'A' and user == question.author %}
 
 <a 	class='answer-select' href='#'
 {% if obj.selected %}
