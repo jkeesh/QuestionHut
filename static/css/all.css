@@ -282,7 +282,7 @@ a.tag:hover{
 
 #question_content .votes, .answer .votes{
     float: left;
-    width: 30px;
+    width: 60px;
     text-align: center;
 }
 
@@ -394,18 +394,33 @@ textarea{
 
 
 /* Voting Arrows */
+a.vote-arrow{
+    background-image: url(/static/images/sprites.png);  
+    text-indent: -9999px;  
+    height: 34px;
+    width: 39px;
+    display: block;
+    margin: auto;
+}
+
 a.vote-arrow.up-arrow{
-    color: green;
+    background-position: 0px -38px;
 }
 
 a.vote-arrow.up-arrow.voted{
-    font-weight: bold;
+    background-position: 0px 0px;
 }
 
 a.vote-arrow.down-arrow{
-    color: red;
+    background-position: 0px -71px;
 }
 
 a.vote-arrow.down-arrow.voted{
+    background-position: 0px -100px;
+}
+
+.vote-count{
+    font-size: 31px;
     font-weight: bold;
+    color: #808185;
 }
