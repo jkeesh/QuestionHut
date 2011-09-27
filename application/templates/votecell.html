@@ -1,6 +1,6 @@
 {% load vote_tags %}
-<a 	class='vote-arrow vote-up-off
-	{% user_vote obj type %}' 
+<a 	class='vote-arrow up-arrow
+	{% user_vote user obj type +1 %}' 
 	href="#"
 	data-type='{{type}}'
 	data-action='+1'
@@ -8,8 +8,8 @@
 <span class='vote-count'
 	data-id='{{obj.id}}'
 	data-type='{{type}}'>{{ obj.votes }}</span>
-<a 	class='vote-arrow vote-down-off
-	{% user_vote obj type %}' 
+<a 	class='vote-arrow down-arrow
+	{% user_vote user obj type -1 %}' 
 	href='#'
 	data-type='{{type}}'
 	data-action='-1'
