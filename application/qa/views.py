@@ -133,7 +133,7 @@ def question_view(request, id=None):
         {
             'user': request.user,
             'question': question,
-            'answers': question.answers.all()
+            'answers': question.answers.all().order_by('-votes')
         },
         context_instance = RequestContext(request)
     )
