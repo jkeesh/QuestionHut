@@ -38,9 +38,15 @@ class Vote(models.Model):
         obj.save()
         return obj.votes
         
-    def undo(self):
+    def undo(self, new_score):
+        ## If the new score == old score, this is an 'undo'
+        should_delete = self.score == new_score
+
         undo_change = self.score * -1 # This undoes the vote
-        self.update_vote_count(undo_change)
+        votes = self.update_vote_count(undo_change)
+        if should_delete:
+            self.delete()
+        return should_delete, votes
     
     @staticmethod
     def submit_vote(request):
@@ -52,7 +58,9 @@ class Vote(models.Model):
                             kind=request.POST['type'],
                             obj_id=request.POST['id']
                         )
-            vote.undo()
+            should_delete, votes = vote.undo(new_score=new_score)
+            if should_delete:
+                return votes
         except Vote.DoesNotExist:
             vote = Vote(
                             user=request.user,
