@@ -172,6 +172,9 @@ input[type="text"], input[type="password"]{
 }
 
 /* Index List */
+#all_questions{
+    border-top: 1px solid black;
+}
 
 .question-item{
     border-bottom: 1px dotted #999;
@@ -423,4 +426,29 @@ a.vote-arrow.down-arrow.voted{
     font-size: 31px;
     font-weight: bold;
     color: #808185;
+}
+
+/* Sort Tabs on Index */
+#tabs_container{
+    overflow: hidden;
+    width: 730px;
+}
+
+#sort_tabs{
+    float: right;
+}
+
+#sort_tabs a{
+    width: 63px;
+    padding: 8px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    display: inline-block;
+    font-size: 16px;
+    text-align: center;
+}
+
+#sort_tabs a:hover{
+    background-color: #eee;
 }

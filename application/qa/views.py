@@ -105,7 +105,7 @@ def sort(request, method):
     if method == 'best':
         questions = Question.objects.all().order_by('-votes')[:30]
     elif method == 'popular':
-        questions = Question.objects.all().order_by('-created_at')[:30]
+        questions = Question.objects.all().order_by('-views')[:30]
     else:
         questions = Question.objects.all().order_by('-created_at')[:30]
     
