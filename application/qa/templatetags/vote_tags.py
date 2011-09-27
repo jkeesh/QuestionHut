@@ -8,10 +8,8 @@ from qa.models import Vote
 def user_vote(user, obj, kind, score):
     try:
         vote = Vote.objects.get(user=user, obj_id=obj.id, kind=kind)
-        if vote.score == 1 and score == 1:
-            return 'voted-up'
-        elif vote.score == -1 and score == -1:
-            return 'voted-down'
+        if vote.score == score:
+            return 'voted'
         return ''
     except Vote.DoesNotExist:
         return ''

@@ -398,7 +398,7 @@ a.vote-arrow.up-arrow{
     color: green;
 }
 
-a.vote-arrow.up-arrow.voted-up{
+a.vote-arrow.up-arrow.voted{
     font-weight: bold;
 }
 
@@ -406,6 +406,6 @@ a.vote-arrow.down-arrow{
     color: red;
 }
 
-a.vote-arrow.down-arrow.voted-down{
+a.vote-arrow.down-arrow.voted{
     font-weight: bold;
 }
