@@ -1,2 +1,3 @@
 *.pyc
 application/secrets.py
+.DS_Store
