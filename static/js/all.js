@@ -87,8 +87,13 @@ function Voter(){
                 success: function(result){
                     if(result.status == 'ok'){
                         vote_count.html(result.votes);
+                        already_selected = self.hasClass('voted');
                         that.deselect_votes(self);
-                        self.addClass('voted');
+                        if(already_selected){
+                            self.removeClass('voted');
+                        }else{
+                            self.addClass('voted');
+                        }
                     }
                 }
             });
