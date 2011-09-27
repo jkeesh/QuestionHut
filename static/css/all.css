@@ -391,3 +391,21 @@ textarea{
     font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
     font-size: 14px;   
 }
+
+
+/* Voting Arrows */
+a.vote-arrow.up-arrow{
+    color: green;
+}
+
+a.vote-arrow.up-arrow.voted-up{
+    font-weight: bold;
+}
+
+a.vote-arrow.down-arrow{
+    color: red;
+}
+
+a.vote-arrow.down-arrow.voted-down{
+    font-weight: bold;
+}
