@@ -69,6 +69,10 @@ function Voter(){
         }
     }
     
+    that.deselect_votes = function(arrow){
+        $('.vote-arrow[data-id="'+arrow.attr('data-id')+'"]').removeClass('voted');
+    }
+    
     that.setup = function(){
         $('.vote-arrow').click(function(e){
             var self = $(this);
@@ -83,6 +87,8 @@ function Voter(){
                 success: function(result){
                     if(result.status == 'ok'){
                         vote_count.html(result.votes);
+                        that.deselect_votes(self);
+                        self.addClass('voted');
                     }
                 }
             });
