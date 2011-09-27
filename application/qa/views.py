@@ -95,17 +95,37 @@ def index(request):
             context_instance = RequestContext(request)
         )
     else:
+        return sort(request, 'recent')
+        
+        
+def sort(request, method):
+    """
+    Sort the home page questions by some method (recent, best, popular)
+    """
+    if method == 'best':
+        questions = Question.objects.all().order_by('-votes')[:30]
+    elif method == 'popular':
         questions = Question.objects.all().order_by('-created_at')[:30]
-        
-        
-        return render_to_response(
-            "index.html",
-            {
-                'user': request.user,
-                'questions': questions
-            },
-            context_instance = RequestContext(request)
-        )
+    else:
+        questions = Question.objects.all().order_by('-created_at')[:30]
+    
+    return render_to_response(
+        "index.html",
+        {
+            'user': request.user,
+            'questions': questions
+        },
+        context_instance = RequestContext(request)
+    )
+    
+    return render_to_response(
+        "index.html",
+        {
+            'user': request.user,
+            'questions': questions
+        },
+        context_instance = RequestContext(request)
+    )
         
 def tag(request, tag_title):
     cur_tag = Tag.objects.get(title=tag_title)

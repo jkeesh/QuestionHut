@@ -2,6 +2,12 @@
 
 {% block content %}
 
+<div id="sort_tabs">
+	<a href="/sort/recent">Recent</a>
+	<a href="/sort/best">Best</a>
+	<a href="/sort/popular">Popular</a>
+</div>
+
 {% for question in questions %}
 	<div class="question-item">
 		<div class="question-info cp"
