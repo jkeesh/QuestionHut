@@ -115,9 +115,44 @@ def sort(request, method):
             'user': request.user,
             'questions': questions,
             'sort': method,
+            'courses': request.user.get_profile().courses.all()
         },
         context_instance = RequestContext(request)
     )
+    
+def sort_questions(query_set, sort):
+    if sort == 'best':
+        return query_set.order_by('-votes')[:30]
+    elif sort == 'popular':
+        return query_set.order_by('-views')[:30]
+    else:
+        return query_set.order_by('-created_at')[:30]
+
+def get_questions(course):
+    if course == 'all':
+        return Question.objects.all()
+    course_tag = Tag.objects.get(title=course)
+    return course_tag.questions.all()    
+    
+def questions_display(request):
+    sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
+    course = request.GET['course'] if 'course' in request.GET else 'all'
+    
+    query_set = get_questions(course=course)
+    query_set = sort_questions(query_set=query_set, sort=sort)
+    
+    return render_to_response(
+        "index.html",
+        {
+            'user': request.user,
+            'questions': query_set,
+            'sort': sort,
+            'course': course,
+            'courses': request.user.get_profile().courses.all()
+        },
+        context_instance = RequestContext(request)
+    )
+        
         
 def tag(request, tag_title):
     cur_tag = Tag.objects.get(title=tag_title)
@@ -178,6 +213,8 @@ def ask_question(request):
             return ask(request, error='You need to enter a title.')
         
         content = request.POST['content']
+        #if len(content) == 0:
+            
         
         course_id = request.POST['course']
         course = Course.objects.get(pk=course_id)

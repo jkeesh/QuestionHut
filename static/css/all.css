@@ -438,7 +438,11 @@ a.vote-arrow.down-arrow.voted{
     float: right;
 }
 
-#sort_tabs a{
+#class_tabs{
+    float: left;
+}
+
+#sort_tabs a, #class_tabs a{
     width: 63px;
     padding: 8px;
     border-top: 1px solid black;
@@ -449,10 +453,14 @@ a.vote-arrow.down-arrow.voted{
     text-align: center;
 }
 
-#sort_tabs a.selected{
+#sort_tabs a.selected, #class_tabs a.selected{
     font-weight: bold;
+    color: white;
+    background-color: #777;
 }
 
-#sort_tabs a:hover{
+#sort_tabs a:hover, #class_tabs a:hover{
     background-color: #eee;
+    color:#3E6D8E;
+    
 }

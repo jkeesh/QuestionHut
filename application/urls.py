@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     
     (r'^ajax/vote$', 'qa.views.vote'),
     
-    
+    (r'^questions/?$', 'qa.views.questions_display'),
     (r'^sort/(?P<method>\w+)/?$', 'qa.views.sort'),
     
     (r'^admin/', include(admin.site.urls)),

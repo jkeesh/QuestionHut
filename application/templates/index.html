@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div id="tabs_container">
+
+	<div id="class_tabs">
+		<a href="/questions?sort={{sort}}">All</a>
+		{% for course in courses %}
+		<a href="/questions?course={{course}}&amp;sort={{sort}}">{{ course|upper }}</a>
+		{% endfor %}
+	</div>
+
 	<div id="sort_tabs">
 		<a href="/sort/recent" 
 		{% if sort == 'recent' %}class="selected "{% endif %}>Recent</a>
