@@ -4,9 +4,12 @@
 
 <div id="tabs_container">
 	<div id="sort_tabs">
-		<a href="/sort/recent">Recent</a>
-		<a href="/sort/best">Best</a>
-		<a href="/sort/popular">Popular</a>
+		<a href="/sort/recent" 
+		{% if sort == 'recent' %}class="selected "{% endif %}>Recent</a>
+		<a href="/sort/best"
+		{% if sort == 'best' %}class="selected "{% endif %}>Best</a>
+		<a href="/sort/popular"
+		{% if sort == 'popular' %}class="selected "{% endif %}>Popular</a>
 	</div>
 </div>
 

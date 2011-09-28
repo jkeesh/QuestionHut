@@ -449,6 +449,10 @@ a.vote-arrow.down-arrow.voted{
     text-align: center;
 }
 
+#sort_tabs a.selected{
+    font-weight: bold;
+}
+
 #sort_tabs a:hover{
     background-color: #eee;
 }

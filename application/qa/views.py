@@ -113,16 +113,8 @@ def sort(request, method):
         "index.html",
         {
             'user': request.user,
-            'questions': questions
-        },
-        context_instance = RequestContext(request)
-    )
-    
-    return render_to_response(
-        "index.html",
-        {
-            'user': request.user,
-            'questions': questions
+            'questions': questions,
+            'sort': method,
         },
         context_instance = RequestContext(request)
     )
@@ -180,6 +172,11 @@ def ask_question(request):
         return redirect('/')
     else:
         title = request.POST['title']
+        print title
+        print len(title)
+        if len(title) == 0:
+            return ask(request, error='You need to enter a title.')
+        
         content = request.POST['content']
         
         course_id = request.POST['course']
@@ -196,15 +193,17 @@ def ask_question(request):
         
         return redirect('/')
     
-def ask(request):
+def ask(request, error=None):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
+        print "error", error
         return render_to_response(
             "ask.html",
             {
                 'user': request.user,
-                'courses': Course.objects.all()
+                'courses': Course.objects.all(),
+                'error': error
             },
             context_instance = RequestContext(request)
         )
