@@ -48,12 +48,12 @@ def verify_email(email):
     Accept emails like 
         jkeeshin@stanford.edu and 
         jkeeshin@cs.stanford.edu
-        
+    
         NAME@(SUBDOMAIN.)?stanford.edu
     """
-	if re.match("^.+\\@(.+\\.)?stanford\\.edu$", email) != None:
-	    return True
-	return False
+    if re.match("^.+\\@(.+\\.)?stanford\\.edu$", email) != None:
+        return True
+    return False
 	
 @csrf_protect
 def join(request):
