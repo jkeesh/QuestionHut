@@ -114,6 +114,8 @@ class Answer(models.Model):
     created_at  =   models.DateTimeField(auto_now_add=True)
     question    =   models.ForeignKey(Question, related_name='answers')
     selected    =   models.BooleanField(default=False)
+    approved    =   models.BooleanField(default=False)
+    
     
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.content[:15], self.votes)
