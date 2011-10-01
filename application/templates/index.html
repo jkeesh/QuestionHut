@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% if message %}
+<div class="notice">
+{{ message }}
+</div>
+{% endif %}
+
 <div id="tabs_container">
 	
 	<div id="class_tabs">

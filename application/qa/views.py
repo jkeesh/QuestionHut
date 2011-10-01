@@ -121,7 +121,7 @@ def get_questions(course, approved=True):
     course_tag = Tag.objects.get(title=course)
     return course_tag.questions.filter(approved=approved)
     
-def questions_display(request):
+def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
     course = request.GET['course'] if 'course' in request.GET else 'all'
     
@@ -135,12 +135,13 @@ def questions_display(request):
             'questions': query_set,
             'sort': sort,
             'course': course,
-            'courses': request.user.get_profile().courses.all()
+            'courses': request.user.get_profile().courses.all(),
+            'message': message
         },
         context_instance = RequestContext(request)
     )
     
-def index(request):
+def index(request, message=None):
     if not request.user.is_authenticated():
         return render_to_response(
             "login.html",
@@ -150,7 +151,13 @@ def index(request):
             context_instance = RequestContext(request)
         )
     else:
-        return questions_display(request=request)
+        message = None
+        if 'msg' in request.GET:
+            if request.GET['msg'] == 'moderation':
+                message = 'Your question has been submitted for moderation, and if approved will be shown soon.'
+        
+        print message
+        return questions_display(request=request, message=message)
 
 
         
@@ -232,7 +239,8 @@ def ask_question(request):
         for tag in tags:
             question.add_tag(tag)
         
-        return redirect('/')
+        
+        return redirect('/?msg=moderation')
     
 def ask(request, error=None, title=None, content=None):
     if not request.user.is_authenticated():
