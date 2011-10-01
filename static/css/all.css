@@ -464,3 +464,24 @@ a.vote-arrow.down-arrow.voted{
     color:#3E6D8E;
     
 }
+
+
+/* Message Classes */
+
+/* Success, info, notice and error/alert boxes
+-------------------------------------------------------------- */
+.error,
+.alert,
+.notice,
+.success,
+.info                   { padding: 0.8em; margin-bottom: 1em; margin-top: 1em; border: 2px solid #ddd; }
+
+.error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
+.notice     { background: #fff6bf; color: #514721; border-color: #ffd324; }
+.success    { background: #e6efc2; color: #264409; border-color: #c6d880; }
+.info                   { background: #d5edf8; color: #205791; border-color: #92cae4; }
+.error a, .alert a { color: #8a1f11; font-weight: bold; }
+.notice a   { color: #514721; font-weight: bold; }
+.success a  { color: #264409; font-weight: bold; }
+.info a                 { color: #205791; font-weight: bold; }
+

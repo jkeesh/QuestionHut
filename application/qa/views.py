@@ -212,7 +212,7 @@ def ask_question(request):
         
         content = request.POST['content']
         if len(content) == 0:
-            return ask(request, error='You need to enter some content to your question.')
+            return ask(request, error='You need to enter some content to your question.', title=title)
             
         course_id = request.POST['course']
         course = Course.objects.get(pk=course_id)
@@ -224,14 +224,14 @@ def ask_question(request):
         
         tags = request.POST['tags'].split(' ')
         if len(tags) == 1 and len(tags[0]) == 0:
-            return ask(request, error='You need to enter some tags.')
+            return ask(request, error='You need to enter some tags.', title=title, content=content)
             
         for tag in tags:
             question.add_tag(tag)
         
         return redirect('/')
     
-def ask(request, error=None):
+def ask(request, error=None, title=None, content=None):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
@@ -241,7 +241,9 @@ def ask(request, error=None):
             {
                 'user': request.user,
                 'courses': Course.objects.all(),
-                'error': error
+                'error': error,
+                'title': title,
+                'content': content
             },
             context_instance = RequestContext(request)
         )
