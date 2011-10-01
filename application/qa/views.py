@@ -222,7 +222,9 @@ def ask_question(request):
 
         question.add_tag(course.title)
         
-        tags = request.POST['tags'].split(' ')
+        
+        
+        tags = request.POST['tags'].replace(',', '').split(' ')
         if len(tags) == 1 and len(tags[0]) == 0:
             return ask(request, error='You need to enter some tags.', title=title, content=content)
             
