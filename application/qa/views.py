@@ -33,6 +33,10 @@ def vote(request):
     })
 
 
+def verify_email(email):
+    return False
+
+
 @csrf_protect
 def join(request):
     try:
@@ -40,8 +44,20 @@ def join(request):
         return redirect('/error')
     except User.DoesNotExist:
         pass
+        
+    if len(request.POST['first_name']) == 0:
+        return redirect('/?msg=fname')
+    if len(request.POST['last_name']) == 0:
+        return redirect('/?msg=lname')
+    if len(request.POST['password']) == 0:
+        return redirect('/?msg=pswd')
     
-    print request.POST
+    if len(request.POST.getlist('class')) == 0:
+        return redirect('/?msg=class')
+    
+    if not verify_email(request.POST['email']):
+        return redirect('/?msg=email')
+    
     user = User.objects.create_user(request.POST['email'], #email is username
                                     request.POST['email'], #email
                                     request.POST['password'])
@@ -54,9 +70,7 @@ def join(request):
     
     courses = request.POST.getlist('class')
     for course_id in courses:
-        print course_id
         course = Course.objects.get(pk=course_id)
-        print course
         userprofile.courses.add(course)
     
     return authenticate(request, request.POST['email'], request.POST['password'])
@@ -154,20 +168,23 @@ def questions_display(request, message=None):
     )
     
 def index(request, message=None):
+    message = None
+    if 'msg' in request.GET:
+        if request.GET['msg'] == 'moderation':
+            message = 'Your question has been submitted for moderation, and if approved will be shown soon.'
+        if request.GET['msg'] == 'email':
+            message = 'You must enter in a properly formatted Stanford email address.'
+    
     if not request.user.is_authenticated():
         return render_to_response(
             "login.html",
             {
-                'courses': Course.objects.all()
+                'courses': Course.objects.all(),
+                'message': message
             },
             context_instance = RequestContext(request)
         )
     else:
-        message = None
-        if 'msg' in request.GET:
-            if request.GET['msg'] == 'moderation':
-                message = 'Your question has been submitted for moderation, and if approved will be shown soon.'
-        
         return questions_display(request=request, message=message)
         
     
