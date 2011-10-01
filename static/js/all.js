@@ -50,6 +50,10 @@ $(document).ready(function(){
     if(path.indexOf('moderate') != -1){
         var approver = new Approver();
     }
+    
+    if(typeof INFINITE_SCROLL !== 'undefined' && INFINITE_SCROLL){
+        D.log('infinite scroll on');
+    }
 });
 
 
