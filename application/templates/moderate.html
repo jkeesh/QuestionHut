@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="tabs_container">
+	
+	<div id="class_tabs">
+		<a href="/questions?sort={{sort}}"
+		{% if course == 'all' %}class="selected"{% endif %}
+		>All</a>
+		{% for the_course in courses %}
+		<a href="/questions?course={{the_course}}&amp;sort={{sort}}"
+		{% if the_course.title == course %}class="selected"{% endif %}
+		>{{ the_course|upper }}</a>
+		{% endfor %}
+	</div>
+
+	<div id="sort_tabs">
+		<a href="/questions?course={{course}}&amp;sort=recent" 
+		{% if sort == 'recent' %}class="selected "{% endif %}>Recent</a>
+		<a href="/questions?course={{course}}&amp;sort=best"
+		{% if sort == 'best' %}class="selected "{% endif %}>Best</a>
+		<a href="/questions?course={{course}}&amp;sort=popular"
+		{% if sort == 'popular' %}class="selected "{% endif %}>Popular</a>
+	</div>
+</div>
+
+<div id="all_questions">
+{% for question in questions %}
+	<div class="question-item">
+		<div class="question-info cp"
+			onclick="window.location.href='/question/{{question.id}}'">
+			<div class="votes">
+				<div class="counts">
+					{{ question.votes }}
+				</div>
+				<div>votes</div>
+			</div>
+			
+			
+			<div class="answers
+				{% if question.answers.all|length > 0 %}
+				
+				{% if question.answered %}
+					answered-accepted
+				{% else %}
+					answered
+				{% endif %}
+					
+				{% else %}
+					unanswered
+				{% endif %}">
+				<div class="counts">
+					{{ question.answers.all|length }}
+				</div>
+				<div>answers</div>
+			</div>
+			
+			<div class="views">
+				<div class="counts">
+					{{ question.views }}
+				</div>
+				<div>views</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="question-summary">
+			<h3>
+				<a href="/question/{{question.id}}">{{ question.title }}</a>
+			</h3>
+			
+			{% load all_tags %}
+			<span class="tags">
+				{% for tag in question.tags.all %}
+					<a href="/tag/{{tag.title}}" class="tag">{{ tag.title }}</a>
+				{% endfor %}
+			</span>
+			
+			<div class="started">
+				<span class="question-time">
+				
+					{% format_time question.created_at %}
+				</span>
+			
+				<span class="question-author">
+					{{ question.author }}
+				</span>
+			</div>
+		</div>
+		
+	</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
