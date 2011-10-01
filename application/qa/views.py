@@ -84,19 +84,6 @@ def error(request):
         {},
         context_instance = RequestContext(request)
     )
-
-def index(request):
-    if not request.user.is_authenticated():
-        return render_to_response(
-            "login.html",
-            {
-                'courses': Course.objects.all()
-            },
-            context_instance = RequestContext(request)
-        )
-    else:
-        return sort(request, 'recent')
-        
         
 def sort(request, method):
     """
@@ -130,9 +117,9 @@ def sort_questions(query_set, sort):
 
 def get_questions(course):
     if course == 'all':
-        return Question.objects.all()
+        return Question.objects.filter(approved=True)
     course_tag = Tag.objects.get(title=course)
-    return course_tag.questions.all()    
+    return course_tag.questions.filter(approved=True)
     
 def questions_display(request):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
@@ -152,6 +139,20 @@ def questions_display(request):
         },
         context_instance = RequestContext(request)
     )
+    
+def index(request):
+    if not request.user.is_authenticated():
+        return render_to_response(
+            "login.html",
+            {
+                'courses': Course.objects.all()
+            },
+            context_instance = RequestContext(request)
+        )
+    else:
+        return questions_display(request=request)
+
+
         
         
 def tag(request, tag_title):

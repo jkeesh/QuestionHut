@@ -11,6 +11,7 @@ class Course(models.Model):
 class UserProfile(models.Model):
     user        =   models.OneToOneField(User)
     courses     =   models.ManyToManyField(Course)
+    is_moderator=   models.BooleanField(default=False)
 
 class Tag(models.Model):
     title       =   models.CharField(max_length=200)
@@ -85,7 +86,7 @@ class Question(models.Model):
     tags        =   models.ManyToManyField(Tag, related_name="questions")   
     answered    =   models.BooleanField(default=False)
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
-        
+    approved    =   models.BooleanField(default=False)
         
     def add_tag(self, tag_title): 
         try:

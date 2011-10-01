@@ -34,6 +34,12 @@
 					<li>
 						<a href="/">Questions</a>
 					</li>
+					
+					{% if user.get_profile.is_moderator %}
+					<li>
+						<a href="/moderate">Moderate</a>
+					</li>
+					{% endif %}
 				</ul>
 			</div>
 			
