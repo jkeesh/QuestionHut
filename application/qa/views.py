@@ -238,12 +238,11 @@ def ask(request, error=None, title=None, content=None):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
-        print "error", error
         return render_to_response(
             "ask.html",
             {
                 'user': request.user,
-                'courses': Course.objects.all(),
+                'courses': request.user.get_profile().courses.all(),
                 'error': error,
                 'title': title,
                 'content': content
@@ -254,7 +253,7 @@ def ask(request, error=None, title=None, content=None):
         
         
 def moderate(request):
-    if not request.user.is_authenticated() and request.user.get_profile().is_moderator:
+    if not request.user.is_authenticated() or not request.user.get_profile().is_moderator:
         return redirect('/')
 
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'    
