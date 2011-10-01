@@ -115,17 +115,29 @@ def sort_questions(query_set, sort):
     else:
         return query_set.order_by('-created_at')[:30]
 
-def get_questions(course, approved=True):
-    if course == 'all':
-        return Question.objects.filter(approved=approved)
-    course_tag = Tag.objects.get(title=course)
-    return course_tag.questions.filter(approved=approved)
+def get_questions(course, tags, approved=True):
+    qs = Question.objects.filter(approved=approved)
+    if course != 'all':
+        course_tag = Tag.objects.get(title=course)
+        qs = qs.filter(tags=course_tag)
+    if tags != 'all':
+        tag_list = tags.split(',')
+        for tag in tag_list:
+            try: 
+                the_tag = Tag.objects.get(title=tag)
+                qs = qs.filter(tags=the_tag)
+            except Tag.DoesNotExist:
+                pass
+
+    return qs
+    
     
 def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
     course = request.GET['course'] if 'course' in request.GET else 'all'
+    tags = request.GET['tags'] if 'tags' in request.GET else 'all'
     
-    query_set = get_questions(course=course)
+    query_set = get_questions(course=course, tags=tags)
     query_set = sort_questions(query_set=query_set, sort=sort)
     
     return render_to_response(
@@ -158,9 +170,6 @@ def index(request, message=None):
         
         print message
         return questions_display(request=request, message=message)
-
-
-        
         
 def tag(request, tag_title):
     cur_tag = Tag.objects.get(title=tag_title)
