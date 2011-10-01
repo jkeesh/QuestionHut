@@ -207,15 +207,13 @@ def ask_question(request):
         return redirect('/')
     else:
         title = request.POST['title']
-        print title
-        print len(title)
         if len(title) == 0:
             return ask(request, error='You need to enter a title.')
         
         content = request.POST['content']
-        #if len(content) == 0:
+        if len(content) == 0:
+            return ask(request, error='You need to enter some content to your question.')
             
-        
         course_id = request.POST['course']
         course = Course.objects.get(pk=course_id)
         
@@ -225,6 +223,9 @@ def ask_question(request):
         question.add_tag(course.title)
         
         tags = request.POST['tags'].split(' ')
+        if len(tags) == 1 and len(tags[0]) == 0:
+            return ask(request, error='You need to enter some tags.')
+            
         for tag in tags:
             question.add_tag(tag)
         
