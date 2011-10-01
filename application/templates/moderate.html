@@ -7,8 +7,12 @@
 {% for question in questions %}
 	<div class="question-item">
 		<div class="question-moderate">
-			<a href="#" class="approve">Approve</a>
-			<a href="#" class="reject">Reject</a>
+			<a href="#" class="approve" 
+				data-id="{{question.id}}"
+				data-action="approve">Approve</a>
+			<a href="#" class="reject" 
+				data-id="{{question.id}}"
+				data-action="reject">Reject</a>
 		</div>
 	
 		<div class="question-summary">

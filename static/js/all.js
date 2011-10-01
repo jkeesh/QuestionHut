@@ -47,7 +47,51 @@ $(document).ready(function(){
     if(path.indexOf('question') != -1){
         var voter = new Voter();
     }
+    if(path.indexOf('moderate') != -1){
+        var approver = new Approver();
+    }
 });
+
+
+function Approver(){
+    var that = {};
+
+    that.get_data = function(link){
+        var action = $(link).attr('data-action');
+        var id = $(link).attr('data-id');  
+        
+        return {
+            action: action,
+            id: id
+        }
+    }
+
+    that.setup = function(){
+        $('.question-moderate a').click(function(){
+           
+           var self = $(this);
+           $.ajax({
+               type: 'POST',
+               url: '/ajax/moderate',
+               dataType: 'JSON',
+               data: that.get_data(self),
+               success: function(result){
+                   if(result.status == 'ok'){
+                        alert('ok');
+                   }else{
+                       alert('faii;l');
+                   }
+               }
+           });
+
+        });
+    }
+
+
+    that.setup();
+    return that;
+}
+
 
 function Voter(){
     var that = {}
