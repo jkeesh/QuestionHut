@@ -108,27 +108,6 @@ def error(request):
         context_instance = RequestContext(request)
     )
         
-def sort(request, method):
-    """
-    Sort the home page questions by some method (recent, best, popular)
-    """
-    if method == 'best':
-        questions = Question.objects.all().order_by('-votes')[:30]
-    elif method == 'popular':
-        questions = Question.objects.all().order_by('-views')[:30]
-    else:
-        questions = Question.objects.all().order_by('-created_at')[:30]
-    
-    return render_to_response(
-        "index.html",
-        {
-            'user': request.user,
-            'questions': questions,
-            'sort': method,
-            'courses': request.user.get_profile().courses.all()
-        },
-        context_instance = RequestContext(request)
-    )
     
 def sort_questions(query_set, sort):
     if sort == 'best':
