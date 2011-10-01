@@ -485,3 +485,27 @@ a.vote-arrow.down-arrow.voted{
 .success a  { color: #264409; font-weight: bold; }
 .info a                 { color: #205791; font-weight: bold; }
 
+
+
+
+/* Moderator page */
+
+.question-moderate{
+    float: left;
+    width: 100px;
+    height: 80px;
+}
+
+.question-moderate a{
+    width: 100px;
+    display: block;
+    padding: 10px;
+}
+
+.question-moderate .approve{
+    color: green;
+}
+
+.question-moderate .reject{
+    color: red;
+}
