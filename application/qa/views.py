@@ -44,7 +44,7 @@ def vote(request):
 
 
 def verify_email(email):
-	if re.match("^.+\\@stanford\\.edu$", email) != None:
+	if re.match("^.+\\@(.+\\.)?stanford\\.edu$", email) != None:
 	    return True
 	return False
 	
