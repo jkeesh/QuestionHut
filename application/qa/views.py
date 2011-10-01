@@ -168,7 +168,6 @@ def index(request, message=None):
             if request.GET['msg'] == 'moderation':
                 message = 'Your question has been submitted for moderation, and if approved will be shown soon.'
         
-        print message
         return questions_display(request=request, message=message)
         
     
