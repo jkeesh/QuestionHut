@@ -24,6 +24,15 @@ models = {
     'Q': Question
 }
 
+MESSAGES = {
+    'moderation': 'Your question has been submitted for moderation, and if approved will be shown soon.',
+    'email': 'You must enter in a properly formatted Stanford email address.',
+    'fname': 'You must enter in a first name.',
+    'lname': 'You must enter in a last name',
+    'passwd': 'You must enter in a password',
+    'class':  'You must select at least one class.'
+}
+
 @csrf_protect
 def vote(request):
     votes = Vote.submit_vote(request)
@@ -50,7 +59,7 @@ def join(request):
     if len(request.POST['last_name']) == 0:
         return redirect('/?msg=lname')
     if len(request.POST['password']) == 0:
-        return redirect('/?msg=pswd')
+        return redirect('/?msg=passwd')
     
     if len(request.POST.getlist('class')) == 0:
         return redirect('/?msg=class')
@@ -170,10 +179,9 @@ def questions_display(request, message=None):
 def index(request, message=None):
     message = None
     if 'msg' in request.GET:
-        if request.GET['msg'] == 'moderation':
-            message = 'Your question has been submitted for moderation, and if approved will be shown soon.'
-        if request.GET['msg'] == 'email':
-            message = 'You must enter in a properly formatted Stanford email address.'
+        the_msg = request.GET['msg']
+        if the_msg in MESSAGES:
+            message = MESSAGES[the_msg]
     
     if not request.user.is_authenticated():
         return render_to_response(
