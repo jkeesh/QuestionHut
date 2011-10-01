@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 # Models
 from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course
+import re
 
 from django.utils import simplejson
 def json_response(obj):
@@ -43,9 +44,10 @@ def vote(request):
 
 
 def verify_email(email):
-    return False
-
-
+	if re.match("^.+\\@stanford\\.edu$", email) != None:
+	    return True
+	return False
+	
 @csrf_protect
 def join(request):
     try:
@@ -117,12 +119,12 @@ def sort_questions(query_set, sort):
     else:
         return query_set.order_by('-created_at')[:30]
 
-def get_questions(course, tags, approved=True):
+def get_questions(course, tags=None, approved=True):
     qs = Question.objects.filter(approved=approved)
     if course != 'all':
         course_tag = Tag.objects.get(title=course)
         qs = qs.filter(tags=course_tag)
-    if tags != 'all':
+    if tags is not None:
         tag_list = tags.split(',')
         for tag in tag_list:
             try: 
@@ -137,7 +139,7 @@ def get_questions(course, tags, approved=True):
 def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
     course = request.GET['course'] if 'course' in request.GET else 'all'
-    tags = request.GET['tags'] if 'tags' in request.GET else 'all'
+    tags = request.GET['tags'] if 'tags' in request.GET else None
     
     query_set = get_questions(course=course, tags=tags)
     query_set = sort_questions(query_set=query_set, sort=sort)
