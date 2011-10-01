@@ -291,10 +291,13 @@ def moderate(request):
     
 @csrf_protect    
 def moderate_action(request):
-    q_id = request.POST['id']
+    obj_id = request.POST['id']
     action = request.POST['action']
-    question = Question.objects.get(pk=q_id)
-    question.moderate(action)
+    Model = models[request.POST['kind']] # 'Q' or 'A'
+    obj = Model.objects.get(pk=obj_id)
+    obj.moderate(action)
+    # question = Question.objects.get(pk=q_id)
+    # question.moderate(action)
     return json_response({
         "status": "ok"
     })

@@ -58,11 +58,13 @@ function Approver(){
 
     that.get_data = function(link){
         var action = $(link).attr('data-action');
-        var id = $(link).attr('data-id');  
+        var id = $(link).attr('data-id'); 
+        var kind = $(link).attr('data-kind'); 
         
         return {
             action: action,
-            id: id
+            id: id,
+            kind: kind
         }
     }
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Moderate Questions for: {{ course|upper }}</h2>
+<h2>Moderate for: {{ course|upper }}</h2>
 
 <div id="all_questions">
 {% for question in questions %}
@@ -9,10 +9,12 @@
 		<div class="question-moderate">
 			<a href="#" class="approve" 
 				data-id="{{question.id}}"
-				data-action="approve">Approve</a>
+				data-action="approve"
+				data-kind="Q">Approve</a>
 			<a href="#" class="reject" 
 				data-id="{{question.id}}"
-				data-action="reject">Reject</a>
+				data-action="reject"
+				data-kind="Q">Reject</a>
 		</div>
 	
 		<div class="question-summary">
