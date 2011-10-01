@@ -296,8 +296,6 @@ def moderate_action(request):
     Model = models[request.POST['kind']] # 'Q' or 'A'
     obj = Model.objects.get(pk=obj_id)
     obj.moderate(action)
-    # question = Question.objects.get(pk=q_id)
-    # question.moderate(action)
     return json_response({
         "status": "ok"
     })
