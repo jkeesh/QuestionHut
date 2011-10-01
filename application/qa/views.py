@@ -115,11 +115,11 @@ def sort_questions(query_set, sort):
     else:
         return query_set.order_by('-created_at')[:30]
 
-def get_questions(course):
+def get_questions(course, approved=True):
     if course == 'all':
-        return Question.objects.filter(approved=True)
+        return Question.objects.filter(approved=approved)
     course_tag = Tag.objects.get(title=course)
-    return course_tag.questions.filter(approved=True)
+    return course_tag.questions.filter(approved=approved)
     
 def questions_display(request):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
@@ -250,3 +250,28 @@ def ask(request, error=None, title=None, content=None):
             },
             context_instance = RequestContext(request)
         )
+        
+        
+        
+def moderate(request):
+    if not request.user.is_authenticated() and request.user.get_profile().is_moderator:
+        return redirect('/')
+
+    sort = request.GET['sort'] if 'sort' in request.GET else 'recent'    
+    course = request.GET['course'] if 'course' in request.GET else 'all'
+    
+    query_set = get_questions(course=course, approved=False)
+    query_set = sort_questions(query_set=query_set, sort=sort)
+
+    return render_to_response(
+        "moderate.html",
+        {
+            'user': request.user,
+            'questions': query_set,
+            'sort': sort,
+            'course': course,
+            'courses': request.user.get_profile().courses.all()
+        },
+        context_instance = RequestContext(request)
+    )
+    

@@ -1,28 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="tabs_container">
-	
-	<div id="class_tabs">
-		<a href="/questions?sort={{sort}}"
-		{% if course == 'all' %}class="selected"{% endif %}
-		>All</a>
-		{% for the_course in courses %}
-		<a href="/questions?course={{the_course}}&amp;sort={{sort}}"
-		{% if the_course.title == course %}class="selected"{% endif %}
-		>{{ the_course|upper }}</a>
-		{% endfor %}
-	</div>
-
-	<div id="sort_tabs">
-		<a href="/questions?course={{course}}&amp;sort=recent" 
-		{% if sort == 'recent' %}class="selected "{% endif %}>Recent</a>
-		<a href="/questions?course={{course}}&amp;sort=best"
-		{% if sort == 'best' %}class="selected "{% endif %}>Best</a>
-		<a href="/questions?course={{course}}&amp;sort=popular"
-		{% if sort == 'popular' %}class="selected "{% endif %}>Popular</a>
-	</div>
-</div>
+<h2>Moderate Questions for: {{ course|upper }}</h2>
 
 <div id="all_questions">
 {% for question in questions %}
