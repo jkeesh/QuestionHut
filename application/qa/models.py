@@ -96,6 +96,13 @@ class Question(models.Model):
             the_tag.save()
         if the_tag not in self.tags.all():
             self.tags.add(the_tag)
+            
+    def moderate(self, action):
+        if action == 'approve':
+            self.approved = True
+            self.save()
+        else:
+            self.delete()
         
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.title, self.votes)

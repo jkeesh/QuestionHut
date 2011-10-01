@@ -231,6 +231,10 @@ input[type="text"], input[type="password"]{
     margin; 0 7px 0 0;
 }
 
+.question-summary{
+    width: 500px;
+    float: left;
+}
 
 .question-summary h3 a{
     font-weight: bold;
@@ -508,4 +512,11 @@ a.vote-arrow.down-arrow.voted{
 
 .question-moderate .reject{
     color: red;
+}
+
+.question-summary .question-content{
+    word-wrap: break-word;
+    float: left;
+    width: 560px;
+    padding: 10px 0;
 }

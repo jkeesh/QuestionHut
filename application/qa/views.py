@@ -274,3 +274,13 @@ def moderate(request):
         context_instance = RequestContext(request)
     )
     
+@csrf_protect    
+def moderate_action(request):
+    q_id = request.POST['id']
+    action = request.POST['action']
+    question = Question.objects.get(pk=q_id)
+    question.moderate(action)
+    return json_response({
+        "status": "ok"
+    })
+    

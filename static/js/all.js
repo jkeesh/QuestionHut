@@ -66,6 +66,12 @@ function Approver(){
         }
     }
 
+    that.remove_box = function(link){
+        var box = link.parent().parent();
+        box.css('background-color', '#eee');
+        box.fadeOut();
+    }
+
     that.setup = function(){
         $('.question-moderate a').click(function(){
            
@@ -77,9 +83,9 @@ function Approver(){
                data: that.get_data(self),
                success: function(result){
                    if(result.status == 'ok'){
-                        alert('ok');
+                        that.remove_box(self);
                    }else{
-                       alert('faii;l');
+                       alert('Fail.');
                    }
                }
            });

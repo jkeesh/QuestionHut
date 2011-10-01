@@ -20,6 +20,10 @@
 				<a href="/question/{{question.id}}">{{ question.title }}</a>
 			</h3>
 			
+			<div class="question-content">
+				{{ question.content }}
+			</div>
+			
 			{% load all_tags %}
 			<span class="tags">
 				{% for tag in question.tags.all %}
