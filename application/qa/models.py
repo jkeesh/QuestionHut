@@ -116,6 +116,12 @@ class Answer(models.Model):
     selected    =   models.BooleanField(default=False)
     approved    =   models.BooleanField(default=False)
     
+    def moderate(self, action):
+        if action == 'approve':
+            self.approved = True
+            self.save()
+        else:
+            self.delete()
     
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.content[:15], self.votes)
