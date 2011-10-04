@@ -299,9 +299,8 @@ def moderate(request):
             return redirect('/moderate')
         
         query_set = get_questions(course=course, approved=False)
-        query_set = sort_questions(query_set=query_set, sort=sort)
-    
-        answers = Answer.objects.filter(approved=False).order_by('-created_at')
+        query_set = sort_questions(query_set=query_set, sort=sort)    
+        answers = Answer.objects.filter(approved=False, question__course__title=course).order_by('-created_at')
 
     return render_to_response(
         "moderate.html",
@@ -311,7 +310,6 @@ def moderate(request):
             'sort': sort,
             'course': course,
             'moderator_courses': request.user.get_profile().moderator_courses.all(),
-            #'courses': request.user.get_profile().courses.all(),
             'answers': answers
         },
         context_instance = RequestContext(request)
