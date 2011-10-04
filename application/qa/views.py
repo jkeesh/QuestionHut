@@ -293,14 +293,11 @@ def moderate(request):
     
     query_set = answers = None
     if course:   
-        
         the_course = Course.objects.get(title=course)
         if the_course not in request.user.get_profile().moderator_courses.all():
             ## Then they cannot moderate this specific class
             return redirect('/moderate')
         
-        
-         
         query_set = get_questions(course=course, approved=False)
         query_set = sort_questions(query_set=query_set, sort=sort)
     
