@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Moderate for: {{ course|upper }}</h2>
-
 {% if course %}
-{{ course }}
+<h2>Moderate for: {{ course|upper }}</h2>
 {% else %}
-No course 
+<h2>Choose Which Class You Want to Moderate</h2>
 {% endif %}
+
+
 
 <div id="tabs_container">
 	
@@ -21,6 +21,8 @@ No course
 	</div>
 </div>
 
+
+{% if course %}
 
 <h3 class="moderate">Questions To Moderate</h3>
 
@@ -120,6 +122,8 @@ No more answers to moderate!
 	</div>
 {% endfor %}
 </div>
+
+{% endif %}
 
 
 {% endblock %}
