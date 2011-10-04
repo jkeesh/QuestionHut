@@ -3,6 +3,25 @@
 {% block content %}
 <h2>Moderate for: {{ course|upper }}</h2>
 
+{% if course %}
+{{ course }}
+{% else %}
+No course 
+{% endif %}
+
+<div id="tabs_container">
+	
+	<div id="class_tabs">
+		
+		{% for mcourse in moderator_courses %}
+		<a href="/moderate?course={{mcourse}}"
+		{% if mcourse.title == course %}class="selected"{% endif %}
+		>{{mcourse|upper}}</a>
+		{% endfor %}
+	</div>
+</div>
+
+
 <h3 class="moderate">Questions To Moderate</h3>
 
 {% if not questions %}

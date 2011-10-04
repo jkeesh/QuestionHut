@@ -10,8 +10,9 @@ class Course(models.Model):
 
 class UserProfile(models.Model):
     user        =   models.OneToOneField(User)
-    courses     =   models.ManyToManyField(Course)
+    courses     =   models.ManyToManyField(Course, related_name='students')
     is_moderator=   models.BooleanField(default=False)
+    moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
 
 class Tag(models.Model):
     title       =   models.CharField(max_length=200)
