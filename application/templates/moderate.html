@@ -5,7 +5,12 @@
 
 <h3 class="moderate">Questions To Moderate</h3>
 
-<div id="all_questions">
+{% if not questions %}
+No more questions to moderate!
+{% endif %}
+
+
+<div class="moderate-container">
 {% for question in questions %}
 	<div class="question-item">
 		<div class="question-moderate">
@@ -57,7 +62,11 @@
 
 <h3 class="moderate">Answers To Moderate</h3>
 
-<div id="all_answers">
+{% if not answers %}
+No more answers to moderate!
+{% endif %}
+
+<div class="moderate-container">
 
 {% for answer in answers %}
 	<div class="question-item">

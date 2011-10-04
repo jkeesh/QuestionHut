@@ -173,7 +173,7 @@ input[type="text"], input[type="password"]{
 
 /* Index List */
 #all_questions{
-/*    border-top: 1px solid black;*/
+    border-top: 1px solid black;
 }
 
 h3.moderate{
