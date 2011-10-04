@@ -3,6 +3,8 @@
 {% block content %}
 <h2>Moderate for: {{ course|upper }}</h2>
 
+<h3 class="moderate">Questions To Moderate</h3>
+
 <div id="all_questions">
 {% for question in questions %}
 	<div class="question-item">
@@ -41,6 +43,48 @@
 			
 				<span class="question-author">
 					{{ question.author }}
+				</span>
+			</div>
+		</div>
+		
+	</div>
+{% endfor %}
+</div>
+
+
+
+
+
+<h3 class="moderate">Answers To Moderate</h3>
+
+<div id="all_answers">
+
+{% for answer in answers %}
+	<div class="question-item">
+		<div class="question-moderate">
+			<a href="#" class="approve" 
+				data-id="{{answer.id}}"
+				data-action="approve"
+				data-kind="A">Approve</a>
+			<a href="#" class="reject" 
+				data-id="{{answer.id}}"
+				data-action="reject"
+				data-kind="A">Reject</a>
+		</div>
+	
+		<div class="question-summary">			
+			<div class="question-content">
+				{{ answer.content }}
+			</div>
+						
+			<div class="started">
+				<span class="question-time">
+				
+					{% format_time answer.created_at %}
+				</span>
+			
+				<span class="question-author">
+					{{ answer.author }}
 				</span>
 			</div>
 		</div>
