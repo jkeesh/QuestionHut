@@ -99,6 +99,8 @@ class Question(models.Model):
         self.deselect_all_answers()
         answer.selected = True
         answer.save()
+        self.answered = True
+        self.save()
         
     def add_tag(self, tag_title): 
         try:
