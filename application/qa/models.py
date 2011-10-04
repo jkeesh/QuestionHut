@@ -88,6 +88,10 @@ class Question(models.Model):
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
     approved    =   models.BooleanField(default=False)
     
+    
+    def get_answer_count(self):
+        return len(self.answers.filter(approved=True))
+    
     def deselect_all_answers(self):
         self.answers.all().update(selected=False)
     

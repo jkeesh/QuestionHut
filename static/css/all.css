@@ -405,7 +405,7 @@ textarea{
 }
 
 
-a.answer-select{
+a.answer-select, span.answer-select{
     background-image: url(/static/images/sprites.png);  
     text-indent: -9999px;  
     height: 34px;
@@ -415,7 +415,7 @@ a.answer-select{
     background-position: 0px -290px;
 }
 
-a.answer-select.chosen-answer{
+a.answer-select.chosen-answer, span.answer-select.chosen-answer{
     background-position: 0px -238px;
 }
 

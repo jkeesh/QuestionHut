@@ -60,7 +60,7 @@ var INFINITE_SCROLL = true;
 					unanswered
 				{% endif %}">
 				<div class="counts">
-					{{ question.answers.all|length }}
+					{{ question.get_answer_count }}
 				</div>
 				<div>answers</div>
 			</div>

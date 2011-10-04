@@ -15,11 +15,12 @@
 	data-action='-1'
 	data-id='{{obj.id}}'>down vote</a>
 	
-{% if type == 'A' and user == question.author %}
-
-<a 	class='answer-select {% if obj.selected %}chosen-answer{% endif %}' href='#' data-id="{{obj.id}}" data-question="{{question.id}}"
->
-	accept answer
-</a>
-
+{% if type == 'A' %}
+	{% if user == question.author %}
+	<a class='answer-select {% if obj.selected %}chosen-answer{% endif %}' href='#' data-id="{{obj.id}}" data-question="{{question.id}}">accept answer</a>
+	{% else %}
+		{% if obj.selected %}
+		<span class='answer-select chosen-answer' href='#'>accept answer</span>
+		{% endif %}
+	{% endif %}
 {% endif %}

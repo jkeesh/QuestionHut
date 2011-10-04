@@ -78,6 +78,9 @@ function AnswerSelector(){
                 data: that.get_data(self),
                 success: function(result){
                     D.log(result);
+                    $('.answer-select').removeClass('chosen-answer');
+                    self.addClass('chosen-answer');
+                    
                     // if(result.status == 'ok'){
                     //      that.remove_box(self);
                     // }else{
