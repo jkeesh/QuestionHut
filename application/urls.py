@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     
     (r'^ajax/vote$', 'qa.views.vote'),
     (r'^ajax/moderate$', 'qa.views.moderate_action'),
+    (r'^ajax/select_answer$', 'qa.views.select_answer'),
     
     (r'^moderate/?$', 'qa.views.moderate'),
     

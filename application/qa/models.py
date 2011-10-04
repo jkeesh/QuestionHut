@@ -87,6 +87,14 @@ class Question(models.Model):
     answered    =   models.BooleanField(default=False)
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
     approved    =   models.BooleanField(default=False)
+    
+    def deselect_all_answers(self):
+        self.answers.all().update(selected=False)
+    
+    def select_answer(self, answer):
+        self.deselect_all_answers()
+        answer.selected = True
+        answer.save()
         
     def add_tag(self, tag_title): 
         try:

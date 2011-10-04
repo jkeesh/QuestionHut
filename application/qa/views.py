@@ -31,7 +31,8 @@ MESSAGES = {
     'fname': 'You must enter in a first name.',
     'lname': 'You must enter in a last name',
     'passwd': 'You must enter in a password',
-    'class':  'You must select at least one class.'
+    'class':  'You must select at least one class.',
+    'amod': 'Your answer has been submitted for moderation, and if approved will be shown soon.'
 }
 
 @csrf_protect
@@ -187,6 +188,14 @@ def index(request, message=None):
 def question_view(request, id=None):
     if not id: 
         return redirect('/error')
+
+    message = None
+    if 'msg' in request.GET:
+        the_msg = request.GET['msg']
+        if the_msg in MESSAGES:
+            message = MESSAGES[the_msg]
+        
+        
     question = get_object_or_404(Question, pk=id)
     question.views += 1
     question.save()
@@ -195,6 +204,7 @@ def question_view(request, id=None):
         {
             'user': request.user,
             'question': question,
+            'message': message,
             'answers': question.answers.filter(approved=True).order_by('-votes')
         },
         context_instance = RequestContext(request)
@@ -213,7 +223,7 @@ def answer_question(request):
                         question=question,
                         content=content)
         answer.save()
-        return redirect('/question/%s' % q_id)
+        return redirect('/question/%s?msg=amod' % q_id)
     
     
 @csrf_protect
@@ -266,6 +276,13 @@ def ask(request, error=None, title=None, content=None):
         )
         
         
+def select_answer(request):
+    answer = Answer.objects.get(pk=request.POST['answer'])
+    question = Question.objects.get(pk=request.POST['question'])
+    question.select_answer(answer)
+    return json_response({
+        "status": "ok"
+    })
         
 def moderate(request):
     if not request.user.is_authenticated() or not request.user.get_profile().is_moderator:

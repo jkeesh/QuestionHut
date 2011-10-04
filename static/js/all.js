@@ -46,6 +46,7 @@ $(document).ready(function(){
     var path = window.location.pathname;
     if(path.indexOf('question') != -1){
         var voter = new Voter();
+        var selector = new AnswerSelector();
     }
     if(path.indexOf('moderate') != -1){
         var approver = new Approver();
@@ -55,6 +56,41 @@ $(document).ready(function(){
         D.log('infinite scroll on');
     }
 });
+
+
+function AnswerSelector(){
+    var that = {};
+    
+    that.get_data = function(link){
+        return {
+            question: $(link).attr('data-question'),
+            answer: $(link).attr('data-id')
+        };
+    }
+    
+    that.setup = function(){
+        $('.answer-select').click(function(){
+            var self = $(this);
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/select_answer',
+                dataType: 'JSON',
+                data: that.get_data(self),
+                success: function(result){
+                    D.log(result);
+                    // if(result.status == 'ok'){
+                    //      that.remove_box(self);
+                    // }else{
+                    //     alert('Fail.');
+                    // }
+                }
+            });
+        });
+    }
+    
+    that.setup();
+    return that;
+}
 
 
 function Approver(){

@@ -3,6 +3,12 @@
 {% block content %}
 <div class="clear"></div>
 
+{% if message %}
+<div class="notice">
+{{ message }}
+</div>
+{% endif %}
+
 <div id="question_title">
 	<h1>
 	{{ question.title }}
