@@ -17,15 +17,7 @@
 	
 {% if type == 'A' and user == question.author %}
 
-<a 	class='answer-select
-{% if obj.selected %}
-chosen-answer
-{% endif %}
-
-' href='#' data-id="{{obj.id}}" data-question="{{question.id}}"
-{% if obj.selected %}
-style="display:none"
-{% endif %}
+<a 	class='answer-select {% if obj.selected %}chosen-answer{% endif %}' href='#' data-id="{{obj.id}}" data-question="{{question.id}}"
 >
 	accept answer
 </a>
