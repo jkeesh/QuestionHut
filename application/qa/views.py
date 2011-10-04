@@ -195,7 +195,7 @@ def question_view(request, id=None):
         {
             'user': request.user,
             'question': question,
-            'answers': question.answers.all().order_by('-votes')
+            'answers': question.answers.filter(approved=True).order_by('-votes')
         },
         context_instance = RequestContext(request)
     )
