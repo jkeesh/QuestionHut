@@ -23,7 +23,7 @@
 	</div>
 	<div class="text">
 		<div class="main">
-			{{ question.content }}
+			{{ question.content|urlize }}
 		</div>
 		<div class="tags">
 			{% for tag in question.tags.all %}
@@ -57,7 +57,7 @@
 
 	<div class="text">
 		<div class="main">
-			{{ answer.content }}
+			{{ answer.content|urlize }}
 		</div>
 		
 		{% load all_tags %}
