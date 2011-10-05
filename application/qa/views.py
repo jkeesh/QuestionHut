@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course
 import re
 
+from qa.search import get_query
+
 from django.utils import simplejson
 def json_response(obj):
     """
@@ -329,4 +331,23 @@ def moderate_action(request):
     return json_response({
         "status": "ok"
     })
+    
+    
+def search(request):
+    q_query = get_query(request.GET['q'], ['title', 'content'])
+    a_query = get_query(request.GET['q'], ['content'])
+    
+    questions = Question.objects.filter(q_query).order_by('-votes')
+    answers = Answer.objects.filter(a_query).order_by('-votes')
+
+    return render_to_response(
+        "search.html",
+        {
+            'user': request.user,
+            'questions': questions,
+            'answers': answers
+        },
+        context_instance = RequestContext(request)
+    )
+    
     
