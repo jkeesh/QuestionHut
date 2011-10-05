@@ -334,18 +334,14 @@ def moderate_action(request):
     
     
 def search(request):
-    q_query = get_query(request.GET['q'], ['title', 'content'])
-    a_query = get_query(request.GET['q'], ['content'])
-    
+    q_query = get_query(request.GET['q'], ['title', 'content'])    
     questions = Question.objects.filter(q_query).order_by('-votes')
-    answers = Answer.objects.filter(a_query).order_by('-votes')
 
     return render_to_response(
         "search.html",
         {
             'user': request.user,
-            'questions': questions,
-            'answers': answers
+            'questions': questions
         },
         context_instance = RequestContext(request)
     )

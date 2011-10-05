@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script type='text/javascript'>
+var INFINITE_SCROLL = true;
+</script>
+
+<div id="all_questions">
+{% for question in questions %}
+	<div class="question-item">
+		<div class="question-info cp"
+			onclick="window.location.href='/question/{{question.id}}'">
+			<div class="votes">
+				<div class="counts">
+					{{ question.votes }}
+				</div>
+				<div>votes</div>
+			</div>
+			
+			
+			<div class="answers
+				{% if question.answers.all|length > 0 %}
+				
+				{% if question.answered %}
+					answered-accepted
+				{% else %}
+					answered
+				{% endif %}
+					
+				{% else %}
+					unanswered
+				{% endif %}">
+				<div class="counts">
+					{{ question.get_answer_count }}
+				</div>
+				<div>answers</div>
+			</div>
+			
+			<div class="views">
+				<div class="counts">
+					{{ question.views }}
+				</div>
+				<div>views</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="question-summary">
+			<h3>
+				<a href="/question/{{question.id}}">{{ question.title }}</a>
+			</h3>
+			
+			{% load all_tags %}
+			<span class="tags">
+				{% for tag in question.tags.all %}
+					<a href="/questions?tags={{tag.title}}" class="tag">{{ tag.title }}</a>
+				{% endfor %}
+			</span>
+			
+			<div class="started">
+				<span class="question-time">
+				
+					{% format_time question.created_at %}
+				</span>
+			
+				<span class="question-author">
+					{{ question.author }}
+				</span>
+			</div>
+		</div>
+		
+	</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
