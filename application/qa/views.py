@@ -335,7 +335,7 @@ def moderate_action(request):
     
 def search(request):
     q_query = get_query(request.GET['q'], ['title', 'content'])    
-    questions = Question.objects.filter(q_query).order_by('-votes')
+    questions = Question.objects.filter(q_query).filter(approved=True).order_by('-votes')
 
     return render_to_response(
         "search.html",

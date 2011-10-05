@@ -26,23 +26,6 @@
 				<a href="/">QuestionHut</a>
 			</div>
 			{% if user.is_authenticated %}
-			<div id="menu">
-				<ul>
-					<li>
-						<a href="/ask">Ask a Question</a>
-					</li>
-					<li>
-						<a href="/">Questions</a>
-					</li>
-					
-					{% if user.get_profile.is_moderator %}
-					<li>
-						<a href="/moderate">Moderate</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-			
 			<div id="user">
 				<span>
 					Hello, {{ user.first_name }} {{ user.last_name }}
@@ -52,6 +35,35 @@
 				
 				<a href="mailto:jkeeshin@stanford.edu">Feedback</a>
 			</div>
+			
+			<div id="menu">
+				<ul>
+					<li class="link">
+						<a href="/ask">Ask a Question</a>
+					</li>
+					<li class="link">
+						<a href="/">Questions</a>
+					</li>
+					
+					{% if user.get_profile.is_moderator %}
+					<li class="link">
+						<a href="/moderate">Moderate</a>
+					</li>
+					{% endif %}
+
+
+					<li class="searchli">
+						<form method="GET" action="/search">
+							<input type="text" name="q" placeholder="Search" class="search-box" />
+						</form>
+					</li>
+
+				</ul>
+				
+				
+			</div>
+			
+
 			{% endif %}
 		</div>
 		

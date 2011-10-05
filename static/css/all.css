@@ -134,9 +134,8 @@ input[type="text"], input[type="password"]{
 }
 
 #menu{
-/*    width: 705px;*/
     float: left;
-    padding: 34px 0px 20px 5px;
+    padding: 11px 0px 20px 5px;
     margin-top: 10px;
 }
 
@@ -156,11 +155,21 @@ input[type="text"], input[type="password"]{
 }
 
 /* Menu */
-#menu li{
+#menu li.link{
     background: #777;
-    display: block;
-    float: left;
     margin-right: 7px;
+}
+
+#menu li{
+    float: left;  
+    display: block;  
+}
+
+#menu li.searchli input{
+    padding: 3px;
+    margin: 0;
+    height: 18px;
+    width: 170px;
 }
 
 #menu a{
