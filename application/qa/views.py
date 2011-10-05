@@ -149,6 +149,10 @@ def questions_display(request, message=None):
     course = request.GET['course'] if 'course' in request.GET else 'all'
     tags = request.GET['tags'] if 'tags' in request.GET else None
     
+    print "Sort", sort
+    print "Course", course
+    print "Tags", tags
+    
     query_set = get_questions(course=course, tags=tags)
     query_set = sort_questions(query_set=query_set, sort=sort)
     
