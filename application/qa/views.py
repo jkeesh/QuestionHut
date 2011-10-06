@@ -80,7 +80,8 @@ def generate_code(user):
 def send_confirmation_email(user):
     code = generate_code(user)
     subject = 'Confirm Your Email Address'
-    email_content = '%s/confirm?code=%s' % (base, code)
+    email_content = '%sconfirm?code=%s' % (settings.BASE_URL, code)
+    print email_content
 #   send_email(subject, email_content, settings.EMAIL_HOST_USER, [user.email])
 
 
