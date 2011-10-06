@@ -73,14 +73,18 @@ def generate_code(user):
     import datetime, hashlib
     now = str(datetime.datetime.now())
     verify = "%s%s" % (user.email, now)
+    code = hashlib.sha224(verify).hexdigest()
+    
     up = user.get_profile()
-    return hashlib.sha224(verify).hexdigest()
+    up.confirmation_code = code
+    up.save()
+    return code
 
 ## To email must be a list
 def send_confirmation_email(user):
     code = generate_code(user)
     subject = 'Confirm Your Email Address'
-    email_content = '%sconfirm?code=%s' % (settings.BASE_URL, code)
+    email_content = '%sconfirm?u=%d&code=%s' % (settings.BASE_URL, user.id, code)
     print email_content
 #   send_email(subject, email_content, settings.EMAIL_HOST_USER, [user.email])
 
