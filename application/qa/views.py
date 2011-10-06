@@ -85,18 +85,22 @@ def send_confirmation_email(user):
     code = generate_code(user)
     subject = 'Confirm Your Email Address'
     email_content = '%sconfirm?u=%d&code=%s' % (settings.BASE_URL, user.id, code)
+    print email_content
     send_email(subject, email_content, settings.EMAIL_HOST_USER, [user.email])
-
+    print "Sent!"
 
 def confirm(request):
     uid = request.GET['u']
     code = request.GET['code']
     
     user = User.objects.get(pk=uid)
+    msg = 'inact'
     if user.get_profile().confirmation_code == code:
+        msg = 'act'
         user.is_active = True
+        user.save()
     
-    return redirect('/') ## include message
+    return redirect('/?msg=%s' % msg ) ## include message
 
 	
 @csrf_protect
