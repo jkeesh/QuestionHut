@@ -23,6 +23,13 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'questionhut@gmail.com'
+EMAIL_HOST_PASSWORD = secrets.PROD['email_passwd']
+EMAIL_SUBJECT_PREFIX = 'Question Hut: '
+EMAIL_USE_TLS = True
+
 if LOCAL:
     DATABASES = {
         'default': {
