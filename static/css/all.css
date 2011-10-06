@@ -549,3 +549,7 @@ a.vote-arrow.down-arrow.voted{
     width: 560px;
     padding: 10px 0;
 }
+
+.original-question a{
+    font-weight: bold;
+}
