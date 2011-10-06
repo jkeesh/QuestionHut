@@ -13,6 +13,7 @@ class UserProfile(models.Model):
     courses     =   models.ManyToManyField(Course, related_name='students')
     is_moderator=   models.BooleanField(default=False)
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
+    confirmation_code   =   models.CharField(max_length=100, default='')
 
 class Tag(models.Model):
     title       =   models.CharField(max_length=200)
