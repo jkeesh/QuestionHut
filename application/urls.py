@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     (r'^join$', 'qa.views.join'),
     (r'^logout$', 'qa.views.logout'),
     (r'^error$', 'qa.views.error'),
+    (r'^confirm$', 'qa.views.confirm'),
     
     (r'^ask/?$', 'qa.views.ask'),
     (r'^ask_question$', 'qa.views.ask_question'),
