@@ -11,6 +11,9 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course
 import re
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from django.conf import settings
 
 from qa.search import get_query
 
@@ -345,5 +348,16 @@ def search(request):
         },
         context_instance = RequestContext(request)
     )
+    
+    
+def send_email(subject, content, from_email, to_email):
+    msg = EmailMessage(subject, content, from_email, to_email)
+    msg.content_subtype = "html"  # Main content is now text/html
+    msg.send()
+    
+def send_confirmation_email(to_email):
+    subject = 'Confirm Your Email Address'
+    email_content = 'hello'
+    send_email(subject, email_content, settings.EMAIL_HOST_USER, to_email)
     
     
