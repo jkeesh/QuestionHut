@@ -30,6 +30,9 @@ EMAIL_HOST_PASSWORD = secrets.PROD['email_passwd']
 EMAIL_SUBJECT_PREFIX = 'Question Hut: '
 EMAIL_USE_TLS = True
 
+
+LOGIN_URL = '/'
+
 if LOCAL:
     DATABASES = {
         'default': {

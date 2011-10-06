@@ -16,6 +16,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from qa.search import get_query
+from django.contrib.auth.decorators import login_required
 
 from django.utils import simplejson
 def json_response(obj):
@@ -37,17 +38,20 @@ MESSAGES = {
     'lname': 'You must enter in a last name',
     'passwd': 'You must enter in a password',
     'class':  'You must select at least one class.',
-    'amod': 'Your answer has been submitted for moderation, and if approved will be shown soon.'
+    'amod': 'Your answer has been submitted for moderation, and if approved will be shown soon.',
+    'act': 'Your account has been activated. Please log in with your email and password.',
+    'inact': 'Your account could not be succesfully activated.',
+    'waitforact': 'Thanks for creating an account. You should receive a confirmation email shortly which will activate your account.'
 }
 
 @csrf_protect
+@login_required  
 def vote(request):
     votes = Vote.submit_vote(request)
     return json_response({
         "status": "ok",
         "votes": votes
     })
-
 
 def verify_email(email):
     """
@@ -62,7 +66,6 @@ def verify_email(email):
     return False
     
     
-
 def send_email(subject, content, from_email, to_email):
     msg = EmailMessage(subject, content, from_email, to_email)
     msg.content_subtype = "html"  # Main content is now text/html
@@ -83,10 +86,11 @@ def generate_code(user):
 ## To email must be a list
 def send_confirmation_email(user):
     code = generate_code(user)
-    subject = 'Confirm Your Email Address'
-    email_content = '%sconfirm?u=%d&code=%s' % (settings.BASE_URL, user.id, code)
+    subject = 'Welcome to QuestionHut: Confirm Your Email Address'
+    email_content = 'Thanks for signing up for Question Hut. Please confirm your email address by ' \
+            'visititing the following link: <br/><br/> %sconfirm?u=%d&code=%s' % (settings.BASE_URL, user.id, code)
     print email_content
-    send_email(subject, email_content, settings.EMAIL_HOST_USER, [user.email])
+    send_email(subject, email_content, 'Question Hut <questionhut@gmail.com>', [user.email])
     print "Sent!"
 
 def confirm(request):
@@ -141,11 +145,14 @@ def join(request):
         userprofile.courses.add(course)
         
     send_confirmation_email(user)
-    return redirect('/')
+    return redirect('/?msg=waitforact')
     #return authenticate(request, request.POST['email'], request.POST['password'])
     
 def authenticate(request, email, password):
     user = auth.authenticate(username=email, password=password)
+    if not user.is_active:
+        auth.logout(request)
+        return redirect('/error?notactive')
     if user is not None:
         auth.login(request, user)
         print "authenticated"
@@ -193,7 +200,7 @@ def get_questions(course, tags=None, approved=True):
 
     return qs
     
-    
+@login_required  
 def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
     course = request.GET['course'] if 'course' in request.GET else 'all'
@@ -238,7 +245,7 @@ def index(request, message=None):
     else:
         return questions_display(request=request, message=message)
         
-    
+@login_required  
 def question_view(request, id=None):
     if not id: 
         return redirect('/error')
@@ -264,7 +271,7 @@ def question_view(request, id=None):
         context_instance = RequestContext(request)
     )
     
-
+@login_required  
 def answer_question(request):
     print request.user
     if not request.user.is_authenticated():
@@ -281,6 +288,7 @@ def answer_question(request):
     
     
 @csrf_protect
+@login_required  
 def ask_question(request):
     if not request.user.is_authenticated():
         return redirect('/')
@@ -313,6 +321,7 @@ def ask_question(request):
         
         return redirect('/?msg=moderation')
     
+@login_required  
 def ask(request, error=None, title=None, content=None):
     if not request.user.is_authenticated():
         return redirect('/')
@@ -338,6 +347,7 @@ def select_answer(request):
         "status": "ok"
     })
         
+@login_required  
 def moderate(request):
     if not request.user.is_authenticated() or not request.user.get_profile().is_moderator:
         return redirect('/')
@@ -369,7 +379,8 @@ def moderate(request):
         context_instance = RequestContext(request)
     )
     
-@csrf_protect    
+@csrf_protect  
+@login_required    
 def moderate_action(request):
     obj_id = request.POST['id']
     action = request.POST['action']
@@ -380,7 +391,7 @@ def moderate_action(request):
         "status": "ok"
     })
     
-    
+@login_required  
 def search(request):
     q_query = get_query(request.GET['q'], ['title', 'content'])    
     questions = Question.objects.filter(q_query).filter(approved=True).order_by('-votes')
