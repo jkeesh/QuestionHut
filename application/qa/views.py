@@ -42,7 +42,9 @@ MESSAGES = {
     'act': 'Your account has been activated. Please log in with your email and password.',
     'inact': 'Your account could not be succesfully activated.',
     'waitforact': 'Thanks for creating an account. You should receive a confirmation email shortly which will activate your account.',
-    'passwdmatch': 'Your passwords did not match. Please enter them again.'
+    'passwdmatch': 'Your passwords did not match. Please enter them again.',
+    'notactive': 'Your account is not yet active.',
+    'loginerror': 'There was an error loggin you in. Please check your password.'
 }
 
 @csrf_protect
@@ -154,15 +156,15 @@ def join(request):
     
 def authenticate(request, email, password):
     user = auth.authenticate(username=email, password=password)
-    if not user.is_active:
-        auth.logout(request)
-        return redirect('/error?notactive')
     if user is not None:
+        if not user.is_active:
+            auth.logout(request)
+            return redirect('/?msg=notactive')
+
         auth.login(request, user)
-        print "authenticated"
         return redirect('/')
     else:
-        return redirect('/error')
+        return redirect('/?msg=loginerror')
     
 @csrf_protect
 def login(request):
@@ -209,11 +211,7 @@ def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
     course = request.GET['course'] if 'course' in request.GET else 'all'
     tags = request.GET['tags'] if 'tags' in request.GET else None
-    
-    print "Sort", sort
-    print "Course", course
-    print "Tags", tags
-    
+        
     query_set = get_questions(course=course, tags=tags)
     query_set = sort_questions(query_set=query_set, sort=sort)
     
