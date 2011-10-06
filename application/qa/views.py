@@ -188,7 +188,7 @@ def sort_questions(query_set, sort):
     elif sort == 'popular':
         return query_set.order_by('-views')[:30]
     else:
-        return query_set.order_by('-created_at')[:30]
+        return query_set.order_by('-last_updated')[:30]
 
 def get_questions(course, tags=None, approved=True):
     qs = Question.objects.filter(approved=approved)
