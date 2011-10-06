@@ -355,6 +355,7 @@ def send_email(subject, content, from_email, to_email):
     msg.content_subtype = "html"  # Main content is now text/html
     msg.send()
     
+## To email must be a list
 def send_confirmation_email(to_email):
     subject = 'Confirm Your Email Address'
     email_content = 'hello'
