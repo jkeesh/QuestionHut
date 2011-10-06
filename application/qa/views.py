@@ -41,7 +41,8 @@ MESSAGES = {
     'amod': 'Your answer has been submitted for moderation, and if approved will be shown soon.',
     'act': 'Your account has been activated. Please log in with your email and password.',
     'inact': 'Your account could not be succesfully activated.',
-    'waitforact': 'Thanks for creating an account. You should receive a confirmation email shortly which will activate your account.'
+    'waitforact': 'Thanks for creating an account. You should receive a confirmation email shortly which will activate your account.',
+    'passwdmatch': 'Your passwords did not match. Please enter them again.'
 }
 
 @csrf_protect
@@ -121,6 +122,9 @@ def join(request):
         return redirect('/?msg=lname')
     if len(request.POST['password']) == 0:
         return redirect('/?msg=passwd')
+        
+    if request.POST['password'] != request.POST['password2']:
+        return redirect('/?msg=passwdmatch')
     
     if len(request.POST.getlist('class')) == 0:
         return redirect('/?msg=class')
