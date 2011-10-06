@@ -60,6 +60,30 @@ def verify_email(email):
     if re.match("^.+\\@(.+\\.)?stanford\\.edu$", email) != None:
         return True
     return False
+    
+    
+
+def send_email(subject, content, from_email, to_email):
+    msg = EmailMessage(subject, content, from_email, to_email)
+    msg.content_subtype = "html"  # Main content is now text/html
+    msg.send()
+
+
+def generate_code(user):
+    import datetime, hashlib
+    now = str(datetime.datetime.now())
+    verify = "%s%s" % (user.email, now)
+    up = user.get_profile()
+    return hashlib.sha224(verify).hexdigest()
+
+## To email must be a list
+def send_confirmation_email(user):
+    code = generate_code(user)
+    subject = 'Confirm Your Email Address'
+    email_content = '%s/confirm?code=%s' % (base, code)
+#   send_email(subject, email_content, settings.EMAIL_HOST_USER, [user.email])
+
+
 	
 @csrf_protect
 def join(request):
@@ -87,6 +111,7 @@ def join(request):
                                     request.POST['password'])
     user.first_name = request.POST['first_name']
     user.last_name = request.POST['last_name']
+    user.is_active = False
     user.save()
     
     userprofile = UserProfile(user=user)
@@ -96,8 +121,10 @@ def join(request):
     for course_id in courses:
         course = Course.objects.get(pk=course_id)
         userprofile.courses.add(course)
-    
-    return authenticate(request, request.POST['email'], request.POST['password'])
+        
+    send_confirmation_email(user)
+    return redirect('/')
+    #return authenticate(request, request.POST['email'], request.POST['password'])
     
 def authenticate(request, email, password):
     user = auth.authenticate(username=email, password=password)
@@ -348,17 +375,3 @@ def search(request):
         },
         context_instance = RequestContext(request)
     )
-    
-    
-def send_email(subject, content, from_email, to_email):
-    msg = EmailMessage(subject, content, from_email, to_email)
-    msg.content_subtype = "html"  # Main content is now text/html
-    msg.send()
-    
-## To email must be a list
-def send_confirmation_email(to_email):
-    subject = 'Confirm Your Email Address'
-    email_content = 'hello'
-    send_email(subject, email_content, settings.EMAIL_HOST_USER, to_email)
-    
-    
