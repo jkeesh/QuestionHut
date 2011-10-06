@@ -13,4 +13,3 @@ def user_vote(user, obj, kind, score):
         return ''
     except Vote.DoesNotExist:
         return ''
-        

@@ -11,12 +11,13 @@
 
 <div id="tabs_container">
 	
+	{% load mod_tags %}
 	<div id="class_tabs">
 		
 		{% for mcourse in moderator_courses %}
 		<a href="/moderate?course={{mcourse}}"
 		{% if mcourse.title == course %}class="selected"{% endif %}
-		>{{mcourse|upper}}</a>
+		>{{mcourse|upper}} ({% mod_count mcourse %})</a>
 		{% endfor %}
 	</div>
 </div>
