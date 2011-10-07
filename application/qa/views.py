@@ -282,6 +282,7 @@ def answer_question(request):
         q_id = request.POST['question']
         content = request.POST['answer']
         question = Question.objects.get(pk=q_id)
+        question.update_timestamp()
         answer = Answer(author=request.user,
                         question=question,
                         content=content)

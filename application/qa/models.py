@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+from datetime import datetime
 
 class Course(models.Model):
     title       =   models.CharField(max_length=50)
@@ -91,6 +91,9 @@ class Question(models.Model):
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
     approved    =   models.BooleanField(default=False)
     
+    def update_timestamp(self):
+        self.last_updated = datetime.now()
+        self.save()
     
     def get_answer_count(self):
         return len(self.answers.filter(approved=True))
