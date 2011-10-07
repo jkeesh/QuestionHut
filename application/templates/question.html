@@ -9,6 +9,13 @@
 </div>
 {% endif %}
 
+
+{% if question.author == user and not question.answered %}
+<div class="success">
+This is your question, and if any of the answers answered the question, please select it by clicking the check mark to let other people know what worked.
+</div>
+{% endif %}
+
 <div id="question_title">
 	<h1>
 	{{ question.title }}
