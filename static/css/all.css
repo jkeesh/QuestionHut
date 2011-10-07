@@ -96,6 +96,16 @@ input[type="text"], input[type="password"]{
     width: 200px;
 }
 
+#searchbox{
+    float:right;
+}
+
+#searchbox input{
+    font-size: 12px;
+    padding: 2px;
+    width: 155px;
+}
+
 
 /* Login Page */
 #login_form, #create_form{
@@ -142,7 +152,7 @@ input[type="text"], input[type="password"]{
 #logo a{
     float: left;
     width: 250px;
-    margin-top: 38px;
+    margin-top: 49px;
     font-size: 38px;
     font-weight: bold;
     display: block;
@@ -152,6 +162,12 @@ input[type="text"], input[type="password"]{
     float: right;
     padding: 5px;
     font-weight: bold;
+}
+
+#user span.top{
+    float: left;
+    margin-right: 6px;
+    margin-top: 5px;
 }
 
 /* Menu */

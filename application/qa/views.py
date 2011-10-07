@@ -190,8 +190,10 @@ def sort_questions(query_set, sort):
     else:
         return query_set.order_by('-last_updated')[:30]
 
-def get_questions(course, tags=None, approved=True):
+def get_questions(course, tags=None, approved=True, status='all'):
     qs = Question.objects.filter(approved=approved)
+    if status == 'unanswered':
+        qs = qs.filter(answered=False)
     if course != 'all':
         course_tag = Tag.objects.get(title=course)
         qs = qs.filter(tags=course_tag)
@@ -211,8 +213,9 @@ def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
     course = request.GET['course'] if 'course' in request.GET else 'all'
     tags = request.GET['tags'] if 'tags' in request.GET else None
+    status = request.GET['status'] if 'status' in request.GET else 'all'
         
-    query_set = get_questions(course=course, tags=tags)
+    query_set = get_questions(course=course, tags=tags, status=status)
     query_set = sort_questions(query_set=query_set, sort=sort)
     
     return render_to_response(
@@ -222,6 +225,7 @@ def questions_display(request, message=None):
             'questions': query_set,
             'sort': sort,
             'course': course,
+            'status': status,
             'courses': request.user.get_profile().courses.all(),
             'message': message
         },

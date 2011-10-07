@@ -27,13 +27,23 @@
 			</div>
 			{% if user.is_authenticated %}
 			<div id="user">
-				<span>
+				<span class="top">
 					Hello, {{ user.first_name }} {{ user.last_name }}
 				</span>
 
-				<a href="/logout">Logout</a>
+				<span class="top">
+					<a href="/logout">Logout</a>
+				</span>
 				
-				<a href="mailto:jkeeshin@stanford.edu">Feedback</a>
+				<span class="top">
+					<a href="mailto:jkeeshin@stanford.edu">Feedback</a>
+				</span>
+				
+				<span id="searchbox">
+				<form method="GET" action="/search">
+					<input type="text" name="q" placeholder="Search" class="search-box" />
+				</form>
+				</span>
 			</div>
 			
 			<div id="menu">
@@ -44,20 +54,19 @@
 					<li class="link">
 						<a href="/">Questions</a>
 					</li>
+					<li class="link">
+						{% if course %}
+						<a href="/questions?status=unanswered&amp;course={{course}}">Unanswered</a>
+						{% else %}
+						<a href="/questions?status=unanswered">Unanswered</a>						
+						{% endif %}
+					</li>
 					
 					{% if user.get_profile.is_moderator %}
 					<li class="link">
 						<a href="/moderate">Moderate</a>
 					</li>
 					{% endif %}
-
-
-					<li class="searchli">
-						<form method="GET" action="/search">
-							<input type="text" name="q" placeholder="Search" class="search-box" />
-						</form>
-					</li>
-
 				</ul>
 				
 				
