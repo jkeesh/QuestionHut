@@ -85,7 +85,7 @@ class Question(models.Model):
     title       =   models.CharField(max_length=200)
     content     =   models.TextField()
     created_at  =   models.DateTimeField(auto_now_add=True)
-    last_updated=   models.DateTimeField(auto_now=True)
+    last_updated=   models.DateTimeField(auto_now_add=True)
     tags        =   models.ManyToManyField(Tag, related_name="questions")   
     answered    =   models.BooleanField(default=False)
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
