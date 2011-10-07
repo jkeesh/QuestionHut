@@ -47,6 +47,15 @@ $(document).ready(function(){
     if(path.indexOf('question') != -1){
         var voter = new Voter();
         var selector = new AnswerSelector();
+        var converter = new Showdown.converter();
+        $(".showdown").each(function(i){
+            D.log($(this));
+            var text = $(this).html();
+            D.log(text);
+            var formatted = converter.makeHtml(text);
+            D.log(formatted);
+            $(this).html(formatted);
+        });
     }
     if(path.indexOf('moderate') != -1){
         var approver = new Approver();

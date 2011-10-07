@@ -29,9 +29,7 @@ This is your question, and if any of the answers answered the question, please s
 		{% endwith %}
 	</div>
 	<div class="text">
-		<div class="main">
-			{{ question.content|urlize }}
-		</div>
+		<div class="main showdown">{{ question.content|urlize }}</div>
 		<div class="tags">
 			{% for tag in question.tags.all %}
 				<a href="/questions?tags={{tag.title}}" class="tag">{{ tag.title }}</a>
@@ -63,9 +61,7 @@ This is your question, and if any of the answers answered the question, please s
 	</div>
 
 	<div class="text">
-		<div class="main">
-			{{ answer.content|urlize }}
-		</div>
+		<div class="main showdown">{{ answer.content|urlize }}</div>
 		
 		{% load all_tags %}
 		<div class="user">

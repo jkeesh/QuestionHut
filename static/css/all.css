@@ -569,3 +569,29 @@ a.vote-arrow.down-arrow.voted{
 .original-question a{
     font-weight: bold;
 }
+
+
+
+/* Showdown styled */
+.showdown em{
+    font-style: italic;
+}
+
+.showdown strong{
+    font-weight: bold;
+}
+
+.showdown pre{
+    background-color: #EEE;
+    font-size: 12px;
+    padding: 7px;
+    border: 1px solid #DEDEDE;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #444;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.0664062) 0px 1px 2px inset;
+}
+
+pre, code{
+    font: normal normal normal 12px/normal 'Bitstream Vera Sans Mono', Courier, monospace;    
+}
