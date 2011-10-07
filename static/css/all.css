@@ -606,3 +606,16 @@ a.vote-arrow.down-arrow.voted{
 pre, code{
     font: normal normal normal 12px/normal 'Bitstream Vera Sans Mono', Courier, monospace;    
 }
+
+
+/* Live Preview */
+.preview-title{
+    margin-top: 20px;
+}
+
+#live_preview{
+    border: 3px dashed #ccc;
+    padding: 10px;
+    min-height: 10px;
+    margin-bottom: 250px;
+}

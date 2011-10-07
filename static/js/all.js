@@ -56,6 +56,21 @@ $(document).ready(function(){
             D.log(formatted);
             $(this).html(formatted);
         });
+        
+        $("#user_input").keyup(function(){
+          var txt = $("#user_input").val();
+          var html = converter.makeHtml(txt);
+          $(".wikistyle").html(html)
+          $("#entry-container, #user_input").css({
+            height: $(".wikistyle").outerHeight()+40
+          })
+
+        });
+        $("#answer_area").keyup(function(){
+           var txt = $(this).val();
+           var html = converter.makeHtml(txt);
+           $("#live_preview").html(html); 
+        });
     }
     if(path.indexOf('moderate') != -1){
         var approver = new Approver();

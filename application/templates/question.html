@@ -78,8 +78,8 @@ This is your question, and if any of the answers answered the question, please s
 
 <div id="your_answer">
 	<h2>Your Answer</h2>
+	<h4>Formatted preview below, using <a href="http://github.github.com/github-flavored-markdown/">Github Flavored Markdown</a></h4>
 </div>
-
 <div class="question-form">
 <form action="/answer_question" method="post">
 	{% csrf_token %}
@@ -90,5 +90,16 @@ This is your question, and if any of the answers answered the question, please s
 	</div>
 </form>
 </div>
+
+
+<div class="preview-title">
+<h2>Live Preview</h2>
+</div>
+<div id="live_preview" class="showdown">
+</div>
+
+
+
+
 
 {% endblock %}
