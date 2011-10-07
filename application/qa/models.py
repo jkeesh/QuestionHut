@@ -14,6 +14,7 @@ class UserProfile(models.Model):
     is_moderator=   models.BooleanField(default=False)
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
     confirmation_code   =   models.CharField(max_length=100, default='')
+    bio         =   models.CharField(max_length=30, default='')
 
 class Tag(models.Model):
     title       =   models.CharField(max_length=200)
