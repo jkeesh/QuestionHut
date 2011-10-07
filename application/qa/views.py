@@ -208,10 +208,18 @@ def get_questions(course, tags=None, approved=True, status='all'):
 
     return qs
     
+def get_course(request):
+    if 'course' in request.GET:
+        return request.GET['course']
+    courses = request.user.get_profile().courses.all()
+    if len(courses) == 1:
+        return courses[0].title
+    return 'all'
+    
 @login_required  
 def questions_display(request, message=None):
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
-    course = request.GET['course'] if 'course' in request.GET else 'all'
+    course = get_course(request)    
     tags = request.GET['tags'] if 'tags' in request.GET else None
     status = request.GET['status'] if 'status' in request.GET else 'all'
         
