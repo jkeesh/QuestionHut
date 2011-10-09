@@ -139,7 +139,7 @@ def join(request):
                                     request.POST['password'])
     user.first_name = request.POST['first_name']
     user.last_name = request.POST['last_name']
-    user.is_active = False
+    #user.is_active = False #comment in
     user.save()
     
     userprofile = UserProfile(user=user)
@@ -149,10 +149,11 @@ def join(request):
     for course_id in courses:
         course = Course.objects.get(pk=course_id)
         userprofile.courses.add(course)
-        
-    send_confirmation_email(user)
-    return redirect('/?msg=waitforact')
-    #return authenticate(request, request.POST['email'], request.POST['password'])
+
+    #return redirect('/')    #comment out
+    #send_confirmation_email(user)  #comment in
+    #return redirect('/?msg=waitforact') #comment out
+    return authenticate(request, user.email, request.POST['password'])
     
 def authenticate(request, email, password):
     user = auth.authenticate(username=email, password=password)
