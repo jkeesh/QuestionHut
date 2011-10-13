@@ -206,6 +206,13 @@ def sort_questions(query_set, sort):
         return query_set.order_by('-last_updated')[:30]
 
 def get_questions(huts, tags=None, approved=True, status='all', user=None):
+    """
+    The method that gets a list of questions. We first make sure we have a user.
+    Then we get all of the questions in the specified huts, and possibly filter
+    by whether it is answered and what tags it has.
+    
+    @author Jeremy Keeshin      October 13, 2011
+    """
     if not user:
         return Question.objects.none()
         
@@ -227,6 +234,13 @@ def get_questions(huts, tags=None, approved=True, status='all', user=None):
     return qs
     
 def get_course(request):
+    """
+    Based on the get parameters of to the questions view, we decide what list
+    of huts to give to the user. This method returns a list of huts as well as a descriptor
+    in a tuple. If the user only is a member of one hut, we return that.
+    
+    @author Jeremy Keeshin      October 13, 2011
+    """
     if 'hut' in request.GET:
         hut_text = request.GET['hut']
         hut = Course.objects.get(title=hut_text)
@@ -401,19 +415,19 @@ def moderate(request):
     if not request.user.is_authenticated() or not request.user.get_profile().is_moderator:
         return redirect('/')
 
-    course = request.GET['course'] if 'course' in request.GET else None    
+    hut_text = request.GET['course'] if 'course' in request.GET else None    
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'    
     
     query_set = answers = None
-    if course:   
-        the_course = Course.objects.get(title=course)
-        if the_course not in request.user.get_profile().moderator_courses.all():
+    if hut_text:   
+        hut = Course.objects.get(title=hut_text)
+        if hut not in request.user.get_profile().moderator_courses.all():
             ## Then they cannot moderate this specific class
             return redirect('/moderate')
         
-        query_set = get_questions(course=course, approved=False, user=request.user)
+        query_set = get_questions(huts=[hut], approved=False, user=request.user)
         query_set = sort_questions(query_set=query_set, sort=sort)    
-        answers = Answer.objects.filter(approved=False, question__course__title=course).order_by('-created_at')
+        answers = Answer.objects.filter(approved=False, question__course__title=hut_text).order_by('-created_at')
 
     return render_to_response(
         "moderate.html",
@@ -421,7 +435,7 @@ def moderate(request):
             'user': request.user,
             'questions': query_set,
             'sort': sort,
-            'course': course,
+            'course': hut_text,
             'moderator_courses': request.user.get_profile().moderator_courses.all(),
             'answers': answers
         },
