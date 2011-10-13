@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 # Models
 from django.contrib.auth.models import User
-from qa.models import Tag, Question, Answer, Vote, UserProfile, Course
+from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role
 import re
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
@@ -160,7 +160,8 @@ def join(request):
     courses = request.POST.getlist('class')
     for course_id in courses:
         course = Course.objects.get(pk=course_id)
-        userprofile.courses.add(course)
+        role = Role(hut=course, profile=userprofile)
+        role.save()
 
     #return redirect('/')    #comment out
     #send_confirmation_email(user)  #comment in
@@ -203,8 +204,13 @@ def sort_questions(query_set, sort):
     else:
         return query_set.order_by('-last_updated')[:30]
 
-def get_questions(course, tags=None, approved=True, status='all'):
-    qs = Question.objects.filter(approved=approved)
+def get_questions(course, tags=None, approved=True, status='all', user=None):
+    if not user:
+        return Question.objects.none()
+        
+    up = user.get_profile()
+    qs = Question.objects.filter(approved=approved, course__in=up.courses.all())
+    
     if status == 'unanswered':
         qs = qs.filter(answered=False)
     if course != 'all':
@@ -236,7 +242,7 @@ def questions_display(request, message=None):
     tags = request.GET['tags'] if 'tags' in request.GET else None
     status = request.GET['status'] if 'status' in request.GET else 'all'
         
-    query_set = get_questions(course=course, tags=tags, status=status)
+    query_set = get_questions(course=course, tags=tags, status=status, user=request.user)
     query_set = sort_questions(query_set=query_set, sort=sort)
     
     return render_to_response(
@@ -390,7 +396,7 @@ def moderate(request):
             ## Then they cannot moderate this specific class
             return redirect('/moderate')
         
-        query_set = get_questions(course=course, approved=False)
+        query_set = get_questions(course=course, approved=False, user=request.user)
         query_set = sort_questions(query_set=query_set, sort=sort)    
         answers = Answer.objects.filter(approved=False, question__course__title=course).order_by('-created_at')
 
