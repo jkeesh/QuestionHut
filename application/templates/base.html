@@ -28,9 +28,15 @@
 			</div>
 			{% if user.is_authenticated %}
 			<div id="user">
-				<span class="top">
-					Hello, {{ user.first_name }} {{ user.last_name }}
+				
+				<span id="searchbox">
+				<form method="GET" action="/search">
+					<input type="text" name="q" placeholder="Search" class="search-box" />
+				</form>
 				</span>
+				
+
+				
 
 				<span class="top">
 					<a href="/logout">Logout</a>
@@ -40,10 +46,13 @@
 					<a href="mailto:jkeeshin@stanford.edu">Feedback</a>
 				</span>
 				
-				<span id="searchbox">
-				<form method="GET" action="/search">
-					<input type="text" name="q" placeholder="Search" class="search-box" />
-				</form>
+				<span class="top">
+					<a href="/huts">My Huts</a>
+				</span>
+			
+				
+				<span class="top">
+					Hello, {{ user.first_name }} {{ user.last_name }}
 				</span>
 			</div>
 			

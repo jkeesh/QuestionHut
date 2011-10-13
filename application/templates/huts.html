@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% if message %}
+<div class="notice">
+{{ message }}
+</div>
+{% endif %}
+
+<h1>My Huts</h1>
+
+{% for hut in huts %}
+<div class="hut">
+	<a href="/questions?hut={{hut}}">{{ hut|upper }}</a>
+</div>
+{% endfor %}
+
+
+{% endblock %}

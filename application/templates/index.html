@@ -11,25 +11,26 @@ var INFINITE_SCROLL = true;
 </div>
 {% endif %}
 
+
 <div id="tabs_container">
-	
-	<div id="class_tabs">
-		<a href="/questions?course=all&amp;sort={{sort}}&amp;status={{status}}"
+	<h2>Hut: {{ course|upper }}</h2>	
+	<!-- <div id="class_tabs">
+		<a href="/questions?hut=all&amp;sort={{sort}}&amp;status={{status}}"
 		{% if course == 'all' %}class="selected"{% endif %}
 		>All</a>
 		{% for the_course in courses %}
-		<a href="/questions?course={{the_course}}&amp;sort={{sort}}&amp;status={{status}}"
+		<a href="/questions?hut={{the_course}}&amp;sort={{sort}}&amp;status={{status}}"
 		{% if the_course.title == course %}class="selected"{% endif %}
 		>{{ the_course|upper }}</a>
 		{% endfor %}
-	</div>
+	</div> -->
 
 	<div id="sort_tabs">
-		<a href="/questions?course={{course}}&amp;sort=recent" 
+		<a href="/questions?hut={{course}}&amp;sort=recent" 
 		{% if sort == 'recent' %}class="selected "{% endif %}>Recent</a>
-		<a href="/questions?course={{course}}&amp;sort=best"
+		<a href="/questions?hut={{course}}&amp;sort=best"
 		{% if sort == 'best' %}class="selected "{% endif %}>Best</a>
-		<a href="/questions?course={{course}}&amp;sort=popular"
+		<a href="/questions?hut={{course}}&amp;sort=popular"
 		{% if sort == 'popular' %}class="selected "{% endif %}>Popular</a>
 	</div>
 </div>

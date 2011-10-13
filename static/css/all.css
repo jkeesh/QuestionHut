@@ -165,7 +165,7 @@ input[type="text"], input[type="password"]{
 }
 
 #user span.top{
-    float: left;
+    float: right;
     margin-right: 6px;
     margin-top: 5px;
 }
@@ -483,6 +483,10 @@ a.vote-arrow.down-arrow.voted{
     width: 730px;
 }
 
+#tabs_container h2{
+    float: left;
+}
+
 #sort_tabs{
     float: right;
 }
@@ -618,4 +622,10 @@ pre, code{
     padding: 10px;
     min-height: 10px;
     margin-bottom: 250px;
+}
+
+
+/* All Huts List */
+.hut a{
+    font-size: 20px;
 }

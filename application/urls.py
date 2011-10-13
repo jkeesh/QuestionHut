@@ -31,6 +31,9 @@ urlpatterns = patterns('',
     (r'^search/?$', 'qa.views.search'),
     
     (r'^admin/', include(admin.site.urls)),
+    
+    
+    (r'^huts/?$', 'qa.views.huts'),
 )
 
 

@@ -47,6 +47,18 @@ MESSAGES = {
     'loginerror': 'There was an error loggin you in. Please check your password.'
 }
 
+@login_required
+def huts(request):
+    # Show a user all of their 'huts'
+    return render_to_response(
+        "huts.html",
+        {
+            'huts': request.user.get_profile().courses.all()
+        },
+        context_instance = RequestContext(request)
+    )
+    
+
 @csrf_protect
 @login_required  
 def vote(request):
@@ -210,8 +222,8 @@ def get_questions(course, tags=None, approved=True, status='all'):
     return qs
     
 def get_course(request):
-    if 'course' in request.GET:
-        return request.GET['course']
+    if 'hut' in request.GET:
+        return request.GET['hut']
     courses = request.user.get_profile().courses.all()
     if len(courses) == 1:
         return courses[0].title
