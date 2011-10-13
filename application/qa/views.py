@@ -48,6 +48,12 @@ MESSAGES = {
     'perms': 'That page does not exist.'
 }
 
+## Permissions Method
+def can_see_question(user, question):
+    up = user.get_profile()
+    hut = question.course
+    return hut in up.courses.all()
+
 @login_required
 def huts(request):
     # Show a user all of their 'huts'
@@ -204,19 +210,31 @@ def sort_questions(query_set, sort):
         return query_set.order_by('-views')[:30]
     else:
         return query_set.order_by('-last_updated')[:30]
+        
+        
+def has_permission(user, huts):
+    up = user.get_profile()
+    user_huts = up.courses.all()
+    for hut in huts:
+        if hut not in user_huts:
+            return False
+    return True
 
-def get_questions(huts, tags=None, approved=True, status='all', user=None):
+def get_questions(huts=[], tags=None, approved=True, status='all', user=None):
     """
     The method that gets a list of questions. We first make sure we have a user.
     Then we get all of the questions in the specified huts, and possibly filter
-    by whether it is answered and what tags it has.
+    by whether it is answered and what tags it has. If this call was invalid
+    instead of returning a queryset, we return False to the caller.
     
     @author Jeremy Keeshin      October 13, 2011
     """
-    if not user:
-        return Question.objects.none()
+    if not user or not huts:
+        return False
+    
+    if not has_permission(user=user, huts=huts):
+        return False
         
-    up = user.get_profile()
     qs = Question.objects.filter(approved=approved, course__in=huts)
     
     if status == 'unanswered':
@@ -262,6 +280,9 @@ def questions_display(request, message=None):
     status = request.GET['status'] if 'status' in request.GET else 'all'
         
     query_set = get_questions(huts=hut_list, tags=tags, status=status, user=request.user)
+    if not query_set:
+        return redirect('/')
+        
     query_set = sort_questions(query_set=query_set, sort=sort)
     
     return render_to_response(
@@ -296,11 +317,7 @@ def index(request, message=None):
         )
     else:
         return questions_display(request=request, message=message)
-     
-def can_see_question(user, question):
-    up = user.get_profile()
-    hut = question.course
-    return hut in up.courses.all() 
+
        
 @login_required  
 def question_view(request, id=None):
