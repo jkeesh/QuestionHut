@@ -259,15 +259,20 @@ def get_course(request):
     
     @author Jeremy Keeshin      October 13, 2011
     """
+    courses = request.user.get_profile().courses.all()
+    
     if 'hut' in request.GET:
         hut_text = request.GET['hut']
+    else:
+        hut_text = 'all'
+
+    if hut_text != 'all':
         hut = Course.objects.get(title=hut_text)
         return [hut], hut_text
 
-    courses = request.user.get_profile().courses.all()
     if len(courses) == 1:
         return [courses[0]], courses[0].title
-    return courses, 'all'
+    return courses, hut_text
     
 def get_sort_method(request):
     return request.GET['sort'] if 'sort' in request.GET else 'recent'
