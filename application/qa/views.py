@@ -245,7 +245,7 @@ def questions_display(request, message=None):
             'user': request.user,
             'questions': query_set,
             'sort': sort,
-            'course': course,
+            'hut': course,
             'status': status,
             'courses': request.user.get_profile().courses.all(),
             'message': message

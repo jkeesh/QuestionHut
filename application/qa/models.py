@@ -10,11 +10,25 @@ class Course(models.Model):
 
 class UserProfile(models.Model):
     user        =   models.OneToOneField(User)
-    courses     =   models.ManyToManyField(Course, related_name='students')
+#    courses     =   models.ManyToManyField(Course, related_name='students')
+    courses     =   models.ManyToManyField(Course, related_name='students', through='Role')
     is_moderator=   models.BooleanField(default=False)
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
     confirmation_code   =   models.CharField(max_length=100, default='')
     bio         =   models.CharField(max_length=30, default='')
+    
+class Role(models.Model):
+    ## Represents a persons role in a hut
+    profile     = models.ForeignKey(UserProfile)
+    hut         = models.ForeignKey(Course)
+    
+    MEMBER      =   1
+    APPROVED    =   2
+    MODERATOR   =   3
+    ADMIN       =   4
+    
+    level       = models.IntegerField(default=MEMBER)     
+    
 
 class Tag(models.Model):
     title       =   models.CharField(max_length=200)

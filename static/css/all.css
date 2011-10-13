@@ -629,3 +629,10 @@ pre, code{
 .hut a{
     font-size: 20px;
 }
+
+.hut{
+    margin-top: 15px;
+}
+.hut:hover{
+    text-decoration: underline;
+}
