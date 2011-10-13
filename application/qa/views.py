@@ -44,7 +44,8 @@ MESSAGES = {
     'waitforact': 'Thanks for creating an account. You should receive a confirmation email shortly which will activate your account.',
     'passwdmatch': 'Your passwords did not match. Please enter them again.',
     'notactive': 'Your account is not yet active.',
-    'loginerror': 'There was an error loggin you in. Please check your password.'
+    'loginerror': 'There was an error loggin you in. Please check your password.',
+    'perms': 'That page does not exist.'
 }
 
 @login_required
@@ -204,18 +205,16 @@ def sort_questions(query_set, sort):
     else:
         return query_set.order_by('-last_updated')[:30]
 
-def get_questions(course, tags=None, approved=True, status='all', user=None):
+def get_questions(huts, tags=None, approved=True, status='all', user=None):
     if not user:
         return Question.objects.none()
         
     up = user.get_profile()
-    qs = Question.objects.filter(approved=approved, course__in=up.courses.all())
+    qs = Question.objects.filter(approved=approved, course__in=huts)
     
     if status == 'unanswered':
         qs = qs.filter(answered=False)
-    if course != 'all':
-        course_tag = Tag.objects.get(title=course)
-        qs = qs.filter(tags=course_tag)
+
     if tags is not None:
         tag_list = tags.split(',')
         for tag in tag_list:
@@ -229,20 +228,26 @@ def get_questions(course, tags=None, approved=True, status='all', user=None):
     
 def get_course(request):
     if 'hut' in request.GET:
-        return request.GET['hut']
+        hut_text = request.GET['hut']
+        hut = Course.objects.get(title=hut_text)
+        return [hut], hut_text
+
     courses = request.user.get_profile().courses.all()
     if len(courses) == 1:
-        return courses[0].title
-    return 'all'
+        return [courses[0]], courses[0].title
+    return courses, 'all'
+    
+def get_sort_method(request):
+    return request.GET['sort'] if 'sort' in request.GET else 'recent'
     
 @login_required  
 def questions_display(request, message=None):
-    sort = request.GET['sort'] if 'sort' in request.GET else 'recent'
-    course = get_course(request)    
+    sort = get_sort_method(request)
+    hut_list, hut = get_course(request)    
     tags = request.GET['tags'] if 'tags' in request.GET else None
     status = request.GET['status'] if 'status' in request.GET else 'all'
         
-    query_set = get_questions(course=course, tags=tags, status=status, user=request.user)
+    query_set = get_questions(huts=hut_list, tags=tags, status=status, user=request.user)
     query_set = sort_questions(query_set=query_set, sort=sort)
     
     return render_to_response(
@@ -251,7 +256,7 @@ def questions_display(request, message=None):
             'user': request.user,
             'questions': query_set,
             'sort': sort,
-            'hut': course,
+            'hut': hut,
             'status': status,
             'courses': request.user.get_profile().courses.all(),
             'message': message
@@ -277,7 +282,12 @@ def index(request, message=None):
         )
     else:
         return questions_display(request=request, message=message)
-        
+     
+def can_see_question(user, question):
+    up = user.get_profile()
+    hut = question.course
+    return hut in up.courses.all() 
+       
 @login_required  
 def question_view(request, id=None):
     if not id: 
@@ -288,9 +298,14 @@ def question_view(request, id=None):
         the_msg = request.GET['msg']
         if the_msg in MESSAGES:
             message = MESSAGES[the_msg]
-        
+    
+    
         
     question = get_object_or_404(Question, pk=id)
+    
+    if not can_see_question(user=request.user, question=question):
+        return redirect('/?msg=perms')
+    
     question.views += 1
     question.save()
     return render_to_response(
