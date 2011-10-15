@@ -585,6 +585,10 @@ a.vote-arrow.down-arrow.voted{
     font-weight: bold;
 }
 
+.showdown p{
+    margin-bottom: 15px;
+}
+
 .showdown pre{
     background-color: #EEE;
     font-size: 12px;
