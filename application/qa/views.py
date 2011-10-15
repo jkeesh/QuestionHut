@@ -79,6 +79,16 @@ def join_hut(request):
     return json_response({
         'status': 'ok'
     })
+
+@login_required
+def drop_hut(request):
+    hut_id = request.POST['hut']
+    hut = Course.objects.get(pk=hut_id)    
+    role = Role.objects.get(hut=hut, profile=request.user.get_profile())
+    role.delete()
+    return json_response({
+        'status': 'ok'
+    })
     
 
 @csrf_protect
@@ -295,7 +305,10 @@ def get_sort_method(request):
 @login_required  
 def questions_display(request, message=None):
     sort = get_sort_method(request)
-    hut_list, hut = get_course(request)    
+    hut_list, hut = get_course(request)   
+    if len(hut_list) == 0:
+        return redirect('/huts')
+         
     tags = request.GET['tags'] if 'tags' in request.GET else None
     status = request.GET['status'] if 'status' in request.GET else 'all'
         

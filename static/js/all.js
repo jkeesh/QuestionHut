@@ -95,6 +95,11 @@ function Joiner(){
              D.log(hut_to_join);
              that.join(hut_to_join);
         });
+        
+        $('a[data-drop]').click(function(){
+            var hut_to_join = $(this).attr('data-drop');
+            that.drop(hut_to_join);
+        });
     }
     
     that.join = function(hut){
@@ -113,6 +118,23 @@ function Joiner(){
             }
         });
     
+    }
+    
+    that.drop = function(hut){
+        $.ajax({
+            type: "POST",
+            url: '/ajax/drop_hut',
+            dataType: 'JSON',
+            data: {
+                hut: hut
+            },
+            success: function(result){
+                D.log(result);
+                if(result.status == 'ok'){
+                    window.location.reload();
+                }
+            }
+        });
     }
     
     

@@ -637,6 +637,8 @@ pre, code{
 .hut{
     margin-top: 15px;
 }
-.hut:hover{
-    text-decoration: underline;
+
+a.hut-status{
+    font-size: 12px;
+    margin-left: 15px;
 }

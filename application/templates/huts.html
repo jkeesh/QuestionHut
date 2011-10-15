@@ -14,8 +14,16 @@
 {% for hut in huts %}
 <div class="hut">
 	<a href="/questions?hut={{hut}}">{{ hut|upper }}</a>
+	
+	<a class="hut-status" href="#" data-drop="{{hut.id}}">Drop</a>
 </div>
 {% endfor %}
+
+{% if huts|length == 0 %}
+<div>
+	You aren't in any huts yet! Join a hut below.
+</div>
+{% endif %}
 
 
 <div class="spacer"></div>
@@ -24,9 +32,16 @@
 
 {% for hut in other %}
 <div class="hut">
-	<a href="#" data-join="{{hut.id}}">{{ hut|upper }} (Join)</a>
+	<a class="#">{{hut|upper}}</a>
+	<a class="hut-status" href="#" data-join="{{hut.id}}">Join</a>
 </div>
 {% endfor %}
+
+{% if other|length == 0 %}
+<div>
+	There are no more huts to join!
+</div>
+{% endif %}
 
 
 
