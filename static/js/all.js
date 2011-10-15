@@ -100,13 +100,16 @@ function Joiner(){
     that.join = function(hut){
         $.ajax({
             type: "POST",
-            url: 'ajax/join_hut',
+            url: '/ajax/join_hut',
             dataType: 'JSON',
             data: {
                 hut: hut
             },
             success: function(result){
                 D.log(result);
+                if(result.status == 'ok'){
+                    window.location.reload();
+                }
             }
         });
     

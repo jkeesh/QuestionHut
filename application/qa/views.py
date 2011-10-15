@@ -69,6 +69,17 @@ def huts(request):
         context_instance = RequestContext(request)
     )
     
+    
+@login_required
+def join_hut(request):
+    hut_id = request.POST['hut']
+    hut = Course.objects.get(pk=hut_id)    
+    role = Role(hut=hut, profile=request.user.get_profile())
+    role.save()
+    return json_response({
+        'status': 'ok'
+    })
+    
 
 @csrf_protect
 @login_required  
