@@ -531,7 +531,7 @@ a.vote-arrow.down-arrow.voted{
 
 .error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
 .notice     { background: #fff6bf; color: #514721; border-color: #ffd324; }
-.success    { background: #e6efc2; color: #264409; border-color: #c6d880; }
+.success    { background: #e6efc2; color: #264409; border-color: #c6d880; font-weight: bold; }
 .info                   { background: #d5edf8; color: #205791; border-color: #92cae4; }
 .error a, .alert a { color: #8a1f11; font-weight: bold; }
 .notice a   { color: #514721; font-weight: bold; }
