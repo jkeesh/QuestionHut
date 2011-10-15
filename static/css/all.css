@@ -600,6 +600,10 @@ a.vote-arrow.down-arrow.voted{
     -webkit-box-shadow: rgba(0, 0, 0, 0.0664062) 0px 1px 2px inset;
 }
 
+.showdown ol{
+    list-sytle-type: decimal;
+}
+
 .showdown p code{
     background-color: #EEE;
     font-size: 12px;
