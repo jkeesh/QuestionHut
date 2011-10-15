@@ -602,6 +602,7 @@ a.vote-arrow.down-arrow.voted{
 
 .showdown ol{
     list-style-type: decimal;
+    margin-left: 18px;
 }
 
 .showdown p code{
