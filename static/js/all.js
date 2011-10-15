@@ -76,10 +76,46 @@ $(document).ready(function(){
         var approver = new Approver();
     }
     
+    if(path.indexOf('huts') != -1){
+        var jointer = new Joiner();
+    }
+    
     if(typeof INFINITE_SCROLL !== 'undefined' && INFINITE_SCROLL){
         D.log('infinite scroll on');
     }
 });
+
+
+function Joiner(){
+    var that = {};
+    
+    that.setup = function(){
+        $('a[data-join]').click(function(){
+             var hut_to_join = $(this).attr('data-join');
+             D.log(hut_to_join);
+             that.join(hut_to_join);
+        });
+    }
+    
+    that.join = function(hut){
+        $.ajax({
+            type: "POST",
+            url: 'ajax/join_hut',
+            dataType: 'JSON',
+            data: {
+                hut: hut
+            },
+            success: function(result){
+                D.log(result);
+            }
+        });
+    
+    }
+    
+    
+    that.setup();
+    return that;
+}
 
 
 function AnswerSelector(){

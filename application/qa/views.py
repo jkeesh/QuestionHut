@@ -57,10 +57,14 @@ def can_see_question(user, question):
 @login_required
 def huts(request):
     # Show a user all of their 'huts'
+    all_huts = Course.objects.all()
+    user_huts = request.user.get_profile().courses.all()
+    other_huts = set(all_huts) - set(user_huts)
     return render_to_response(
         "huts.html",
         {
-            'huts': request.user.get_profile().courses.all()
+            'huts': user_huts,
+            'other': other_huts
         },
         context_instance = RequestContext(request)
     )

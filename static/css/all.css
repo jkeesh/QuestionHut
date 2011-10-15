@@ -611,6 +611,10 @@ pre, code{
     font: normal normal normal 12px/normal 'Bitstream Vera Sans Mono', Courier, monospace;    
 }
 
+.spacer{
+    height: 30px;
+}
+
 
 /* Live Preview */
 .preview-title{

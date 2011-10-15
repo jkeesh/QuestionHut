@@ -18,4 +18,18 @@
 {% endfor %}
 
 
+<div class="spacer"></div>
+
+<h1>Join a Hut</h1>
+
+{% for hut in other %}
+<div class="hut">
+	<a href="#" data-join="{{hut.id}}">{{ hut|upper }} (Join)</a>
+</div>
+{% endfor %}
+
+
+
+
+
 {% endblock %}
