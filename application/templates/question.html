@@ -69,7 +69,7 @@ This is your question, and if any of the answers answered the question, please s
 		{% load all_tags %}
 		<div class="user">
 			<div class="time-asked">
-				asked {% format_time answer.created_at %}
+				answered {% format_time answer.created_at %}
 			</div>
 			
 			{{ answer.author.name }}{% if answer.author.get_profile.bio|length > 1 %}, {{ answer.author.get_profile.bio }}{% endif %}
