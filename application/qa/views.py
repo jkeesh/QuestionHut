@@ -313,7 +313,9 @@ def questions_display(request, message=None):
     status = request.GET['status'] if 'status' in request.GET else 'all'
         
     query_set = get_questions(huts=hut_list, tags=tags, status=status, user=request.user)
-    if not query_set:
+    
+    # Explicitly check for false, since empty list [] is okay
+    if query_set == False:
         return redirect('/')
         
     query_set = sort_questions(query_set=query_set, sort=sort)
