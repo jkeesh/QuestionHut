@@ -487,7 +487,8 @@ def moderate(request):
             'sort': sort,
             'course': hut_text,
             'moderator_courses': request.user.get_profile().moderator_courses.all(),
-            'answers': answers
+            'answers': answers,
+            'test': 'test'
         },
         context_instance = RequestContext(request)
     )
