@@ -1,0 +1,9 @@
+#!/bin/sh
+GIT_WORK_TREE=/home/jkeesh/sites/questionhut.com git checkout -f
+
+## Run migrations if there are any
+cd /home/jkeesh/sites/questionhut.com/application/ && ./manage.py migrate
+
+sudo service apache2 restart
+
+

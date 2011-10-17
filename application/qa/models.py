@@ -4,13 +4,16 @@ from datetime import datetime
 
 class Course(models.Model):
     title       =   models.CharField(max_length=50)
+    slug        =   models.CharField(max_length=50, default='')
+    description =   models.CharField(max_length=200, default='')
+    default_level   =   models.IntegerField(default=1)
+    
     
     def __unicode__(self):
         return "%s" % self.title
 
 class UserProfile(models.Model):
     user        =   models.OneToOneField(User)
-#    courses     =   models.ManyToManyField(Course, related_name='students')
     courses     =   models.ManyToManyField(Course, related_name='students', through='Role')
     is_moderator=   models.BooleanField(default=False)
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
