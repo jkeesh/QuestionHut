@@ -7,6 +7,7 @@ class Course(models.Model):
     slug        =   models.CharField(max_length=50, default='')
     description =   models.CharField(max_length=200, default='')
     default_level   =   models.IntegerField(default=1)
+    public      =   models.BooleanField(default=True)
     
     
     def __unicode__(self):
