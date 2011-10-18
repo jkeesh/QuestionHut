@@ -10,6 +10,19 @@ class Course(models.Model):
     public      =   models.BooleanField(default=True)
     
     
+    @staticmethod
+    def create_course(title, public=True, default_level=1):
+        slug = title.lower().replace(' ', '-')
+        new_course = Course(title=title, slug=slug, public=public, default_level=default_level)
+        new_course.save()
+    
+    def set_description(self, description):
+        self.description = description
+        self.save()
+        
+    
+    
+    
     def __unicode__(self):
         return "%s" % self.title
 
