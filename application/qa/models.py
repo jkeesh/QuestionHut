@@ -25,7 +25,7 @@ class Course(models.Model):
     
     def __unicode__(self):
         visibility = 'public' if self.public else 'private'
-        return "%s (%s) [%S] level=%d" % (self.title, self.slug, self.visibility, self.default_level)
+        return "%s (%s) [%s] level=%d" % (self.title, self.slug, visibility, self.default_level)
 
 class UserProfile(models.Model):
     user        =   models.OneToOneField(User)
