@@ -5,11 +5,7 @@ register = template.Library()
 from qa.models import Question, Answer
 
 @register.simple_tag
-def mod_count(course):
-    print course
-    q_count = Question.objects.filter(tags__title=course, approved=False).count()
-    
-    
-    print q_count
-    a_count = Answer.objects.filter(question__course__slug=course, approved=False).count()
+def mod_count(hut):
+    q_count = Question.objects.filter(course=hut, approved=False).count()
+    a_count = Answer.objects.filter(question__course=hut, approved=False).count()
     return q_count + a_count
