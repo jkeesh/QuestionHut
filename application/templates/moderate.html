@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if course %}
-<h2>Moderate for: {{ course|upper }}</h2>
+{% if hut %}
+<h2>Moderate for: {{ hut.title }}</h2>
 {% else %}
 <h2>Choose Which Class You Want to Moderate</h2>
 {% endif %}
@@ -13,9 +13,9 @@
 	<div id="class_tabs">
 		
 		{% for mcourse in moderator_courses %}
-		<a href="/moderate?course={{mcourse}}"
-		{% if mcourse.title == course %}class="selected"{% endif %}
-		>{{mcourse|upper}} ({% mod_count mcourse %})</a>
+		<a href="/moderate?course={{mcourse.slug}}"
+		{% if mcourse.slug == course %}class="selected"{% endif %}
+		>{{mcourse.title}} ({% mod_count mcourse %})</a>
 		{% endfor %}
 	</div>
 </div>

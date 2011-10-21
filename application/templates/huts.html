@@ -13,7 +13,7 @@
 
 {% for hut in huts %}
 <div class="hut">
-	<a href="/questions?hut={{hut}}">{{ hut|upper }}</a>
+	<a href="/questions?hut={{hut.slug}}">{{ hut.title|upper }}</a>
 	
 	<a class="hut-status" href="#" data-drop="{{hut.id}}">Drop</a>
 </div>
@@ -32,7 +32,7 @@
 
 {% for hut in other %}
 <div class="hut">
-	<a class="#">{{hut|upper}}</a>
+	<a class="#">{{hut.title|upper}}</a>
 	<a class="hut-status" href="#" data-join="{{hut.id}}">Join</a>
 </div>
 {% endfor %}

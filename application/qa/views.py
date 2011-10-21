@@ -292,7 +292,7 @@ def get_course(request):
         hut_text = 'all'
 
     if hut_text != 'all':
-        hut = Course.objects.get(title=hut_text)
+        hut = Course.objects.get(slug=hut_text)
         return [hut], hut_text
 
     if len(courses) == 1:
@@ -470,9 +470,9 @@ def moderate(request):
     hut_text = request.GET['course'] if 'course' in request.GET else None    
     sort = request.GET['sort'] if 'sort' in request.GET else 'recent'    
     
-    query_set = answers = None
+    query_set = answers = hut = None
     if hut_text:   
-        hut = Course.objects.get(title=hut_text)
+        hut = Course.objects.get(slug=hut_text)
         if hut not in request.user.get_profile().moderator_courses.all():
             ## Then they cannot moderate this specific class
             return redirect('/moderate')
@@ -488,6 +488,7 @@ def moderate(request):
             'questions': query_set,
             'sort': sort,
             'course': hut_text,
+            'hut': hut,
             'moderator_courses': request.user.get_profile().moderator_courses.all(),
             'answers': answers
         },
