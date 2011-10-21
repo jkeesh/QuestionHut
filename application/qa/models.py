@@ -19,9 +19,6 @@ class Course(models.Model):
     def set_description(self, description):
         self.description = description
         self.save()
-        
-    
-    
     
     def __unicode__(self):
         visibility = 'public' if self.public else 'private'
