@@ -11,5 +11,5 @@ def mod_count(course):
     
     
     print q_count
-    a_count = Answer.objects.filter(question__course__title=course, approved=False).count()
+    a_count = Answer.objects.filter(question__course__slug=course, approved=False).count()
     return q_count + a_count
