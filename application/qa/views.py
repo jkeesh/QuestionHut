@@ -419,16 +419,15 @@ def ask_question(request):
         course_id = request.POST['course']
         course = Course.objects.get(pk=course_id)
         
+        tags = request.POST['tags'].replace(',', '').split(' ')
+        if len(tags) == 1 and len(tags[0]) == 0:
+            return ask(request, error='You need to enter some tags.', title=title, content=content)
+
         question = Question(title=title, content=content, author=request.user, course=course)
         question.save()
 
         question.add_tag(course.title)
-        
-        
-        
-        tags = request.POST['tags'].replace(',', '').split(' ')
-        if len(tags) == 1 and len(tags[0]) == 0:
-            return ask(request, error='You need to enter some tags.', title=title, content=content)
+
             
         for tag in tags:
             question.add_tag(tag)
