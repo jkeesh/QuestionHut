@@ -38,6 +38,14 @@ class UserProfile(models.Model):
     confirmation_code   =   models.CharField(max_length=100, default='')
     bio         =   models.CharField(max_length=30, default='')
     
+    def set_role(self, hut, level):
+        role = Role.objects.get(profile=self, hut=hut)
+        role.level = level
+        role.save()
+        
+    def __unicode__(self):
+        return "%s" % self.user
+    
 class Role(models.Model):
     ## Represents a persons role in a hut
     profile     = models.ForeignKey(UserProfile)
