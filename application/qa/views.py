@@ -432,7 +432,7 @@ def ask_question(request):
         question = Question(title=title, content=content, author=request.user, course=course)
         question.save()
 
-        question.add_tag(course.title)
+        question.add_tag(course.slug)
 
             
         for tag in tags:
