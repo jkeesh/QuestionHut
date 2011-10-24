@@ -399,6 +399,12 @@ def answer_question(request):
                         question=question,
                         content=content)
         answer.save()
+                        
+        if question.course.has_approved(request.user):
+            answer.approved = True
+            answer.save()
+            return redirect('/question/%s' % q_id)
+                        
         return redirect('/question/%s?msg=amod' % q_id)
     
     
