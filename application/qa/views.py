@@ -519,8 +519,18 @@ def moderate_action(request):
     
 @login_required  
 def search(request):
+    from itertools import chain
+    
     q_query = get_query(request.GET['q'], ['title', 'content'])    
+
+    a_query = get_query(request.GET['q'], ['content'])    
+
     questions = Question.objects.filter(q_query).filter(approved=True).order_by('-votes')
+
+    answers = Answer.objects.filter(a_query).filter(approved=True).order_by('-votes').values('question')
+    more = Question.objects.filter(id__in=answers)
+
+    questions = list(set(chain(questions, more)))
 
     return render_to_response(
         "search.html",
