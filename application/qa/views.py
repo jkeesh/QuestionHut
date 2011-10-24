@@ -431,7 +431,12 @@ def ask_question(request):
             
         for tag in tags:
             question.add_tag(tag)
-        
+            
+            
+        if course.has_approved(request.user):
+            question.approved = True
+            question.save()
+            return redirect('/question/%d' % question.id)
         
         return redirect('/?msg=moderation')
     

@@ -19,6 +19,12 @@ class Course(models.Model):
     def set_description(self, description):
         self.description = description
         self.save()
+        
+    def has_approved(self, user):
+        """Return if this user has auto-posting permissions. This is true if their level is
+        >= APPROVED"""
+        role = Role.objects.get(hut=self, profile=user.get_profile())
+        return role.level >= Role.APPROVED
     
     def __unicode__(self):
         visibility = 'public' if self.public else 'private'
