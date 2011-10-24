@@ -74,7 +74,7 @@ def huts(request):
 def join_hut(request):
     hut_id = request.POST['hut']
     hut = Course.objects.get(pk=hut_id)    
-    role = Role(hut=hut, profile=request.user.get_profile())
+    role = Role(hut=hut, profile=request.user.get_profile(), level=hut.default_level)
     role.save()
     return json_response({
         'status': 'ok'
