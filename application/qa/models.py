@@ -56,7 +56,10 @@ class Role(models.Model):
     MODERATOR   =   3
     ADMIN       =   4
     
-    level       = models.IntegerField(default=MEMBER)     
+    level       = models.IntegerField(default=MEMBER) 
+    
+    def __unicode__(self):
+        return "[%d] %s: %s" % (self.level, self.profile, self.hut)    
     
 
 class Tag(models.Model):
