@@ -54,11 +54,15 @@ class UserProfile(models.Model):
     def remove_points(self, points):
         self.change_points(-points)
         
-    def moderator_huts(self):
+    def moderator_roles(self):
         return Role.objects.filter(profile=self, level__gte=Role.MODERATOR)
         
+    def moderator_huts(self):
+        huts = self.moderator_roles()
+        return Course.objects.filter(id__in=huts)        
+        
     def is_hut_moderator(self):
-        return self.moderator_huts().count() > 0
+        return self.moderator_roles().count() > 0
         
     def __unicode__(self):
         return "%s" % self.user

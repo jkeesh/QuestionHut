@@ -474,7 +474,8 @@ def select_answer(request):
         
 @login_required  
 def moderate(request):
-    if not request.user.is_authenticated() or not request.user.get_profile().is_moderator:
+    profile = request.user.get_profile()
+    if not request.user.is_authenticated() or not profile.is_hut_moderator():
         return redirect('/')
 
     hut_text = request.GET['course'] if 'course' in request.GET else None    
@@ -483,7 +484,7 @@ def moderate(request):
     query_set = answers = hut = None
     if hut_text:   
         hut = Course.objects.get(slug=hut_text)
-        if hut not in request.user.get_profile().moderator_courses.all():
+        if hut not in profile.moderator_huts():
             ## Then they cannot moderate this specific class
             return redirect('/moderate')
         
@@ -499,7 +500,7 @@ def moderate(request):
             'sort': sort,
             'course': hut_text,
             'hut': hut,
-            'moderator_courses': request.user.get_profile().moderator_courses.all(),
+            'moderator_huts': profile.moderator_huts(),
             'answers': answers
         },
         context_instance = RequestContext(request)
