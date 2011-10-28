@@ -525,10 +525,12 @@ def search(request):
     q_query = get_query(request.GET['q'], ['title', 'content'])    
 
     a_query = get_query(request.GET['q'], ['content'])    
+    
+    courses = request.user.get_profile().courses.all()
 
-    questions = Question.objects.filter(q_query).filter(approved=True).order_by('-votes')
+    questions = Question.objects.filter(q_query).filter(approved=True).filter(course__in=courses).order_by('-votes')
 
-    answers = Answer.objects.filter(a_query).filter(approved=True).order_by('-votes').values('question')
+    answers = Answer.objects.filter(a_query).filter(approved=True).filter(question__course__in=courses).order_by('-votes').values('question')
     more = Question.objects.filter(id__in=answers)
 
     questions = list(set(chain(questions, more)))
