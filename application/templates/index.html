@@ -88,7 +88,15 @@ var INFINITE_SCROLL = true;
 					{{ question.author }}
 				</span>
 			</div>
+			
+
 		</div>
+		
+		{% if not question.course.public %}
+		<div class="question-locked">
+			<img src="/static/images/lock.png"/>
+		</div>
+		{% endif %}
 		
 	</div>
 {% endfor %}

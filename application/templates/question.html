@@ -35,7 +35,7 @@ This is your question, and if any of the answers answered the question, please s
 		<div class="main showdown">{{ question.content|urlize }}</div>
 		<div class="tags">
 			{% for tag in question.tags.all %}
-				<a href="/questions?tags={{tag.title}}" class="tag">{{ tag.title }}</a>
+				<a href="/questions?hut={{question.course.slug}}&amp;tags={{tag.title}}" class="tag">{{ tag.title }}</a>
 			{% endfor %}
 		</div>
 		

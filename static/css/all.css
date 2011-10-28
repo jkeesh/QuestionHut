@@ -270,6 +270,17 @@ h3.moderate{
     font-weight: bold;
 }
 
+.question-locked{
+    float: left;
+    margin-left: 22px;
+    margin-top: 10px;
+    width: 20px;
+}
+
+.question-locked img{
+    width: 20px;
+}
+
 /* Bottom Right Corner of Index Question List */
 .started{
     float: right;
@@ -280,6 +291,8 @@ h3.moderate{
 .started .question-time{
     font-weight: bold;
 }
+
+
 
 /* Tags */
 .question-summary .tags{
@@ -408,9 +421,12 @@ textarea{
 
 #question_class_area select{
     margin-bottom: 5px;
-    width: 100px;
+    width: 300px;
+    height: 40px;
+    font-size: 25px;
+    font-weight: bold;
+    border: 1px solid black;
 }
-
 .class-options{
     float: left;
 }
