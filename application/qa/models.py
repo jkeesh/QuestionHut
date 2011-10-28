@@ -112,8 +112,6 @@ class Vote(models.Model):
         obj, points = self.get_object()
                     
         obj.votes += score_change
-#        point_diff = points[0] if score_change == 1 else points[1]
-#        obj.author.get_profile().change_points(point_diff)
         obj.save()
         return obj.votes
         
