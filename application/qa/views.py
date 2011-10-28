@@ -541,3 +541,12 @@ def search(request):
         },
         context_instance = RequestContext(request)
     )
+    
+def faq(request):
+    return render_to_response(
+        "faq.html",
+        {
+            'user': request.user    
+        },
+        context_instance = RequestContext(request)
+    )
