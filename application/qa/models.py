@@ -203,6 +203,10 @@ class Question(models.Model):
         return len(self.answers.filter(approved=True))
     
     def deselect_all_answers(self):
+        previous = self.answers.filter(selected=True)
+        if len(previous) == 1:
+            previous[0].author.get_profile().remove_points(Points.ANSWER_ACCEPTED)
+        
         self.answers.all().update(selected=False)
     
     def select_answer(self, answer):

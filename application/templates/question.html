@@ -46,6 +46,7 @@ This is your question, and if any of the answers answered the question, please s
 			</div>
 			
 			{{ question.author.name }}{% if question.author.get_profile.bio|length > 1 %}, {{ question.author.get_profile.bio }}{% endif %}
+			, <span class="box-points">{{ question.author.get_profile.points }}</span>
 		</div>
 	</div>
 </div>
@@ -73,6 +74,7 @@ This is your question, and if any of the answers answered the question, please s
 			</div>
 			
 			{{ answer.author.name }}{% if answer.author.get_profile.bio|length > 1 %}, {{ answer.author.get_profile.bio }}{% endif %}
+			, <span class="box-points">{{ answer.author.get_profile.points }}</span>
 		</div>
 	</div>
 </div>	

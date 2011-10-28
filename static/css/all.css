@@ -302,6 +302,10 @@ a.tag:hover{
 
 /* Question Page */
 
+.box-points{
+    font-weight: bold;
+}
+
 .answer{
     overflow: hidden;
     padding: 15px 0;
