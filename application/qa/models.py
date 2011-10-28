@@ -37,6 +37,7 @@ class UserProfile(models.Model):
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
     confirmation_code   =   models.CharField(max_length=100, default='')
     bio         =   models.CharField(max_length=30, default='')
+    points      =   models.PositiveIntegerField(default=1)
     
     def set_role(self, hut, level):
         role = Role.objects.get(profile=self, hut=hut)
