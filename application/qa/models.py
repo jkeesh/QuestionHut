@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+class Points():
+    ANSWER_UPVOTE   = 10
+    ANSWER_DOWNVOTE = -2
+    QUESTION_UPVOTE = 5
+    QUESTION_DOWNVOTE = -2
+    ANSWER_ACCEPTED = 15
+
 class Course(models.Model):
     title       =   models.CharField(max_length=50)
     slug        =   models.CharField(max_length=50, default='')
@@ -46,6 +53,8 @@ class UserProfile(models.Model):
         
     def change_points(self, points):
         self.points += points
+        if self.points < 1:
+            self.points = 1
         self.save()
         
     def add_points(self, points):
@@ -100,14 +109,38 @@ class Vote(models.Model):
     kind        =   models.CharField(max_length=1, choices=VOTE_TYPES)
     
     def update_vote_count(self, score_change):
-        if self.kind == 'A':
-            obj = Answer.objects.get(pk=self.obj_id)
-        else:
-            obj = Question.objects.get(pk=self.obj_id)
+        obj, points = self.get_object()
                     
         obj.votes += score_change
+#        point_diff = points[0] if score_change == 1 else points[1]
+#        obj.author.get_profile().change_points(point_diff)
         obj.save()
         return obj.votes
+        
+    def get_object(self):
+        if self.kind == 'A':
+            obj = Answer.objects.get(pk=self.obj_id)
+            points = (Points.ANSWER_UPVOTE, Points.ANSWER_DOWNVOTE)
+        else:
+            obj = Question.objects.get(pk=self.obj_id)
+            points = (Points.QUESTION_UPVOTE, Points.QUESTION_DOWNVOTE)
+            
+        return obj, points
+        
+    def undo_points(self):
+        """Since a vote was undone, the full amount of the points should be removed from the user."""
+        obj, points = self.get_object()
+        point_diff = points[0] if self.score == 1 else points[1]
+        obj.author.get_profile().change_points(-point_diff)
+        
+    def add_points(self):
+        obj, points = self.get_object()
+        print obj
+        print points
+        point_diff = points[0] if self.score == 1 else points[1]
+        print point_diff
+        obj.author.get_profile().change_points(point_diff)
+        
         
     def undo(self, new_score):
         ## If the new score == old score, this is an 'undo'
@@ -116,6 +149,7 @@ class Vote(models.Model):
         undo_change = self.score * -1 # This undoes the vote
         votes = self.update_vote_count(undo_change)
         if should_delete:
+            self.undo_points()
             self.delete()
         return should_delete, votes
     
@@ -123,6 +157,7 @@ class Vote(models.Model):
     def submit_vote(request):
         new_score = int(request.POST['action'])
         
+        created = False
         try:
             vote = Vote.objects.get(
                             user=request.user, 
@@ -137,9 +172,12 @@ class Vote(models.Model):
                             user=request.user,
                             kind=request.POST['type'],
                             obj_id=request.POST['id']
-                        )        
+                        )
+            created = True
         vote.score = new_score
         vote.save()
+        if created:
+            vote.add_points()        
         return vote.update_vote_count(new_score)
     
     def __unicode__(self):
@@ -173,6 +211,8 @@ class Question(models.Model):
         self.deselect_all_answers()
         answer.selected = True
         answer.save()
+        ## give points to answerer
+        answer.author.get_profile().add_points(Points.ANSWER_ACCEPTED)
         self.answered = True
         self.save()
         
