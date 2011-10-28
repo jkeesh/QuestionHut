@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for u in users %}
-<div class="user">{{u.user.name}}</div>
+<div class="user">{{u.user.name}} <span class="points">{{u.points}}</span></div>
 {% endfor %}
 
 {% endblock %}

@@ -701,6 +701,9 @@ a.hut-status{
     font-size: 15px;
     padding: 5px;
 }
+.user .points{
+    font-weight: bold;
+}
 h2.user-link{
     margin-left: 10px;
 }
