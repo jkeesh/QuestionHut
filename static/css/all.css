@@ -651,3 +651,27 @@ a.hut-status{
     font-size: 12px;
     margin-left: 15px;
 }
+
+
+/* FAQ Page */
+.page-title{
+    font-size: 30px;
+    font-weight: bold;
+}
+.faq-question{
+    font-family: Trebuchet MS;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0px;
+}
+
+.faq-answer, .faq-tabbed, .faq-answer a{
+    font-family: Arial;
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.faq-tabbed{
+    margin-left: 40px;
+    padding: 5px;
+}
