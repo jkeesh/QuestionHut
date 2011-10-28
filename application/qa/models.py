@@ -44,6 +44,22 @@ class UserProfile(models.Model):
         role.level = level
         role.save()
         
+    def change_points(self, points):
+        self.points += points
+        self.save()
+        
+    def add_points(self, points):
+        self.change_points(points)
+        
+    def remove_points(self, points):
+        self.change_points(-points)
+        
+    def moderator_huts(self):
+        return Role.objects.filter(profile=self, level__gte=Role.MODERATOR)
+        
+    def is_hut_moderator(self):
+        return self.moderator_huts().count() > 0
+        
     def __unicode__(self):
         return "%s" % self.user
     
