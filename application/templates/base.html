@@ -51,9 +51,12 @@
 					<a href="/huts">My Huts</a>
 				</span>
 			
+				<span class="top" title="Reputation">
+					{{ user.get_profile.points }}
+				</span>
 				
 				<span class="top">
-					Hello, {{ user.first_name }} {{ user.last_name }}
+					{{ user.first_name }} {{ user.last_name }} 
 				</span>
 			</div>
 			
