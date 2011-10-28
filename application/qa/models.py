@@ -38,15 +38,14 @@ class Course(models.Model):
             level = self.default_level
         role = Role(hut=self, profile=user.get_profile(), level=level)
         role.save()
-        
-    
+            
     def __unicode__(self):
         visibility = 'public' if self.public else 'private'
         return "%s (%s) [%s] level=%d" % (self.title, self.slug, visibility, self.default_level)
 
 class UserProfile(models.Model):
     user        =   models.OneToOneField(User)
-    courses     =   models.ManyToManyField(Course, related_name='students', through='Role')
+    courses     =   models.ManyToManyField(Course, related_name='members', through='Role')
     is_moderator=   models.BooleanField(default=False)
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
     confirmation_code   =   models.CharField(max_length=100, default='')
