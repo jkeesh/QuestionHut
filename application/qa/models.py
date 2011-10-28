@@ -32,6 +32,13 @@ class Course(models.Model):
         >= APPROVED"""
         role = Role.objects.get(hut=self, profile=user.get_profile())
         return role.level >= Role.APPROVED
+        
+    def add_user(self, user, level=None):
+        if not level:
+            level = self.default_level
+        role = Role(hut=self, profile=user.get_profile(), level=level)
+        role.save()
+        
     
     def __unicode__(self):
         visibility = 'public' if self.public else 'private'
