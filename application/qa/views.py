@@ -296,7 +296,7 @@ def get_course(request):
         return [hut], hut_text
 
     if len(courses) == 1:
-        return [courses[0]], courses[0].title
+        return [courses[0]], courses[0].slug
     return courses, hut_text
     
 def get_sort_method(request):
