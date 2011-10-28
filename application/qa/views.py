@@ -566,7 +566,7 @@ def users(request):
         "users.html",
         {
             'user': request.user,
-            'users': hut.members.all(),
+            'users': hut.members.all().order_by('-points'),
             'hut': hut  
         },
         context_instance = RequestContext(request)
