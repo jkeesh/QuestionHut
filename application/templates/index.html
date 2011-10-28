@@ -74,7 +74,7 @@ var INFINITE_SCROLL = true;
 			{% load all_tags %}
 			<span class="tags">
 				{% for tag in question.tags.all %}
-					<a href="/questions?tags={{tag.title}}" class="tag">{{ tag.title }}</a>
+					<a href="/questions?hut={{hut}}&amp;tags={{tag.title}}" class="tag">{{ tag.title }}</a>
 				{% endfor %}
 			</span>
 			
