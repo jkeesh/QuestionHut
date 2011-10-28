@@ -13,7 +13,11 @@ var INFINITE_SCROLL = true;
 
 
 <div id="tabs_container">
-	<h2>Hut: {{ hut.title }}</h2>	
+	<h2>Hut: {{ hut.title }}</h2>
+	
+	{% if hut != 'all' %}
+	<h2 class="user-link"><a href="/users?hut={{hut}}">Users</a></h2>
+	{% endif %}
 
 	<div id="sort_tabs">
 		<a href="/questions?hut={{hut}}&amp;sort=recent" 

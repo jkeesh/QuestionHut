@@ -552,3 +552,23 @@ def faq(request):
         },
         context_instance = RequestContext(request)
     )
+    
+def users(request):
+    hut = request.GET['hut'] if 'hut' in request.GET else ''
+    try:
+        hut = Course.objects.get(slug=hut)
+    except Course.DoesNotExist:
+        return redirect('/')
+    
+    if not has_permission(user=request.user, huts=[hut]):
+        return redirect('/')
+    return render_to_response(
+        "users.html",
+        {
+            'user': request.user,
+            'users': hut.members.all(),
+            'hut': hut  
+        },
+        context_instance = RequestContext(request)
+    )
+    

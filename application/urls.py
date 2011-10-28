@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     
     (r'^questions/?$', 'qa.views.questions_display'),
     
+    (r'^users/?$', 'qa.views.users'),
     (r'^search/?$', 'qa.views.search'),
     
     (r'^admin/', include(admin.site.urls)),

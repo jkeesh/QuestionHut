@@ -695,3 +695,12 @@ a.hut-status{
     margin-left: 40px;
     padding: 5px;
 }
+
+/* Users */
+.user{
+    font-size: 15px;
+    padding: 5px;
+}
+h2.user-link{
+    margin-left: 10px;
+}
