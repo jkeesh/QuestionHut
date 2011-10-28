@@ -345,7 +345,7 @@ def index(request, message=None):
         return render_to_response(
             "login.html",
             {
-                'courses': Course.objects.all(),
+                'courses': Course.objects.filter(public=True),
                 'message': message
             },
             context_instance = RequestContext(request)
