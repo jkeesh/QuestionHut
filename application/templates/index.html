@@ -20,15 +20,17 @@ var INFINITE_SCROLL = true;
 	{% endif %}
 
 	<div id="sort_tabs">
-		<a href="/questions?hut={{hut}}&amp;sort=recent" 
+		<a href="/questions?hut={{hut}}&amp;time={{time}}&amp;sort=recent" 
 		{% if sort == 'recent' %}class="selected "{% endif %}>Recent</a>
-		<a href="/questions?hut={{hut}}&amp;sort=best"
+		<a href="/questions?hut={{hut}}&amp;time={{time}}&amp;sort=best"
 		{% if sort == 'best' %}class="selected "{% endif %}>Best</a>
-		<a href="/questions?hut={{hut}}&amp;sort=popular"
+		<a href="/questions?hut={{hut}}&amp;time={{time}}&amp;sort=popular"
 		{% if sort == 'popular' %}class="selected "{% endif %}>Popular</a>
 	</div>
 </div>
 
+
+	
 <div id="all_questions">
 {% for question in questions %}
 	<div class="question-item">
@@ -106,5 +108,20 @@ var INFINITE_SCROLL = true;
 {% endfor %}
 </div>
 
+<div id="sidebar">
+	<div id="time_tabs">
+		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=today" 
+		{% if time == 'today' %}class="selected "{% endif %}>Today</a>
+		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=week" 
+		{% if time == 'week' %}class="selected "{% endif %}>This Week</a>
+		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=month" 
+		{% if time == 'month' %}class="selected "{% endif %}>This Month</a>
+		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=quarter" 
+		{% if time == 'quarter' %}class="selected "{% endif %}>This Quarter</a>
+		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=all" 
+		{% if time == 'all' %}class="selected "{% endif %}>All Time</a>
+	</div>
+
+</div>
 
 {% endblock %}

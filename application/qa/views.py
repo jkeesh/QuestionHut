@@ -302,9 +302,29 @@ def get_course(request):
 def get_sort_method(request):
     return request.GET['sort'] if 'sort' in request.GET else 'recent'
     
+def get_time_limit(request):
+    return request.GET['time'] if 'time' in request.GET else 'all'
+    
+    
+def time_period(query_set, time):
+    import datetime
+    now = datetime.datetime.now()
+    if time == 'today':
+        day = datetime.timedelta(days=1)
+        return query_set.filter(created_at__gte=now-day)        
+    if time == 'week':
+        week = datetime.timedelta(days=7)
+        return query_set.filter(created_at__gte=now-week)
+    elif time == 'month':
+        month = datetime.timedelta(weeks=4)
+        return query_set.filter(created_at__gte=now-month)
+    else:
+        return query_set
+    
 @login_required  
 def questions_display(request, message=None):
     sort = get_sort_method(request)
+    time = get_time_limit(request)
     hut_list, hut = get_course(request)   
     if len(hut_list) == 0:
         return redirect('/huts')
@@ -317,7 +337,8 @@ def questions_display(request, message=None):
     # Explicitly check for false, since empty list [] is okay
     if query_set == False:
         return redirect('/')
-        
+
+    query_set = time_period(query_set=query_set, time=time)    
     query_set = sort_questions(query_set=query_set, sort=sort)
     
     return render_to_response(
@@ -327,6 +348,7 @@ def questions_display(request, message=None):
             'questions': query_set,
             'sort': sort,
             'hut': hut,
+            'time': time,
             'status': status,
             'courses': request.user.get_profile().courses.all(),
             'message': message

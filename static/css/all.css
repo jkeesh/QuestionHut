@@ -133,12 +133,12 @@ input[type="text"], input[type="password"]{
 /* Base Overview */
 
 #content{
-    width: 900px;
+    width: 960px;
     margin: auto;
 }
 
 #header{
-    width: 900px;
+    width: 960px;
     margin: auto;
     overflow: hidden;
 }
@@ -199,6 +199,7 @@ input[type="text"], input[type="password"]{
 /* Index List */
 #all_questions{
     border-top: 1px solid black;
+    float: left;
 }
 
 h3.moderate{
@@ -538,6 +539,27 @@ a.vote-arrow.down-arrow.voted{
     
 }
 
+/* Time Tabs on Index */
+#sidebar{
+    float: right;
+    width: 200px;
+}
+#time_tabs{
+    width: 100px;
+}
+#time_tabs a{
+    display: block;
+    padding: 10px;
+}
+#time_tabs a.selected{
+    background-color: #777;
+    color: white;
+    font-weight: bold;
+}
+#time_tabs a:hover{
+    background-color: #eee;
+    color: #07C;
+}
 
 /* Message Classes */
 
