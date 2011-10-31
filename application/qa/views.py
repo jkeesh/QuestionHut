@@ -475,6 +475,16 @@ def ask(request, error=None, title=None, content=None):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
+        if 'select' in request.GET:
+            return render_to_response(
+                "select.html",
+                {
+                    'user': request.user,
+                    'huts': request.user.get_profile().courses.all()
+                },
+                context_instance = RequestContext(request)    
+            )
+        
         return render_to_response(
             "ask.html",
             {

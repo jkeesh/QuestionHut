@@ -465,6 +465,16 @@ a.answer-select.chosen-answer, span.answer-select.chosen-answer{
     background-position: 0px -238px;
 }
 
+/* Ask Select Hut */
+.hut-select, .hut-select a{
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.hut-select .private{
+    color: red;
+}
+
 
 /* Voting Arrows */
 a.vote-arrow{

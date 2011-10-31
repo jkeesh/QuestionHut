@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>
+	Which hut do you want to submit a question to?
+</h2>
+
+{% for hut in huts %}
+<div class="hut-select">
+	<a href="/ask?hut={{hut.slug}}">{{hut.title}}</a> 
+	{% if not hut.public %}
+	<span class="private">(Private)</span>
+	{% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}
