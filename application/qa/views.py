@@ -17,6 +17,8 @@ from django.conf import settings
 
 from qa.search import get_query
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+
 
 from django.utils import simplejson
 def json_response(obj):
@@ -263,7 +265,7 @@ def get_questions(huts=[], tags=None, approved=True, status='all', user=None):
     qs = Question.objects.filter(approved=approved, course__in=huts)
     
     if status == 'unanswered':
-        qs = qs.filter(answered=False)
+        qs = qs.annotate(num_answers=Count('answers')).filter(num_answers=0)
 
     if tags is not None:
         tag_list = tags.split(',')
