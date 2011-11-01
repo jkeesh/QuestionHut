@@ -475,6 +475,21 @@ a.answer-select.chosen-answer, span.answer-select.chosen-answer{
     color: red;
 }
 
+.answer-title{
+    font-size: 23px;
+    font-weight: bold;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    border-bottom: 1px solid #555;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+.answer-title .hutname{
+    color: #07C;
+    font-size: 23px;
+}
+.answer-title .private{
+    color: red;
+}
 
 /* Voting Arrows */
 a.vote-arrow{

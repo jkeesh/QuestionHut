@@ -446,24 +446,22 @@ def ask_question(request):
         if len(content) == 0:
             return ask(request, error='You need to enter some content to your question.', title=title)
             
-        course_id = request.POST['course']
-        course = Course.objects.get(pk=course_id)
+        hut_slug = request.POST['hut']
+        hut = Course.objects.get(slug=hut_slug)
         
         tags = request.POST['tags'].replace(',', '').split(' ')
         if len(tags) == 1 and len(tags[0]) == 0:
             return ask(request, error='You need to enter some tags.', title=title, content=content)
 
-        question = Question(title=title, content=content, author=request.user, course=course)
+        question = Question(title=title, content=content, author=request.user, course=hut)
         question.save()
 
-        question.add_tag(course.slug)
-
+        question.add_tag(hut.slug)
             
         for tag in tags:
             question.add_tag(tag)
-            
-            
-        if course.has_approved(request.user):
+                  
+        if hut.has_approved(request.user):
             question.approved = True
             question.save()
             return redirect('/question/%d' % question.id)
@@ -485,6 +483,11 @@ def ask(request, error=None, title=None, content=None):
                 context_instance = RequestContext(request)    
             )
         
+        try:
+            hut = Course.objects.get(slug=request.GET['hut'])
+        except Course.DoesNotExist:
+            return redirect('/ask?select')
+        
         return render_to_response(
             "ask.html",
             {
@@ -492,7 +495,8 @@ def ask(request, error=None, title=None, content=None):
                 'courses': request.user.get_profile().courses.all(),
                 'error': error,
                 'title': title,
-                'content': content
+                'content': content,
+                'hut': hut
             },
             context_instance = RequestContext(request)
         )

@@ -11,6 +11,17 @@
 <div class="error">{{ error }}</div>
 {% endif %}
 
+<div class="answer-title">
+	You are submitting to hut 
+	<span class="hutname">{{hut.title}}</span>
+	{% if not hut.public %}
+	<span class="private">This hut is private</span>
+	{% else %}
+	<span class="public">This hut is public</span>	
+	{% endif %}
+
+</div>
+
 <div id="ask_form">
 <form action="/ask_question" method='post'>
 	{% csrf_token %}
@@ -36,17 +47,7 @@
 			placeholder="You need at least one tag like 'karel' or 'simple-java'"/>
 	</div>
 	
-	<div id="question_class_area">
-		<div class="form-label">Class</div>
-		
-		<div class="class-options">
-		<select name="course">
-		{% for course in courses %}
-		  <option value="{{course.id}}">{{course.title}}</option>
-		{% endfor %}
-		</select>
-		</div>
-	</div>
+	<input type="hidden" name="hut" value="{{hut.slug}}" />
 	
 	<div class="ask-form-submit">
 		<input id="question_submit" type="submit" value="Submit Question">
