@@ -73,7 +73,7 @@ class UserProfile(models.Model):
         return Role.objects.filter(profile=self, level__gte=Role.MODERATOR)
         
     def moderator_huts(self):
-        huts = self.moderator_roles()
+        huts = self.moderator_roles().values('hut')
         return Course.objects.filter(id__in=huts)        
         
     def is_hut_moderator(self):
