@@ -242,6 +242,10 @@ class Question(models.Model):
         
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.title, self.votes)
+        
+    def get_comments(self):
+        """Return the comments for this question"""
+        return Comment.objects.filter(kind=Comment.QUESTION_TYPE, obj_id=self.id)
        
 class Answer(models.Model):
     author      =   models.ForeignKey(User)
