@@ -262,6 +262,36 @@ class Answer(models.Model):
     
     def __unicode__(self):
         return "%s: %s (%d)" % (self.author, self.content[:15], self.votes)
+        
+    def get_comments(self):
+        """Return the comments for this answer"""
+        return Comment.objects.filter(kind=Comment.ANSWER_TYPE, obj_id=self.id)
+        
+class Comment(models.Model):
+    author      =   models.ForeignKey(User)
+    content     =   models.TextField()
+    votes       =   models.IntegerField(default=0)
+    created_at  =   models.DateTimeField(auto_now_add=True)
+
+    QUESTION_TYPE   =   'Q'
+    ANSWER_TYPE     =   'A'
+    
+    PARENT_TYPES = (
+        (QUESTION_TYPE, 'Question'),
+        (ANSWER_TYPE, 'Answer'),
+    )
+    
+    kind        =   models.CharField(max_length=1, choices=PARENT_TYPES)
+    obj_id      =   models.PositiveIntegerField()
+    
+    def __unicode__(self):
+        return "[%s] %s - %s (%d)" % (self.kind, self.content, self.author, self.votes)
+        
+    def parent(self):
+        if self.kind == Comment.QUESTION_TYPE:
+            return Question.objects.get(pk=self.obj_id)
+        return Answer.objects.get(pk=self.obj_id)
+    
     
     
 class UserMethods:
