@@ -54,6 +54,11 @@ This is your question, and if any of the answers answered the question, please s
 			, <span class="box-points">{{ question.author.get_profile.points }}</span>
 		</div>
 	</div>
+	<div class="clear"></div>
+
+	{% with obj=question kind='Q' kind_str='question'  %}
+	{% include "comment_list.html" %}
+	{% endwith %}
 </div>
 
 <div id="answer_count">
@@ -82,6 +87,12 @@ This is your question, and if any of the answers answered the question, please s
 			, <span class="box-points">{{ answer.author.get_profile.points }}</span>
 		</div>
 	</div>
+	
+	<div class="clear"></div>
+	
+	{% with obj=answer kind='A' kind_str='answer' %}
+	{% include "comment_list.html" %}
+	{% endwith %}
 </div>	
 
 {% endfor %}

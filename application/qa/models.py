@@ -289,12 +289,23 @@ class Comment(models.Model):
     obj_id      =   models.PositiveIntegerField()
     
     def __unicode__(self):
-        return "[%s] %s - %s (%d)" % (self.kind, self.content, self.author, self.votes)
+        return "[%s:%d] %s - %s (%d)" % (self.kind, self.obj_id, self.content, self.author, self.votes)
         
     def parent(self):
         if self.kind == Comment.QUESTION_TYPE:
             return Question.objects.get(pk=self.obj_id)
         return Answer.objects.get(pk=self.obj_id)
+    
+    @staticmethod
+    def create(author, content, obj):
+        if type(obj) == Answer:
+            kind = Comment.ANSWER_TYPE
+        else:
+            kind = Comment.QUESTION_TYPE
+            
+        comment = Comment(author=author, content=content, obj_id=obj.id, kind=kind)
+        comment.save()
+        return comment
     
     
     

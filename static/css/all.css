@@ -351,6 +351,8 @@ a.tag:hover{
     line-height: 18px;
     width: 660px;
     float: left;
+    border-bottom: dotted 1px #AAA;
+    padding-bottom: 15px;
 }
 
 .text .main{
@@ -753,4 +755,38 @@ a.hut-status{
 }
 h2.user-link{
     margin-left: 10px;
+}
+
+
+/* Comments */
+.comment-list{
+    width: 450px;
+    margin-left: 100px;
+    margin-top: 9px;
+}
+
+.comment{
+    background-color: #EDEFF4;
+    border-bottom: 1px solid #D2D9E7;
+    padding: 8px;
+}
+
+.comment-author{
+    font-weight: bold;
+    color: #3B5998;
+}
+
+.comment-time{
+    color: gray;
+    font-size: 11px;
+    margin-top: 4px;
+    margin-left: 20px;
+}
+
+.comment-textarea{
+    width: 440px;
+}
+
+.comment-list input[type=submit]{
+    float: right;
 }

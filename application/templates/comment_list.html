@@ -1,0 +1,12 @@
+<div class="comment-list">
+	{% for comment in obj.get_comments %}
+		{% include "comment.html" %}
+	{% endfor %}
+	
+	<form type="POST" action="/submit_comment">
+		<textarea class="comment-textarea" placeholder="Comment on this {{kind_str}}." name="content"></textarea>
+		<input type="hidden" name="kind" value="{{kind}}" />
+		<input type="hidden" name="obj_id" value="{{obj.id}}" />
+		<input type="submit" value="Submit" />
+	</form>
+</div>
