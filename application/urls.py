@@ -27,6 +27,9 @@ urlpatterns = patterns('',
     (r'^ajax/join_hut$', 'qa.views.join_hut'),
     (r'^ajax/drop_hut$', 'qa.views.drop_hut'),
     
+    
+    (r'^submit_comment$', 'qa.views.submit_comment'),
+    
     (r'^moderate/?$', 'qa.views.moderate'),
     
     (r'^questions/?$', 'qa.views.questions_display'),

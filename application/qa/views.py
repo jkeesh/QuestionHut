@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 # Models
 from django.contrib.auth.models import User
-from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role
+from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment
 import re
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
@@ -408,6 +408,18 @@ def question_view(request, id=None):
         },
         context_instance = RequestContext(request)
     )
+    
+@login_required
+def submit_comment(request):
+    print request.POST
+    content = request.POST['content']
+    kind = request.POST['kind']
+    obj_id = request.POST['obj_id']
+    
+    comment = Comment(author=request.user, content=content, kind=kind, obj_id=obj_id)
+    comment.save()
+    return redirect('/question/' + request.POST['redirect'])
+    
     
 @login_required  
 def answer_question(request):
