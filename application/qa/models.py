@@ -257,6 +257,9 @@ class Answer(models.Model):
     selected    =   models.BooleanField(default=False)
     approved    =   models.BooleanField(default=False)
     
+    def update_timestamp(self):        
+        self.question.update_timestamp()
+    
     def moderate(self, action):
         if action == 'approve':
             self.approved = True
