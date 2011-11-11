@@ -411,10 +411,12 @@ def question_view(request, id=None):
     
 @login_required
 def submit_comment(request):
-    print request.POST
     content = request.POST['content']
     kind = request.POST['kind']
     obj_id = request.POST['obj_id']
+
+    obj = Comment.get_parent(kind=kind, obj_id=obj_id)
+    obj.update_timestamp()
     
     comment = Comment(author=request.user, content=content, kind=kind, obj_id=obj_id)
     comment.save()
