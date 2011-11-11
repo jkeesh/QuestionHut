@@ -1,7 +1,7 @@
 {% load all_tags %}
 
 <div class="comment">
-	({{comment.votes}}) 
+	<!-- ({{comment.votes}})  -->
 	<span class="comment-author">{{comment.author.name}}:</span> 
 	<span class="comment-text">{{ comment.content }}</span>
 	<div class="comment-time">{% format_time comment.created_at %}</div>
