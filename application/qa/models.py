@@ -51,6 +51,7 @@ class UserProfile(models.Model):
     confirmation_code   =   models.CharField(max_length=100, default='')
     bio         =   models.CharField(max_length=30, default='')
     points      =   models.PositiveIntegerField(default=1)
+    last_visited=   models.DateTimeField(auto_now=True, default=datetime.now())
     
     def set_role(self, hut, level):
         role = Role.objects.get(profile=self, hut=hut)
@@ -314,6 +315,7 @@ class Comment(models.Model):
             
         comment = Comment(author=author, content=content, obj_id=obj.id, kind=kind)
         comment.save()
+        comment.parent().update_timestamp()
         return comment
     
     

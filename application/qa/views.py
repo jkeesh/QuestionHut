@@ -18,6 +18,7 @@ from django.conf import settings
 from qa.search import get_query
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from datetime import datetime
 
 
 from django.utils import simplejson
@@ -343,6 +344,11 @@ def questions_display(request, message=None):
     query_set = time_period(query_set=query_set, time=time)    
     query_set = sort_questions(query_set=query_set, sort=sort)
     
+    up = request.user.get_profile()
+    last_visited = up.last_visited
+    up.last_visit = datetime.now()
+    up.save()
+    
     return render_to_response(
         "index.html",
         {
@@ -353,7 +359,8 @@ def questions_display(request, message=None):
             'time': time,
             'status': status,
             'courses': request.user.get_profile().courses.all(),
-            'message': message
+            'message': message,
+            'last_visited': last_visited
         },
         context_instance = RequestContext(request)
     )

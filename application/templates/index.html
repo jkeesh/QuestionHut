@@ -33,7 +33,11 @@ var INFINITE_SCROLL = true;
 	
 <div id="all_questions">
 {% for question in questions %}
-	<div class="question-item">
+	<div class="question-item
+	{% if question.last_updated > last_visited %}
+	highlight
+	{% endif %}
+	">
 		<div class="question-info cp"
 			onclick="window.location.href='/question/{{question.id}}'">
 			<div class="votes">

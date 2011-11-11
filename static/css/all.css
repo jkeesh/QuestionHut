@@ -220,6 +220,10 @@ h3.moderate{
     font-weight: bold;
 }
 
+.question-item.highlight{
+    background-color: #FFEFC6;
+}
+
 .question-info .votes{
     float: left;
     padding: 5px;
