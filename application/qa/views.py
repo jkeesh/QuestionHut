@@ -588,11 +588,19 @@ def search(request):
     courses = request.user.get_profile().courses.all()
 
     questions = Question.objects.filter(q_query).filter(approved=True).filter(course__in=courses).order_by('-votes')
-
     answers = Answer.objects.filter(a_query).filter(approved=True).filter(question__course__in=courses).order_by('-votes').values('question')
     more = Question.objects.filter(id__in=answers)
 
-    questions = list(set(chain(questions, more)))
+    ## Search comments on questions
+    q_comments = Comment.objects.filter(a_query).filter(kind=Comment.QUESTION_TYPE).values('obj_id')
+    comment_questions = Question.objects.filter(id__in=q_comments).filter(approved=True).filter(course__in=courses)
+
+    ## Search comments on answers
+    a_comments = Comment.objects.filter(a_query).filter(kind=Comment.ANSWER_TYPE).values('obj_id')
+    answers = Answer.objects.filter(id__in=a_comments).filter(approved=True).filter(question__course__in=courses).order_by('-votes').values('question')
+    comment_answers = Question.objects.filter(id__in=answers)
+
+    questions = list(set(chain(questions, more, comment_questions, comment_answers)))
 
     return render_to_response(
         "search.html",
