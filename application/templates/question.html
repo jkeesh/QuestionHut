@@ -9,9 +9,11 @@
 </div>
 {% endif %}
 
+{% if user.is_authenticated %}
 <div class="success">
 If you find a question or answer that was helpful, vote it up.
 </div>
+{% endif %}
 
 {% if question.author == user and not question.answered %}
 <div class="success">
@@ -97,6 +99,8 @@ This is your question, and if any of the answers answered the question, please s
 
 {% endfor %}
 
+
+{% if user.is_authenticated %}
 <div id="your_answer">
 	<h2>Your Answer</h2>
 	<h4>Formatted preview below, using <a href="http://github.github.com/github-flavored-markdown/">Github Flavored Markdown</a></h4>
@@ -118,6 +122,8 @@ This is your question, and if any of the answers answered the question, please s
 </div>
 <div id="live_preview" class="showdown">
 </div>
+
+{% endif %}
 
 
 

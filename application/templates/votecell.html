@@ -1,3 +1,5 @@
+{% if user.is_authenticated %}
+
 {% load vote_tags %}
 <a 	class='vote-arrow up-arrow
 	{% user_vote user obj type +1 %}' 
@@ -23,4 +25,6 @@
 		<span class='answer-select chosen-answer' href='#'>accept answer</span>
 		{% endif %}
 	{% endif %}
+{% endif %}
+
 {% endif %}

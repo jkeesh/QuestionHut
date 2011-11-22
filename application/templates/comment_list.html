@@ -3,6 +3,7 @@
 		{% include "comment.html" %}
 	{% endfor %}
 	
+	{% if user.is_authenticated %}
 	<form method="POST" action="/submit_comment">
 		{% csrf_token %}
 		<textarea class="comment-textarea" placeholder="Comment on this {{kind_str}}." name="content"></textarea>
@@ -11,4 +12,5 @@
 		<input type="hidden" name="redirect" value="{{question.id}}">
 		<input type="submit" value="Submit" />
 	</form>
+	{% endif %}
 </div>

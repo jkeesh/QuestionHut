@@ -53,8 +53,12 @@ MESSAGES = {
 
 ## Permissions Method
 def can_see_question(user, question):
-    up = user.get_profile()
     hut = question.course
+
+    if user.is_anonymous():
+        return question.course.public
+        
+    up = user.get_profile()
     return hut in up.courses.all()
 
 @login_required
@@ -385,7 +389,6 @@ def index(request, message=None):
         return questions_display(request=request, message=message)
 
        
-@login_required  
 def question_view(request, id=None):
     if not id: 
         return redirect('/error')
