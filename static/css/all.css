@@ -794,3 +794,17 @@ h2.user-link{
 .comment-list input[type=submit]{
     float: right;
 }
+
+/* Survey */
+#survey{
+    height: 30px;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
+#survey a{
+    font-size: 27px;   
+    font-weight: bold;
+    cursor: pointer; 
+}
