@@ -173,8 +173,9 @@ class Vote(models.Model):
 
         undo_change = self.score * -1 # This undoes the vote
         votes = self.update_vote_count(undo_change)
+        self.undo_points()
+
         if should_delete:
-            self.undo_points()
             self.delete()
         return should_delete, votes
     
@@ -201,8 +202,7 @@ class Vote(models.Model):
             created = True
         vote.score = new_score
         vote.save()
-        if created:
-            vote.add_points()        
+        vote.add_points()        
         return vote.update_vote_count(new_score)
     
     def __unicode__(self):
