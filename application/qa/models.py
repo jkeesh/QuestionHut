@@ -2,6 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+class State(models.Model):
+    CURRENT_QUARTER = 'winter-2012'
+    
+    @staticmethod
+    def get_tag():
+        try:
+            tag = Tag.objects.get(title=State.CURRENT_QUARTER)
+        except Tag.DoesNotExist:
+            tag = Tag(title=State.CURRENT_QUARTER)
+            tag.save()
+        return tag
+
 class Points():
     ANSWER_UPVOTE   = 10
     ANSWER_DOWNVOTE = -2

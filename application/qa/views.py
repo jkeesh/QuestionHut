@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 # Models
 from django.contrib.auth.models import User
-from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment
+from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment, State
 import re
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
@@ -481,6 +481,8 @@ def ask_question(request):
         question.save()
 
         question.add_tag(hut.slug)
+        
+        question.add_tag(State.CURRENT_QUARTER)
             
         for tag in tags:
             question.add_tag(tag)
