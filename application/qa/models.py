@@ -152,20 +152,18 @@ class Vote(models.Model):
             
         return obj, points
         
+    def change_points(self, multiplier=1):
+        obj, points = self.get_object()
+        point_diff = points[0] if self.score == 1 else points[1]
+        obj.author.get_profile().change_points(multiplier*point_diff)
+        
+        
     def undo_points(self):
         """Since a vote was undone, the full amount of the points should be removed from the user."""
-        obj, points = self.get_object()
-        point_diff = points[0] if self.score == 1 else points[1]
-        obj.author.get_profile().change_points(-point_diff)
+        self.change_points(multiplier=-1)
         
     def add_points(self):
-        obj, points = self.get_object()
-        print obj
-        print points
-        point_diff = points[0] if self.score == 1 else points[1]
-        print point_diff
-        obj.author.get_profile().change_points(point_diff)
-        
+        self.change_points()        
         
     def undo(self, new_score):
         ## If the new score == old score, this is an 'undo'
@@ -181,9 +179,22 @@ class Vote(models.Model):
     
     @staticmethod
     def submit_vote(request):
+        """
+        The process of submitting a vote is as follows:
+            1. Get the new score for this vote. That is either a +1 or -1
+            2. See if we had an old vote
+                - If we did. Undo that vote (and also undo the points that went along with it)
+                - If the new vote was the same as the old vote, that means this vote should be deleted entirely,
+                    so just return the number of votes for this object
+            3. If we didn't have an old vote
+                - Create a new vote, but dont set the score. What we are trying to do is make it so that
+                    in any situation we are starting "from scratch" and seeing the effect of the most recent vote.
+            4. Set the new score, and save the vote.
+            5. Add the points properly
+            6. Update the vote count on the object
+        """
         new_score = int(request.POST['action'])
         
-        created = False
         try:
             vote = Vote.objects.get(
                             user=request.user, 
@@ -199,7 +210,6 @@ class Vote(models.Model):
                             kind=request.POST['type'],
                             obj_id=request.POST['id']
                         )
-            created = True
         vote.score = new_score
         vote.save()
         vote.add_points()        
