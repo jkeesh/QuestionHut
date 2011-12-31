@@ -325,6 +325,9 @@ def time_period(query_set, time):
     elif time == 'month':
         month = datetime.timedelta(weeks=4)
         return query_set.filter(created_at__gte=now-month)
+    elif time == 'quarter':
+        print "FILTER BY QUARTER"
+        return query_set.filter(tags__title=State.CURRENT_QUARTER)
     else:
         return query_set
     
