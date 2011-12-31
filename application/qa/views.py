@@ -477,20 +477,21 @@ def ask_question(request):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
-        title = request.POST['title']
-        if len(title) == 0:
-            return ask(request, error='You need to enter a title.')
-        
-        content = request.POST['content']
-        if len(content) == 0:
-            return ask(request, error='You need to enter some content to your question.', title=title)
-            
+        print request.POST
         hut_slug = request.POST['hut']
         hut = Course.objects.get(slug=hut_slug)
         
-        tags = request.POST['tags'].replace(',', '').split(' ')
+        title = request.POST['title']
+        if len(title) == 0:
+            return ask(request, error='You need to enter a title.', hut_slug=hut_slug)
+        
+        content = request.POST['content']
+        if len(content) == 0:
+            return ask(request, error='You need to enter some content to your question.', title=title, hut_slug=hut_slug)
+        
+        tags = request.POST['tags'].strip().replace(',', '').split(' ')
         if len(tags) == 1 and len(tags[0]) == 0:
-            return ask(request, error='You need to enter some tags.', title=title, content=content)
+            return ask(request, error='You need to enter some tags.', title=title, content=content, hut_slug=hut_slug)
 
         question = Question(title=title, content=content, author=request.user, course=hut)
         question.save()
@@ -510,7 +511,7 @@ def ask_question(request):
         return redirect('/?msg=moderation')
     
 @login_required  
-def ask(request, error=None, title=None, content=None):
+def ask(request, error=None, title=None, content=None, hut_slug=None):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
@@ -525,7 +526,10 @@ def ask(request, error=None, title=None, content=None):
             )
         
         try:
-            hut = Course.objects.get(slug=request.GET['hut'])
+            if not hut_slug:
+                hut = Course.objects.get(slug=request.GET['hut'])
+            else:
+                hut = Course.objects.get(slug=hut_slug)
         except Course.DoesNotExist:
             return redirect('/ask?select')
         
