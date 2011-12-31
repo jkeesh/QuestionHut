@@ -44,10 +44,11 @@ $(document).ajaxSend(function(event, xhr, settings) {
 
 $(document).ready(function(){
     var path = window.location.pathname;
+    var converter = new Showdown.converter();
+
     if(path.indexOf('question') != -1){
         var voter = new Voter();
         var selector = new AnswerSelector();
-        var converter = new Showdown.converter();
         new QuestionDeleter();
         $(".showdown").each(function(i){
             D.log($(this));
@@ -67,10 +68,10 @@ $(document).ready(function(){
           })
 
         });
-        $("#answer_area").keyup(function(){
-           var txt = $(this).val();
-           var html = converter.makeHtml(txt);
-           $("#live_preview").html(html); 
+        new Preview({
+            input: '#answer_area',
+            dest: '#live_preview',
+            converter: converter
         });
     }
     if(path.indexOf('moderate') != -1){
@@ -81,10 +82,33 @@ $(document).ready(function(){
         var jointer = new Joiner();
     }
     
+    if(path.indexOf('ask') != -1){
+        new Preview({
+            input: '#question_textarea',
+            dest: '#live_preview',
+            converter: converter
+        });
+    }
+    
     if(typeof INFINITE_SCROLL !== 'undefined' && INFINITE_SCROLL){
         D.log('infinite scroll on');
     }
 });
+
+/*
+ * Setup a automatic preview from
+ * @param   options {Object}    options object
+ *  -   input   {string}    selector for the input field
+ *  -   dest    {string}    selector for the preview field
+ *  -   converter   {Object}    the showdown converter
+ */
+function Preview(options){
+    $(options.input).keyup(function(){
+       var txt = $(this).val();
+       var html = options.converter.makeHtml(txt);
+       $(options.dest).html(html); 
+    });
+}
 
 
 function Joiner(){
