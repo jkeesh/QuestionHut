@@ -76,6 +76,16 @@ def huts(request):
         context_instance = RequestContext(request)
     )
     
+@login_required
+def delete_question(request):
+    qid = request.POST['qid']
+    question = Question.objects.get(pk=qid)
+    if not request.user.get_profile().is_moderator_for_hut(question.course):
+        return json_response({"status": "fail"})
+    
+    question.delete()
+    return json_response({"status":"ok"})
+    
     
 @login_required
 def join_hut(request):
@@ -326,7 +336,6 @@ def time_period(query_set, time):
         month = datetime.timedelta(weeks=4)
         return query_set.filter(created_at__gte=now-month)
     elif time == 'quarter':
-        print "FILTER BY QUARTER"
         return query_set.filter(tags__title=State.CURRENT_QUARTER)
     else:
         return query_set
@@ -408,6 +417,8 @@ def question_view(request, id=None):
     
     if not can_see_question(user=request.user, question=question):
         return redirect('/?msg=perms')
+        
+    moderator = request.user.get_profile().is_moderator_for_hut(question.course)
     
     question.views += 1
     question.save()
@@ -417,7 +428,8 @@ def question_view(request, id=None):
             'user': request.user,
             'question': question,
             'message': message,
-            'answers': question.answers.filter(approved=True).order_by('-votes')
+            'answers': question.answers.filter(approved=True).order_by('-votes'),
+            'moderator': moderator
         },
         context_instance = RequestContext(request)
     )

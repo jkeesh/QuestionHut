@@ -56,6 +56,13 @@ This is your question, and if any of the answers answered the question, please s
 			, <span class="box-points">{{ question.author.get_profile.points }}</span>
 		</div>
 	</div>
+
+	{% if moderator %}
+	<div class="delete">
+		<a href="#" id="delete_question" data-id="{{question.id}}">delete question</a>
+	</div>
+	{% endif %}
+	
 	<div class="clear"></div>
 
 	{% with obj=question kind='Q' kind_str='question'  %}

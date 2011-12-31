@@ -48,6 +48,7 @@ $(document).ready(function(){
         var voter = new Voter();
         var selector = new AnswerSelector();
         var converter = new Showdown.converter();
+        new QuestionDeleter();
         $(".showdown").each(function(i){
             D.log($(this));
             var text = $(this).html();
@@ -281,6 +282,36 @@ function Voter(){
     }
     
     
+    
+    that.setup();
+    return that;
+}
+
+
+function QuestionDeleter(){
+    var that = {};
+    
+    that.setup = function(){
+        $('#delete_question').click(function(){
+            if(confirm('Are you sure you want to delete this question?')){
+                var qid = $(this).attr('data-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajax/delete',
+                    dataType: 'JSON',
+                    data: {
+                        qid: qid
+                    },
+                    success: function(result){
+                        D.log(result);
+                        if(result.status == "ok"){
+                            window.location.href = '/';
+                        }
+                    }
+                });
+            }
+        });
+    }
     
     that.setup();
     return that;

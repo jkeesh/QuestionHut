@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     
     (r'^question/(?P<id>\d+)/?$', 'qa.views.question_view'),
     (r'^answer_question$', 'qa.views.answer_question'),
+
+    (r'^ajax/delete$', 'qa.views.delete_question'),
     
     (r'^ajax/vote$', 'qa.views.vote'),
     (r'^ajax/moderate$', 'qa.views.moderate_action'),

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+import re
 
 class State(models.Model):
     CURRENT_QUARTER = 'winter-2012'
@@ -87,7 +88,11 @@ class UserProfile(models.Model):
         
     def moderator_huts(self):
         huts = self.moderator_roles().values('hut')
-        return Course.objects.filter(id__in=huts)        
+        return Course.objects.filter(id__in=huts) 
+        
+    def is_moderator_for_hut(self, hut):
+        huts = self.moderator_huts()
+        return hut in huts       
         
     def is_hut_moderator(self):
         return self.moderator_roles().count() > 0
@@ -238,6 +243,11 @@ class Question(models.Model):
         self.save()
         
     def add_tag(self, tag_title): 
+        if len(tag_title) == 0:
+            return
+        if re.search('^\s+$', tag_title):
+            return
+            
         try:
             the_tag = Tag.objects.get(title=tag_title.strip().lower())
         except Tag.DoesNotExist:
