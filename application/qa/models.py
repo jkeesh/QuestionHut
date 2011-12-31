@@ -63,7 +63,7 @@ class UserProfile(models.Model):
     moderator_courses   =   models.ManyToManyField(Course, related_name='moderators')
     confirmation_code   =   models.CharField(max_length=100, default='')
     bio         =   models.CharField(max_length=30, default='')
-    points      =   models.PositiveIntegerField(default=1)
+    points      =   models.IntegerField(default=1)
     last_visited=   models.DateTimeField(auto_now=True, default=datetime.now())
     
     def set_role(self, hut, level):
@@ -71,10 +71,13 @@ class UserProfile(models.Model):
         role.level = level
         role.save()
         
+    def get_points(self):
+        if self.points < 1:
+            return 1
+        return self.points
+        
     def change_points(self, points):
         self.points += points
-        if self.points < 1:
-            self.points = 1
         self.save()
         
     def add_points(self, points):
