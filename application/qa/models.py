@@ -347,9 +347,7 @@ class Comment(models.Model):
         return Answer.objects.get(pk=obj_id)
         
     def parent(self):
-        if self.kind == Comment.QUESTION_TYPE:
-            return Question.objects.get(pk=self.obj_id)
-        return Answer.objects.get(pk=self.obj_id)
+        return Comment.get_parent(self.kind, self.obj_id)
     
     @staticmethod
     def create(author, content, obj):
