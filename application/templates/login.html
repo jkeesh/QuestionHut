@@ -60,15 +60,6 @@
 		<input id="user_password2" type="password" name="password2"/>
 	</div>
 	
-	<div class="classes-area">
-		<label for"user_classes">Classes:</label>
-		{% for course in courses %}
-		<span class="checkbox-option">
-		<input type="checkbox" 
-			class="user-class" name="class" value="{{course.id}}" />{{course.title}}</span>
-		{% endfor %}
-	</div>
-	
 	<div class="create-submit">
 		<input type="submit" value="Create Account" />
 	</div>
