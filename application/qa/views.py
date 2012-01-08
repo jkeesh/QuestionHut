@@ -504,7 +504,7 @@ def ask_question(request):
         if len(content) == 0:
             return ask(request, error='You need to enter some content to your question.', title=title, hut_slug=hut_slug)
         
-        tags = request.POST['tags'].strip().replace(',', '').split(' ')
+        tags = request.POST['tags'].strip().replace(',', '').replace('#', '').split(' ')
         if len(tags) == 1 and len(tags[0]) == 0:
             return ask(request, error='You need to enter some tags.', title=title, content=content, hut_slug=hut_slug)
 

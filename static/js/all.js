@@ -361,7 +361,8 @@ function Follower(){
     }
     
     that.setup = function(){
-        $('#follow_question').click(function(){
+        $('#follow_question').click(function(e){
+            e.preventDefault();
             var elem = this;
             var data = that.get_data(elem);
             $.ajax({

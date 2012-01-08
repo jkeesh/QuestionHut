@@ -27,7 +27,7 @@
 	{% csrf_token %}
 	<div>
 		<span class="form-label">Title</span>
-		<input id="question_title" type="text" name="title"
+		<input id="question_title_form" type="text" name="title"
 			placeholder="What is your question? Be specific." 
 			{% if title %}value="{{title}}"{% endif %}			
 			/>

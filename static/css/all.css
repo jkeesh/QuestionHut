@@ -447,14 +447,24 @@ a.follow{
 }
 
 #question_title{
+    float: left;
+    width: 660px;
+    color: #888;
+    padding: 3px;
+    outline: none;
+    font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
+    
+}
+
+#question_title_form{
     width: 610px;
     color: #888;
     padding: 3px;
     outline: none;
     font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
     font-size: 14px;
-    float: left;
 }
+
 
 #question_tags{
     width: 660px;
