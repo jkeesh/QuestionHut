@@ -146,8 +146,9 @@ def send_email(subject, content, from_email, to_email):
     # msg = EmailMessage(subject, content, from_email, to_email)
     # msg.content_subtype = "html"  # Main content is now text/html
     # msg.send()    
-    send_mail(subject, content, from_email, to_email, fail_silently=False)
-
+    #
+    # send_mail(subject, content, from_email, to_email, fail_silently=False)
+    pass
 
 def generate_code(user):
     import datetime, hashlib

@@ -833,3 +833,8 @@ h2.user-link{
 .delete{
     float: right;
 }
+
+.question-hint{
+    padding: 6px;
+    font-style: italic;
+}
