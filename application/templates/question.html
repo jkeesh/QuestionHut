@@ -21,15 +21,21 @@ This is your question, and if any of the answers answered the question, please s
 </div>
 {% endif %}
 
-<div id="question_title">
-	<h1>
-	{{ question.title }}
-	{% if not question.course.public %}
-	<img src="/static/images/lock.png" title="This is a question in a private hut" width="20px"/>
-	{% endif %}
-	</h1>
+<div id="question_top">
+	<div id="question_title">
+		<h1>
+		{{ question.title }}
+		{% if not question.course.public %}
+		<img src="/static/images/lock.png" title="This is a question in a private hut" width="20px"/>
+		{% endif %}
+		</h1>
+	</div>
 	
-
+	{% if user in question.get_followers %}
+	<a href="#" class="follow" title="Following a question means you will receive email notifications for this question.">You follow this question. Unfollow.</a>		
+	{% else %}
+	<a href="#" class="follow" title="Following a question means you will receive email notifications for this question.">Follow this question</a>	
+	{% endif %}
 </div>
 
 <div id="question_content">

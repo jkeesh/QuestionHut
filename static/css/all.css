@@ -320,6 +320,10 @@ a.tag:hover{
 
 /* Question Page */
 
+#question_top{
+    overflow: hidden;
+}
+
 .box-points{
     font-weight: bold;
 }
@@ -438,6 +442,10 @@ textarea{
     float: left;
 }
 
+a.follow{
+    float: right;
+}
+
 #question_title{
     width: 610px;
     color: #888;
@@ -445,6 +453,7 @@ textarea{
     outline: none;
     font-family: Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;
     font-size: 14px;
+    float: left;
 }
 
 #question_tags{

@@ -502,6 +502,8 @@ def ask_question(request):
         question.add_tag(hut.slug)
         
         question.add_tag(State.CURRENT_QUARTER)
+        
+        question.add_follower(request.user)
             
         for tag in tags:
             question.add_tag(tag)
