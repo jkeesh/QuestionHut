@@ -86,6 +86,18 @@ def delete_question(request):
     question.delete()
     return json_response({"status":"ok"})
     
+@login_required
+def follow_question(request):
+    qid = request.POST['qid']
+    action = request.POST['action']
+    question = Question.objects.get(pk=qid)
+    if action == "unfollow":
+        question.remove_follower(request.user)
+    elif action == "follow":
+        question.add_follower(request.user)
+    
+    return json_response({"status":"ok"})
+    
     
 @login_required
 def join_hut(request):

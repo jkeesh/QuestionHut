@@ -50,6 +50,7 @@ $(document).ready(function(){
         var voter = new Voter();
         var selector = new AnswerSelector();
         new QuestionDeleter();
+        new Follower();
         $(".showdown").each(function(i){
             D.log($(this));
             var text = $(this).html();
@@ -334,6 +335,45 @@ function QuestionDeleter(){
                     }
                 });
             }
+        });
+    }
+    
+    that.setup();
+    return that;
+}
+
+
+function Follower(){
+    var that = {};
+    
+    // Reversed, since on "unfollow" we tell them they can follow this question
+    // and on "follow" we tell them them they can unfollow
+    that.responses = {
+        unfollow: 'Follow this question',
+        follow: 'You follow this question. Unfollow.'
+    }
+    
+    that.get_data = function(elem){
+        return {
+            qid: $(elem).attr('data-question'),
+            action: $(elem).attr('data-action')
+        };
+    }
+    
+    that.setup = function(){
+        $('#follow_question').click(function(){
+            var elem = this;
+            var data = that.get_data(elem);
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/follow',
+                dataType: 'JSON',
+                data: data,
+                success: function(result){
+                    D.log(result);
+                    $(elem).html(that.responses[data.action]);
+                }
+            });
         });
     }
     

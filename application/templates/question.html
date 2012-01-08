@@ -32,9 +32,19 @@ This is your question, and if any of the answers answered the question, please s
 	</div>
 	
 	{% if user in question.get_followers %}
-	<a href="#" class="follow" title="Following a question means you will receive email notifications for this question.">You follow this question. Unfollow.</a>		
+	<a href="#"
+	 	id="follow_question"
+		class="follow" 
+		data-action="unfollow"
+		data-question="{{question.id}}"
+		title="Following a question means you will receive email notifications for this question.">You follow this question. Unfollow.</a>		
 	{% else %}
-	<a href="#" class="follow" title="Following a question means you will receive email notifications for this question.">Follow this question</a>	
+	<a href="#" 
+		id="follow_question"id="follow_question"
+		class="follow" 
+		data-action="follow"
+		data-question="{{question.id}}"
+		title="Following a question means you will receive email notifications for this question.">Follow this question</a>	
 	{% endif %}
 </div>
 
