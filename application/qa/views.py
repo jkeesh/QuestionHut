@@ -48,7 +48,8 @@ MESSAGES = {
     'passwdmatch': 'Your passwords did not match. Please enter them again.',
     'notactive': 'Your account is not yet active.',
     'loginerror': 'There was an error loggin you in. Please check your password.',
-    'perms': 'That page does not exist.'
+    'perms': 'That page does not exist.',
+    'exists': 'An account already exists with this email.'
 }
 
 ## Permissions Method
@@ -170,30 +171,29 @@ def confirm(request):
     
     return redirect('/?msg=%s' % msg ) ## include message
 
+
+
 	
 @csrf_protect
 def join(request):
     try:
         User.objects.get(email=request.POST['email'])
-        return redirect('/error')
+        return index(request, message='exists')
     except User.DoesNotExist:
         pass
         
     if len(request.POST['first_name']) == 0:
-        return redirect('/?msg=fname')
+        return index(request, message='fname')
     if len(request.POST['last_name']) == 0:
-        return redirect('/?msg=lname')
+        return index(request, message='lname')
     if len(request.POST['password']) == 0:
-        return redirect('/?msg=passwd')
+        return index(request, 'passwd')
         
     if request.POST['password'] != request.POST['password2']:
-        return redirect('/?msg=passwdmatch')
-    
-    if len(request.POST.getlist('class')) == 0:
-        return redirect('/?msg=class')
+        return index(request, 'passwdmatch')
     
     if not verify_email(request.POST['email']):
-        return redirect('/?msg=email')
+        return index(request, 'email')
     
     user = User.objects.create_user(request.POST['email'], #email is username
                                     request.POST['email'], #email
@@ -206,11 +206,11 @@ def join(request):
     userprofile = UserProfile(user=user)
     userprofile.save()
     
-    courses = request.POST.getlist('class')
-    for course_id in courses:
-        course = Course.objects.get(pk=course_id)
-        role = Role(hut=course, profile=userprofile)
-        role.save()
+    # courses = request.POST.getlist('class')
+    # for course_id in courses:
+    #     course = Course.objects.get(pk=course_id)
+    #     role = Role(hut=course, profile=userprofile)
+    #     role.save()
 
     #return redirect('/')    #comment out
     #send_confirmation_email(user)  #comment in
@@ -382,8 +382,11 @@ def questions_display(request, message=None):
     )
     
 def index(request, message=None):
-    message = None
-    if 'msg' in request.GET:
+    print message
+    print request.POST
+    if message != None:
+        message = MESSAGES[message]  
+    elif 'msg' in request.GET:
         the_msg = request.GET['msg']
         if the_msg in MESSAGES:
             message = MESSAGES[the_msg]
@@ -392,8 +395,8 @@ def index(request, message=None):
         return render_to_response(
             "login.html",
             {
-                'courses': Course.objects.filter(public=True),
-                'message': message
+                'message': message,
+                'previous': request.POST
             },
             context_instance = RequestContext(request)
         )
