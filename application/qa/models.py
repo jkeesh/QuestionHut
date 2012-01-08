@@ -231,6 +231,7 @@ class Question(models.Model):
     answered    =   models.BooleanField(default=False)
     course      =   models.ForeignKey(Course, default=None, blank=True, null=True)
     approved    =   models.BooleanField(default=False)
+    followers   =   models.ManyToManyField(User, related_name="questions_followed")
     
     def update_timestamp(self):
         self.last_updated = datetime.now()

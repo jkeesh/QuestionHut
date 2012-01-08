@@ -23,10 +23,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'questionhut@gmail.com'
-EMAIL_HOST_PASSWORD = secrets.PROD['email_passwd']
+EMAIL_HOST = secrets.EMAIL_HOST
+EMAIL_PORT = secrets.EMAIL_PORT
+EMAIL_HOST_USER = secrets.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = secrets.EMAIL_HOST_PASSWORD
 EMAIL_SUBJECT_PREFIX = 'Question Hut: '
 EMAIL_USE_TLS = True
 

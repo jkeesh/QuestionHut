@@ -11,7 +11,6 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment, State
 import re
-from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -132,9 +131,10 @@ def verify_email(email):
     
     
 def send_email(subject, content, from_email, to_email):
-    msg = EmailMessage(subject, content, from_email, to_email)
-    msg.content_subtype = "html"  # Main content is now text/html
-    msg.send()
+    # msg = EmailMessage(subject, content, from_email, to_email)
+    # msg.content_subtype = "html"  # Main content is now text/html
+    # msg.send()    
+    send_mail(subject, content, from_email, to_email, fail_silently=False)
 
 
 def generate_code(user):
@@ -200,7 +200,7 @@ def join(request):
                                     request.POST['password'])
     user.first_name = request.POST['first_name']
     user.last_name = request.POST['last_name']
-    #user.is_active = False #comment in
+    user.is_active = False #comment in
     user.save()
     
     userprofile = UserProfile(user=user)
@@ -214,8 +214,8 @@ def join(request):
 
     #return redirect('/')    #comment out
     #send_confirmation_email(user)  #comment in
-    #return redirect('/?msg=waitforact') #comment out
-    return authenticate(request, user.email, request.POST['password'])
+    return redirect('/?msg=waitforact') #comment out
+    #return authenticate(request, user.email, request.POST['password'])
     
 def authenticate(request, email, password):
     user = auth.authenticate(username=email, password=password)
