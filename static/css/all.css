@@ -786,6 +786,7 @@ h2.user-link{
     width: 450px;
     margin-left: 100px;
     margin-top: 9px;
+    float: left;
 }
 
 .comment{
@@ -826,4 +827,9 @@ h2.user-link{
     font-size: 27px;   
     font-weight: bold;
     cursor: pointer; 
+}
+
+
+.delete{
+    float: right;
 }

@@ -477,6 +477,9 @@ def answer_question(request):
                         question=question,
                         content=content)
         answer.save()
+        
+        ## Add the user to the list of followers for this question
+        question.add_follower(request.user)
                         
         if question.course.has_approved(request.user):
             answer.approved = True

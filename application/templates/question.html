@@ -73,17 +73,18 @@ This is your question, and if any of the answers answered the question, please s
 		</div>
 	</div>
 
-	{% if moderator %}
-	<div class="delete">
-		<a href="#" id="delete_question" data-id="{{question.id}}">delete question</a>
-	</div>
-	{% endif %}
 	
 	<div class="clear"></div>
 
 	{% with obj=question kind='Q' kind_str='question'  %}
 	{% include "comment_list.html" %}
 	{% endwith %}
+	
+	{% if moderator %}
+	<div class="delete">
+		<a href="#" id="delete_question" data-id="{{question.id}}">Delete Question</a>
+	</div>
+	{% endif %}
 </div>
 
 <div id="answer_count">
