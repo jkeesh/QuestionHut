@@ -233,6 +233,15 @@ class Question(models.Model):
     approved    =   models.BooleanField(default=False)
     followers   =   models.ManyToManyField(User, related_name="questions_followed")
     
+    def get_followers(self):
+        return self.followers.all()
+    
+    def add_follower(self, user):
+        self.followers.add(user)
+        
+    def remove_follower(self, user):
+        self.followers.remove(user)
+    
     def update_timestamp(self):
         self.last_updated = datetime.now()
         self.save()
