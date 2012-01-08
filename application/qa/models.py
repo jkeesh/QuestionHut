@@ -305,6 +305,9 @@ class Answer(models.Model):
     
     def update_timestamp(self):        
         self.question.update_timestamp()
+        
+    def add_follower(self, user):
+        self.question.add_follower(user)
     
     def moderate(self, action):
         if action == 'approve':

@@ -457,6 +457,7 @@ def submit_comment(request):
 
     obj = Comment.get_parent(kind=kind, obj_id=obj_id)
     obj.update_timestamp()
+    obj.add_follower(request.user)
     
     comment = Comment(author=request.user, content=content, kind=kind, obj_id=obj_id)
     comment.save()
