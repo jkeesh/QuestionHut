@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment, State
 import re
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 
 from qa.search import get_query
@@ -48,7 +48,8 @@ MESSAGES = {
     'notactive': 'Your account is not yet active.',
     'loginerror': 'There was an error loggin you in. Please check your password.',
     'perms': 'That page does not exist.',
-    'exists': 'An account already exists with this email.'
+    'exists': 'An account already exists with this email.',
+    'noaccount': 'We could not find an account with that email address.'
 }
 
 ## Permissions Method
@@ -143,12 +144,11 @@ def verify_email(email):
     
     
 def send_email(subject, content, from_email, to_email):
-    # msg = EmailMessage(subject, content, from_email, to_email)
-    # msg.content_subtype = "html"  # Main content is now text/html
-    # msg.send()    
+    msg = EmailMessage(subject, content, from_email, to_email)
+    msg.content_subtype = "html"  # Main content is now text/html
+    msg.send()    
     #
-    # send_mail(subject, content, from_email, to_email, fail_silently=False)
-    pass
+    #send_mail(subject, content, from_email, to_email, fail_silently=False)
 
 def generate_code(user):
     import datetime, hashlib
@@ -218,17 +218,9 @@ def join(request):
     
     userprofile = UserProfile(user=user)
     userprofile.save()
-    
-    # courses = request.POST.getlist('class')
-    # for course_id in courses:
-    #     course = Course.objects.get(pk=course_id)
-    #     role = Role(hut=course, profile=userprofile)
-    #     role.save()
 
-    #return redirect('/')    #comment out
-    #send_confirmation_email(user)  #comment in
+    send_confirmation_email(user)  #comment in
     return redirect('/?msg=waitforact') #comment out
-    #return authenticate(request, user.email, request.POST['password'])
     
 def authenticate(request, email, password):
     user = auth.authenticate(username=email, password=password)
@@ -244,6 +236,10 @@ def authenticate(request, email, password):
     
 @csrf_protect
 def login(request):
+    exists = User.objects.filter(email=request.POST['email'])
+    if len(exists) == 0:
+        return redirect('/?msg=noaccount')
+        
     return authenticate(request, request.POST['email'], request.POST['password'])
     
 def logout(request):
