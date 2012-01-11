@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment, State
 import re
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail, EmailMessage, send_mass_mail
 from django.conf import settings
 
 from qa.search import get_query
@@ -144,11 +144,44 @@ def verify_email(email):
     
     
 def send_email(subject, content, from_email, to_email):
-    msg = EmailMessage(subject, content, from_email, to_email)
+    msg = EmailMessage(subject=subject, body=content, from_email=from_email, bcc=to_email)
     msg.content_subtype = "html"  # Main content is now text/html
     msg.send()    
     #
     #send_mail(subject, content, from_email, to_email, fail_silently=False)
+
+#
+# Message all of the people who follow this question
+#
+#   question    the question that was just acted on
+#   actor       the user who just acted, they should *not* receive a notification
+#               about what just happened, because they did it
+#   
+def message_followers(question, actor):
+    followers = question.get_followers()
+
+    subject = 'QuestionHut: New Response on a Question: %s' % question.title
+    email_content = """
+        There is a new response on a question you follow. Check out the question here %squestion/%d
+    """ % (settings.BASE_URL, question.id)
+
+    from_addr = 'Question Hut <jkeeshin@cs.stanford.edu>'
+    
+    data_tuple = None
+    for user in followers:
+        if user != actor:
+            if data_tuple:
+                data_tuple = data_tuple, (subject, email_content, from_addr, [user.email]),
+            else:
+                data_tuple = (subject, email_content, from_addr, [user.email]),
+
+    print data_tuple
+    
+    print len(data_tuple)
+
+    if data_tuple:            
+        send_mass_mail(data_tuple)
+    
 
 def generate_code(user):
     import datetime, hashlib
@@ -329,11 +362,12 @@ def get_sort_method(request):
     return request.GET['sort'] if 'sort' in request.GET else 'recent'
     
 def get_time_limit(request):
-    return request.GET['time'] if 'time' in request.GET else 'all'
+    return request.GET['time'] if 'time' in request.GET else 'quarter'
     
     
 def time_period(query_set, time):
     import datetime
+    
     now = datetime.datetime.now()
     if time == 'today':
         day = datetime.timedelta(days=1)
@@ -344,10 +378,12 @@ def time_period(query_set, time):
     elif time == 'month':
         month = datetime.timedelta(weeks=4)
         return query_set.filter(created_at__gte=now-month)
-    elif time == 'quarter':
-        return query_set.filter(tags__title=State.CURRENT_QUARTER)
-    else:
+    elif time == 'all':
         return query_set
+    # elif time == 'quarter':
+    else:
+        return query_set.filter(tags__title=State.CURRENT_QUARTER)
+
     
 @login_required  
 def questions_display(request, message=None):
@@ -461,6 +497,7 @@ def submit_comment(request):
     return redirect('/question/' + request.POST['redirect'])
     
     
+    
 @login_required  
 def answer_question(request):
     print request.user
@@ -475,6 +512,8 @@ def answer_question(request):
                         question=question,
                         content=content)
         answer.save()
+        
+        message_followers(question=question, actor=request.user)
         
         ## Add the user to the list of followers for this question
         question.add_follower(request.user)
