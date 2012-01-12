@@ -29,6 +29,8 @@ class Course(models.Model):
     default_level   =   models.IntegerField(default=1)
     public      =   models.BooleanField(default=True)
     
+    def get_subscribers(self):
+        return []
     
     @staticmethod
     def create_course(title, public=True, default_level=1):
@@ -342,8 +344,7 @@ class Comment(models.Model):
     
     def __unicode__(self):
         return "[%s:%d] %s - %s (%d)" % (self.kind, self.obj_id, self.content, self.author, self.votes)
-        
-        
+                
     def get_question(self):
         if self.kind == Comment.QUESTION_TYPE:
             return Question.objects.get(pk=self.obj_id)

@@ -23,6 +23,8 @@ urlpatterns = patterns('',
 
     (r'^ajax/delete$', 'qa.views.delete_question'),
     (r'^ajax/follow$', 'qa.views.follow_question'),
+    (r'^ajax/subscribe$', 'qa.views.subscribe_to_hut'),
+    
     
     (r'^ajax/vote$', 'qa.views.vote'),
     (r'^ajax/moderate$', 'qa.views.moderate_action'),

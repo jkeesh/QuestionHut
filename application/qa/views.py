@@ -99,6 +99,17 @@ def follow_question(request):
     
     return json_response({"status":"ok"})
     
+@login_required
+def subscribe_to_hut(request):
+    hut_id = request.POST['hut_id']
+    action = request.POST['action']
+    if action == "subscribe":
+        pass
+    elif action == "unsubscribe":
+        pass
+    
+    return json_response({"status": "ok"})
+    
     
 @login_required
 def join_hut(request):
@@ -386,6 +397,8 @@ def questions_display(request, message=None):
     hut_list, hut = get_course(request)   
     if len(hut_list) == 0:
         return redirect('/huts')
+
+    hut_obj = hut_list[0] if len(hut_list) == 1 else None
          
     tags = request.GET['tags'] if 'tags' in request.GET else None
     status = request.GET['status'] if 'status' in request.GET else 'all'
@@ -411,6 +424,7 @@ def questions_display(request, message=None):
             'questions': query_set,
             'sort': sort,
             'hut': hut,
+            'hut_obj': hut_obj,
             'time': time,
             'status': status,
             'courses': request.user.get_profile().courses.all(),

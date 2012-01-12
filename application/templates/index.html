@@ -18,6 +18,19 @@ var INFINITE_SCROLL = true;
 	{% if hut != 'all' %}
 	<h2 class="user-link"><a href="/users?hut={{hut}}">Users</a></h2>
 	{% endif %}
+	
+	{% if hut_obj %}
+	<h2 class="subscribe-link">
+		<a 	href="#" id="follow_hut"
+			data-hut="{{hut_obj.id}}"
+		{% if user in hut.get_subscribers %}
+			data-action="unsubscribe"
+		{% else %}
+			data-action="subscribe"
+		{% endif %}
+			>Get an email when there is a new question</a>
+	</h2>
+	{% endif %}
 
 	<div id="sort_tabs">
 		<a href="/questions?hut={{hut}}&amp;time={{time}}&amp;sort=recent" 

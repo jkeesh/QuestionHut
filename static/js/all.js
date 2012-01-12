@@ -45,6 +45,8 @@ $(document).ajaxSend(function(event, xhr, settings) {
 $(document).ready(function(){
     var path = window.location.pathname;
     var converter = new Showdown.converter();
+    
+    new Subscriber();
 
     if(path.indexOf('question') != -1){
         var voter = new Voter();
@@ -353,6 +355,13 @@ function Follower(){
         follow: 'You follow this question. Unfollow.'
     }
     
+    that.other_action = function(action){
+        if(action == "follow"){
+            return "unfollow";
+        }
+        return "follow";
+    }
+    
     that.get_data = function(elem){
         return {
             qid: $(elem).attr('data-question'),
@@ -373,6 +382,54 @@ function Follower(){
                 success: function(result){
                     D.log(result);
                     $(elem).html(that.responses[data.action]);
+                    $(elem).attr('data-action', that.other_action(data.action));
+                }
+            });
+        });
+    }
+    
+    that.setup();
+    return that;
+}
+
+function Subscriber(){
+    var that = {};
+    
+    // Reversed, since on "unfollow" we tell them they can follow this question
+    // and on "follow" we tell them them they can unfollow
+    that.responses = {
+        unsubscribe: 'Get an email when there is a new question',
+        subscribe: 'Unsubscribe from new question updates'
+    }
+    
+    that.other_action = function(action){
+        if(action == "unsubscribe"){
+            return "subscribe";
+        }
+        return "unsubscribe";
+    }
+    
+    that.get_data = function(elem){
+        return {
+            hut_id: $(elem).attr('data-hut'),
+            action: $(elem).attr('data-action')
+        };
+    }
+    
+    that.setup = function(){
+        $('#follow_hut').click(function(e){
+            e.preventDefault();
+            var elem = this;
+            var data = that.get_data(elem);
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/subscribe',
+                dataType: 'JSON',
+                data: data,
+                success: function(result){
+                    D.log(result);
+                    $(elem).html(that.responses[data.action]);
+                    $(elem).attr('data-action', that.other_action(data.action));
                 }
             });
         });
