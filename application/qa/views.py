@@ -102,11 +102,12 @@ def follow_question(request):
 @login_required
 def subscribe_to_hut(request):
     hut_id = request.POST['hut_id']
+    hut = Course.objects.get(pk=hut_id)
     action = request.POST['action']
     if action == "subscribe":
-        pass
+        hut.add_subscriber(request.user)
     elif action == "unsubscribe":
-        pass
+        hut.remove_subscriber(request.user)
     
     return json_response({"status": "ok"})
     

@@ -23,12 +23,11 @@ var INFINITE_SCROLL = true;
 	<h2 class="subscribe-link">
 		<a 	href="#" id="follow_hut"
 			data-hut="{{hut_obj.id}}"
-		{% if user in hut.get_subscribers %}
-			data-action="unsubscribe"
+		{% if user in hut_obj.get_subscribers %}
+			data-action="unsubscribe">Unsubscribe from new question updates</a>
 		{% else %}
-			data-action="subscribe"
+			data-action="subscribe">Get an email when there is a new question</a>
 		{% endif %}
-			>Get an email when there is a new question</a>
 	</h2>
 	{% endif %}
 
