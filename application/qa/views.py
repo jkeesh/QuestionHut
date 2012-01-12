@@ -161,6 +161,17 @@ def send_email(subject, content, from_email, to_email):
     msg.send()    
     #
     #send_mail(subject, content, from_email, to_email, fail_silently=False)
+    
+def message_subscribers(hut, question, actor):
+    print "Message subscribers for ", hut
+    subscribers = hut.get_subscribers().exclude(id=actor.id)
+    subject = 'QuestionHut: New Question For %s: %s' % (hut.title, question.title)
+    content = 'There is a new question for %s.\n\nCheck it out here %squestion/%d' % (hut.title, settings.BASE_URL, question.id)
+    from_addr = 'Question Hut <jkeeshin@cs.stanford.edu>'
+    to_bcc = [subscriber.email for subscriber in subscribers]
+    send_email(subject, content, from_addr, to_bcc)
+    
+    
 
 #
 # Message all of the people who follow this question
@@ -571,10 +582,14 @@ def ask_question(request):
             
         for tag in tags:
             question.add_tag(tag)
+            
                   
         if hut.has_approved(request.user):
             question.approved = True
             question.save()
+            
+            message_subscribers(hut, question, request.user)
+            
             return redirect('/question/%d' % question.id)
         
         return redirect('/?msg=moderation')
