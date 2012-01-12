@@ -343,6 +343,12 @@ class Comment(models.Model):
     def __unicode__(self):
         return "[%s:%d] %s - %s (%d)" % (self.kind, self.obj_id, self.content, self.author, self.votes)
         
+        
+    def get_question(self):
+        if self.kind == Comment.QUESTION_TYPE:
+            return Question.objects.get(pk=self.obj_id)
+        return Answer.objects.get(pk=self.obj_id).question            
+        
     @staticmethod
     def get_parent(kind, obj_id):
         if kind == Comment.QUESTION_TYPE:
