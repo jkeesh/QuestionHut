@@ -161,9 +161,7 @@ def message_followers(question, actor):
     followers = question.get_followers()
 
     subject = 'QuestionHut: New Response on a Question: %s' % question.title
-    email_content = """
-        There is a new response on a question you follow. Check out the question here %squestion/%d
-    """ % (settings.BASE_URL, question.id)
+    email_content = """There is a new response on a question you follow.\n\nCheck out the question here %squestion/%d""" % (settings.BASE_URL, question.id)
 
     from_addr = 'Question Hut <jkeeshin@cs.stanford.edu>'
     
@@ -174,10 +172,6 @@ def message_followers(question, actor):
                 data_tuple = data_tuple, (subject, email_content, from_addr, [user.email]),
             else:
                 data_tuple = (subject, email_content, from_addr, [user.email]),
-
-    print data_tuple
-    
-    print len(data_tuple)
 
     if data_tuple:            
         send_mass_mail(data_tuple)
@@ -494,6 +488,9 @@ def submit_comment(request):
     
     comment = Comment(author=request.user, content=content, kind=kind, obj_id=obj_id)
     comment.save()
+    
+    message_followers(question=comment.get_question(), actor=request.user)
+    
     return redirect('/question/' + request.POST['redirect'])
     
     
