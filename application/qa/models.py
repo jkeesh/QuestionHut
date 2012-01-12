@@ -30,7 +30,18 @@ class Course(models.Model):
     public      =   models.BooleanField(default=True)
     
     def get_subscribers(self):
-        return []
+        subscribed_profiles = Role.objects.filter(hut=self, subscribed=True).values('profile')
+        return User.objects.filter(userprofile__id__in=subscribed_profiles)
+        
+    def add_subscriber(self, user):
+        role = Role.objects.get(hut=self, profile=user.get_profile())
+        role.subscribed = True
+        role.save()
+    
+    def remove_subscriber(self, user):
+        role = Role.objects.get(hut=self, profile=user.get_profile())
+        role.subscribed = False
+        role.save()
     
     @staticmethod
     def create_course(title, public=True, default_level=1):
@@ -109,6 +120,7 @@ class Role(models.Model):
     ## Represents a persons role in a hut
     profile     = models.ForeignKey(UserProfile)
     hut         = models.ForeignKey(Course)
+    subscribed  = models.BooleanField(default=False)
     
     MEMBER      =   1
     APPROVED    =   2
