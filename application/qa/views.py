@@ -486,7 +486,10 @@ def question_view(request, id=None):
     if not can_see_question(user=request.user, question=question):
         return redirect('/?msg=perms')
         
-    moderator = request.user.get_profile().is_moderator_for_hut(question.course)
+    if request.user.is_authenticated():
+        moderator = request.user.get_profile().is_moderator_for_hut(question.course)
+    else:
+        moderator = False
     
     question.views += 1
     question.save()

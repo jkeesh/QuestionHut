@@ -31,20 +31,22 @@ This is your question, and if any of the answers answered the question, please s
 		</h1>
 	</div>
 	
-	{% if user in question.get_followers %}
-	<a href="#"
-	 	id="follow_question"
-		class="follow" 
-		data-action="unfollow"
-		data-question="{{question.id}}"
-		title="Following a question means you will receive email notifications for this question.">You follow this question. Unfollow.</a>		
-	{% else %}
-	<a href="#" 
-		id="follow_question"id="follow_question"
-		class="follow" 
-		data-action="follow"
-		data-question="{{question.id}}"
-		title="Following a question means you will receive email notifications for this question.">Follow this question</a>	
+	{% if user.is_authenticated %}
+		{% if user in question.get_followers %}
+		<a href="#"
+		 	id="follow_question"
+			class="follow" 
+			data-action="unfollow"
+			data-question="{{question.id}}"
+			title="Following a question means you will receive email notifications for this question.">You follow this question. Unfollow.</a>		
+		{% else %}
+		<a href="#" 
+			id="follow_question"id="follow_question"
+			class="follow" 
+			data-action="follow"
+			data-question="{{question.id}}"
+			title="Following a question means you will receive email notifications for this question.">Follow this question</a>	
+		{% endif %}
 	{% endif %}
 </div>
 
