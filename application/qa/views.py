@@ -188,17 +188,16 @@ def message_followers(question, actor):
 
     from_addr = 'Question Hut <jkeeshin@cs.stanford.edu>'
     
-    data_tuple = None
+    mail_list = []
     for user in followers:
         if user != actor:
-            if data_tuple:
-                data_tuple = data_tuple, (subject, email_content, from_addr, [user.email])
-            else:
-                data_tuple = (subject, email_content, from_addr, [user.email]),
-
-    if data_tuple:      
+            cur_email = (subject, email_content, from_addr, [user.email])
+            mail_list.append(cur_email)
+            
+    if mail_list:      
         print "FOUND DATA TUPLE" 
-        print data_tuple     
+        print mail_list
+        data_tuple = tuple(mail_list)
         send_mass_mail(data_tuple)
     
 
