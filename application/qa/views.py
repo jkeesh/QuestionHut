@@ -192,7 +192,7 @@ def message_followers(question, actor):
     for user in followers:
         if user != actor:
             if data_tuple:
-                data_tuple = data_tuple, (subject, email_content, from_addr, [user.email]),
+                data_tuple = data_tuple, (subject, email_content, from_addr, [user.email])
             else:
                 data_tuple = (subject, email_content, from_addr, [user.email]),
 
