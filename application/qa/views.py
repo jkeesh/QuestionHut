@@ -195,8 +195,6 @@ def message_followers(question, actor):
             mail_list.append(cur_email)
             
     if mail_list:      
-        print "FOUND DATA TUPLE" 
-        print mail_list
         data_tuple = tuple(mail_list)
         send_mass_mail(data_tuple)
     
