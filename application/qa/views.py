@@ -196,7 +196,9 @@ def message_followers(question, actor):
             else:
                 data_tuple = (subject, email_content, from_addr, [user.email]),
 
-    if data_tuple:            
+    if data_tuple:      
+        print "FOUND DATA TUPLE" 
+        print data_tuple     
         send_mass_mail(data_tuple)
     
 
@@ -548,6 +550,8 @@ def answer_question(request):
             answer.approved = True
             answer.save()
             return redirect('/question/%s' % q_id)
+            
+        
                         
         return redirect('/question/%s?msg=amod' % q_id)
     
