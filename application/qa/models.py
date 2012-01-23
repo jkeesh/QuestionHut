@@ -169,8 +169,7 @@ class Vote(models.Model):
     def change_points(self, multiplier=1):
         obj, points = self.get_object()
         point_diff = points[0] if self.score == 1 else points[1]
-        obj.author.get_profile().change_points(multiplier*point_diff)
-        
+        obj.author.get_profile().change_points(multiplier*point_diff)        
         
     def undo_points(self):
         """Since a vote was undone, the full amount of the points should be removed from the user."""

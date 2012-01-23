@@ -163,7 +163,6 @@ def send_email(subject, content, from_email, to_email):
     #send_mail(subject, content, from_email, to_email, fail_silently=False)
     
 def message_subscribers(hut, question, actor):
-    print "Message subscribers for ", hut
     subscribers = hut.get_subscribers().exclude(id=actor.id)
     subject = 'QuestionHut: New Question For %s: %s' % (hut.title, question.title)
     content = 'There is a new question for %s.\n\nCheck it out here %squestion/%d' % (hut.title, settings.BASE_URL, question.id)
@@ -216,9 +215,7 @@ def send_confirmation_email(user):
     subject = 'Welcome to QuestionHut: Confirm Your Email Address'
     email_content = 'Thanks for signing up for Question Hut. Please confirm your email address by ' \
             'visititing the following link: <br/><br/> %sconfirm?u=%d&code=%s' % (settings.BASE_URL, user.id, code)
-    print email_content
     send_email(subject, email_content, 'Question Hut <questionhut@gmail.com>', [user.email])
-    print "Sent!"
 
 def confirm(request):
     uid = request.GET['u']
@@ -446,8 +443,6 @@ def questions_display(request, message=None):
     )
     
 def index(request, message=None):
-    print message
-    print request.POST
     if message != None:
         message = MESSAGES[message]  
     elif 'msg' in request.GET:
@@ -525,7 +520,6 @@ def submit_comment(request):
     
 @login_required  
 def answer_question(request):
-    print request.user
     if not request.user.is_authenticated():
         return redirect('/')
     else:
@@ -559,7 +553,6 @@ def ask_question(request):
     if not request.user.is_authenticated():
         return redirect('/')
     else:
-        print request.POST
         hut_slug = request.POST['hut']
         hut = Course.objects.get(slug=hut_slug)
         
