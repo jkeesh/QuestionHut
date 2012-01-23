@@ -154,14 +154,25 @@ def verify_email(email):
         return True
     return False
     
-    
+
+#
+# Send an email to a list of users. The users will appear in the bcc field
+# If we are testing locally, print a message instead of sending the email
+#    
 def send_email(subject, content, from_email, to_email):
-    msg = EmailMessage(subject=subject, body=content, from_email=from_email, bcc=to_email)
-    msg.content_subtype = "html"  # Main content is now text/html
-    msg.send()    
-    #
-    #send_mail(subject, content, from_email, to_email, fail_silently=False)
-    
+    if not settings.LOCAL:
+        msg = EmailMessage(subject=subject, body=content, from_email=from_email, bcc=to_email)
+        msg.content_subtype = "html"  # Main content is now text/html
+        msg.send()   
+    else:
+        print "Send Email Message (Local)" 
+ 
+# Message all of the users who are subscribed to this hut
+#
+#   hut         the hut that users were subscribed to
+#   question    the question that was just asked
+#   actor       the user who asked the question, should not be notified if they are a subsriber
+#   
 def message_subscribers(hut, question, actor):
     subscribers = hut.get_subscribers().exclude(id=actor.id)
     subject = 'QuestionHut: New Question For %s: %s' % (hut.title, question.title)
@@ -195,8 +206,11 @@ def message_followers(question, actor):
             
     if mail_list:      
         data_tuple = tuple(mail_list)
-        send_mass_mail(data_tuple)
-    
+        
+        if not settings.LOCAL:
+            send_mass_mail(data_tuple)
+        else:
+            print "Messaging question followers (local)"
 
 def generate_code(user):
     import datetime, hashlib
