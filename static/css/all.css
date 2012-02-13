@@ -786,16 +786,20 @@ h2.subscribe-link{
 
 /* Comments */
 .comment-list{
-    width: 450px;
+    width: 628px;
     margin-left: 100px;
     margin-top: 9px;
     float: left;
 }
 
 .comment{
-    background-color: #EDEFF4;
-    border-bottom: 1px solid #D2D9E7;
-    padding: 8px;
+    border-bottom: 1px dashed #D2D9E7;
+    padding: 5px 0 2px 0;
+    line-height: 17px;
+}
+
+.comment:hover{
+    background-color: #FAFAFA;
 }
 
 .comment-author{
@@ -811,7 +815,8 @@ h2.subscribe-link{
 }
 
 .comment-textarea{
-    width: 440px;
+    width: 618px;
+    margin: 10px 0 5px 0;
 }
 
 .comment-list input[type=submit]{
