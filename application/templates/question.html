@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="clear"></div>
 
 {% if message %}
@@ -115,7 +116,7 @@ This is your question, and if any of the answers answered the question, please s
 			, <span class="box-points">{{ answer.author.get_profile.get_points }}</span>
 		</div>
 	</div>
-	
+		
 	<div class="clear"></div>
 	
 	{% with obj=answer kind='A' kind_str='answer' %}
