@@ -316,11 +316,11 @@ def error(request):
     
 def sort_questions(query_set, sort):
     if sort == 'best':
-        return query_set.order_by('-votes')[:30]
+        return query_set.order_by('-votes')[:60]
     elif sort == 'popular':
-        return query_set.order_by('-views')[:30]
+        return query_set.order_by('-views')[:60]
     else:
-        return query_set.order_by('-last_updated')[:30]
+        return query_set.order_by('-last_updated')[:60]
         
         
 def has_permission(user, huts):
@@ -474,7 +474,8 @@ def index(request, message=None):
             context_instance = RequestContext(request)
         )
     else:
-        return questions_display(request=request, message=message)
+        return redirect('/huts')
+        #return questions_display(request=request, message=message)
 
        
 def question_view(request, id=None):
