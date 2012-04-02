@@ -35,7 +35,9 @@ def format_time(timestamp = None):
 
     str = ""
     tStr = ""
-    if days > 0:
+    if days > 7:
+        return timestamp.strftime("%b %d, '%y %H:%M")
+    elif days > 0:
         if days == 1:   tStr = "day"
         else:           tStr = "days"
         str = str + "%s %s ago" %(days, tStr)
