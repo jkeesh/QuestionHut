@@ -474,8 +474,8 @@ def index(request, message=None):
             context_instance = RequestContext(request)
         )
     else:
-        return redirect('/huts')
-        #return questions_display(request=request, message=message)
+        #return redirect('/huts')
+        return questions_display(request=request, message=message)
 
        
 def question_view(request, id=None):

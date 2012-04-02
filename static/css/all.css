@@ -594,19 +594,24 @@ a.vote-arrow.down-arrow.voted{
     float: right;
     width: 200px;
 }
-#time_tabs{
+#sidebar .title{
+    font-size: 14px;
+    margin: 25px 0 10px 10px;
+    font-weight: bold;
+}
+.tab{
     width: 100px;
 }
-#time_tabs a{
+.tab a{
     display: block;
     padding: 10px;
 }
-#time_tabs a.selected{
+.tab a.selected{
     background-color: #777;
     color: white;
     font-weight: bold;
 }
-#time_tabs a:hover{
+.tab a:hover{
     background-color: #eee;
     color: #07C;
 }

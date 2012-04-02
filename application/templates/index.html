@@ -125,7 +125,7 @@ var INFINITE_SCROLL = true;
 </div>
 
 <div id="sidebar">
-	<div id="time_tabs">
+	<div class="tab">
 		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=today" 
 		{% if time == 'today' %}class="selected "{% endif %}>Today</a>
 		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=week" 
@@ -137,6 +137,20 @@ var INFINITE_SCROLL = true;
 		<a href="/questions?hut={{hut}}&amp;sort={{sort}}&amp;time=all" 
 		{% if time == 'all' %}class="selected "{% endif %}>All Time</a>
 	</div>
+
+	{% if courses %}
+	<div class="title">My Huts</div>
+	<div class="tab">
+		{% if courses|length > 1 %}
+		<a href="/" {% ifequal hut "all" %}class="selected"{% endifequal %}>All</a>
+		{% endif %}
+		
+		{% for cur_hut in courses %}
+		<a href="/questions?hut={{cur_hut.slug}}&amp;sort={{sort}}&amp;time=quarter"
+		{% ifequal cur_hut.slug hut %}class="selected "{% endifequal %}>{{ cur_hut.title }}</a>
+		{% endfor %}
+	</div>
+	{% endif %}
 
 </div>
 
