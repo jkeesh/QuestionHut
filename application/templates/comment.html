@@ -3,6 +3,6 @@
 <div class="comment">
 	<!-- ({{comment.votes}})  -->
 	<span class="comment-author">{{comment.author.name}}:</span> 
-	<span class="comment-text">{{ comment.content }}</span>
+	<span class="comment-text showdown">{{ comment.content }}</span>
 	<div class="comment-time">{% format_time comment.created_at %}</div>
 </div>
