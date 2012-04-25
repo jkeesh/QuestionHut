@@ -1,5 +1,6 @@
 # Django settings for application project.
 #
+#
 import socket, secrets, os, sys
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
