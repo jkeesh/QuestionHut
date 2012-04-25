@@ -8,7 +8,7 @@ import socket, secrets, os, sys
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, PROJECT_ROOT)
 
-if socket.gethostname() == 'madness':
+if socket.gethostname() == 'madness' or socket.gethostname() == 'pointer2':
     PRODUCTION = True
     DEBUG = False
     LOCAL = False
