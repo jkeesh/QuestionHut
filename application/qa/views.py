@@ -324,6 +324,9 @@ def sort_questions(query_set, sort):
         
         
 def has_permission(user, huts):
+    if not user.is_authenticated():
+        return False
+    
     up = user.get_profile()
     user_huts = up.courses.all()
     for hut in huts:
