@@ -4,7 +4,7 @@ from datetime import datetime
 import re
 
 class State(models.Model):
-    CURRENT_QUARTER = 'spring-2012'
+    CURRENT_QUARTER = 'summer-2012'
     
     @staticmethod
     def get_tag():
