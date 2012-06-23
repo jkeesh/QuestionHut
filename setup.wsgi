@@ -2,7 +2,7 @@ import os
 import sys
 
 sys.path.append('/var/questionhut/code/')
-##sys.path.append('/home/jkeesh/sites/questionhut.com/')
+sys.path.append('/var/questionhut/code/application/')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'application.settings'
 
 sys.stdout = sys.stderr
