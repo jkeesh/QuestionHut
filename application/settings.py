@@ -10,11 +10,13 @@ if socket.gethostname() == 'madness' or socket.gethostname() == 'pointer2':
     DEBUG = False
     LOCAL = False
     CONSOLE_DEBUG = False
+    print "On live version..."
 else:
     PRODUCTION = False
     DEBUG = True
     LOCAL = True
     CONSOLE_DEBUG = True
+    print "On local version"
 
 TEMPLATE_DEBUG = DEBUG
 
