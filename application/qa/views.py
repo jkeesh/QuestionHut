@@ -9,7 +9,13 @@ from django.shortcuts import get_object_or_404
 
 # Models
 from django.contrib.auth.models import User
+
+print "Here... 1"
+
 from qa.models import Tag, Question, Answer, Vote, UserProfile, Course, Role, Comment, State
+
+print "Here... 2"
+
 import re
 from django.core.mail import send_mail, EmailMessage, send_mass_mail
 from django.conf import settings
